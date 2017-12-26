@@ -20,7 +20,8 @@ import com.teamdev.jxmaps.swing.MapView;
 
 @SuppressWarnings("serial")
 public class BusMap extends MapView{
-	
+	private LatLng aldini = new LatLng(44.4904617,11.3296486);
+
 	private Semaphore s;
     public BusMap() {
         // Setting of a ready handler to MapView object. onMapReady will be called when map initialization is done and
@@ -65,6 +66,17 @@ public class BusMap extends MapView{
     	
         marker.setPosition(ll);
         return marker;
+    }
+    
+    public void addStop() throws FileNotFoundException {
+    	Marker marker = new Marker(getMap());
+    	Icon icon = new Icon();
+    	InputStream inputstream = new FileInputStream("./res/stop.png");
+    	icon.loadFromStream(inputstream, "png");
+    	marker.setIcon(icon);
+    	
+        marker.setPosition(aldini);
+    	
     }
     
     public void moveBus(Marker m, LatLng ll) {
