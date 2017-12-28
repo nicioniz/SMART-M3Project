@@ -1,36 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" creator="mapstogpx.com" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">
-  <metadata>
-    <link href="http://www.mapstogpx.com">
-      <text>Sverrir Sigmundarson</text>
-    </link>
-    <!--desc>Map data ©2017 Google</desc-->
-    <!--copyright author="Google Inc">
-    	<year>2017</year>
-    	<license>https://developers.google.com/maps/terms</license>
-    </copyright-->
-    <!--url>https://www.google.co.uk/maps/dir/44.4904637,11.3296465/44.499364,11.327423/44.5010215,11.3559649/44.4854313,11.3485057/44.4904518,11.3296473/@44.4956625,11.3256636,13.67z/data=!4m2!4m1!3e0?hl=it&authuser=0&hl=en</url-->
-    <time>2017-11-30T12:41:09Z</time>
-  </metadata>
-  <wpt lat="44.4904637" lon="11.3296465">
-    <name>40134 Bologna BO</name>
-    <desc>Viale Carlo Pepoli, 4, 40134 Bologna BO, Italy</desc>
-  </wpt>
-  <wpt lat="44.499364" lon="11.327423">
-    <name>40131 Bologna BO</name>
-    <desc>Viale Antonio Silvani, 6c, 40131 Bologna BO, Italy</desc>
-  </wpt>
-  <wpt lat="44.5010215" lon="11.3559649">
-    <name>44.5010215</name>
-  </wpt>
-  <wpt lat="44.4854313" lon="11.3485057">
-    <name>40124 Bologna BO</name>
-    <desc>Viale Giovanni Gozzadini, 2, 40124 Bologna BO, Italy</desc>
-  </wpt>
-  <wpt lat="44.4904518" lon="11.3296473">
-    <name>40136 Bologna BO</name>
-    <desc>Viale Aldini, 234, 40136 Bologna BO, Italy</desc>
-  </wpt>
+<gpx>
+
 <trk>
   <name>40134 Bologna BO to 40136 Bologna BO</name>
   <number>1</number>
@@ -50,6 +20,11 @@
   <trkpt lat="44.49196" lon="11.32933">
     <name>TP005</name>
   </trkpt>
+  
+   <trkpt lat="44.492244" lon="11.329362">
+    <name>TP005</name>
+  </trkpt>
+  
   <trkpt lat="44.49232" lon="11.32921">
     <name>TP006</name>
   </trkpt>
@@ -71,6 +46,11 @@
   <trkpt lat="44.49493" lon="11.3284">
     <name>TP012</name>
   </trkpt>
+
+ <trkpt lat="44.495536" lon="11.328299">
+  <name>TP012</name>
+  </trkpt>
+
   <trkpt lat="44.49565" lon="11.32818">
     <name>TP013</name>
   </trkpt>
@@ -128,6 +108,11 @@
   <trkpt lat="44.4996" lon="11.32759">
     <name>TP031</name>
   </trkpt>
+  
+  <trkpt lat="44.499820" lon="11.328130">
+    <name>TP031</name>
+  </trkpt>
+  
   <trkpt lat="44.50054" lon="11.32946">
     <name>TP032</name>
   </trkpt>

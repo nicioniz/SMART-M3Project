@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx>
+ 
+<trk>
+  <name>40134 Bologna BO to 40136 Bologna BO</name>
+  <number>1</number>
+  <trkseg>
+
+  <trkpt lat="44.492244" lon="11.329362">
+    <name>Liceo Righi</name>
+  </trkpt>
+  
+   
+  <trkpt lat="44.495536" lon="11.328299">
+  <name>Porta Sant'Isaia</name>
+  </trkpt>
+ 
+  <trkpt lat="44.499820" lon="11.328130">
+    <name>Porta San Felice</name>
+  </trkpt>
+  
+ 
+  </trkseg>
+</trk>
+</gpx>

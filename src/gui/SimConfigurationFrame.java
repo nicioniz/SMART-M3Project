@@ -97,12 +97,13 @@ public class SimConfigurationFrame extends JFrame {
 		if(lineNo32CheckBox.isSelected()) {
 			BusVisualizerAggregator aggregator = new BusVisualizerAggregator("BUS32", busMap);
 			aggregator.start();
-			new Bus("BUS32", "gpx/bus32.gpx").start();
+			new Bus("BUS32", "gpx/bus32.gpx","gpx/bus32StopList.gpx").start();
 		}
 		if(lineNo20CheckBox.isSelected()) {
 			BusVisualizerAggregator aggregator2 = new BusVisualizerAggregator("BUS20", busMap);
 			aggregator2.start();
-			new Bus("BUS20", "gpx/bus20.gpx").start();
+			//===============CORREGGERE PATH PER LE FERMATE DEL 20 !!!===============
+			new Bus("BUS20", "gpx/bus20.gpx", "gpx/bus32StopList.gpx").start();
 		}
 		new BusMapFrame(busMap);		
 		this.dispose();

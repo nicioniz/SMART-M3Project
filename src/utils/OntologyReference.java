@@ -23,6 +23,7 @@ public class OntologyReference {
 	public static final String IS_INSPECTOR_PRESENT = NS + "isInspectorPresent";
 	public static final String HAS_PERSON_DATA = NS + "hasPersonData";
 	public static final String ON_RIDE = NS + "onRide";
+	
 
 	//LocationDAta class
 	public static final String LOCATION_DATA = NS + "LocationData";

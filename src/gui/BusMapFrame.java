@@ -13,12 +13,7 @@ public class BusMapFrame extends JFrame{
 	
 	public BusMapFrame(BusMap map) {
 		super("BusMap");
-		try {
-			map.addStop();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		add(map, BorderLayout.CENTER);
 		setSize(1400, 1000);
