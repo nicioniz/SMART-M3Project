@@ -4,7 +4,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -90,16 +90,23 @@ public class SimConfigurationFrame extends JFrame {
 	
 	public void startSimButtonPressed(ActionEvent e) {
 		this.busMap = new BusMap();
-		
+		//wait fro map, otherwise can't call addStops()..
+		busMap.waitReady();
 		double simVel = velocitySlider.getValue() / 10.0;
 		SimulationConfig.getInstance().setSimulationVelocity(simVel);
 		
 		if(lineNo32CheckBox.isSelected()) {
+			try {
+				busMap.addStops("gpx/bus32StopList.gpx");
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
 			BusVisualizerAggregator aggregator = new BusVisualizerAggregator("BUS32", busMap);
 			aggregator.start();
 			new Bus("BUS32", "gpx/bus32.gpx","gpx/bus32StopList.gpx").start();
 		}
 		if(lineNo20CheckBox.isSelected()) {
+			
 			BusVisualizerAggregator aggregator2 = new BusVisualizerAggregator("BUS20", busMap);
 			aggregator2.start();
 			//===============CORREGGERE PATH PER LE FERMATE DEL 20 !!!===============

@@ -36,14 +36,7 @@ public class BusVisualizerAggregator extends Thread {
 				+ " }";			
 		
 		HandlerSubscriptionLocationData MyHandler = new HandlerSubscriptionLocationData(map);  
-		try {
-			map.waitForMap();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-//		map.waitReady();
-		
+		map.waitReady();
 		kp.subscribeSPARQL(sparqlQuery, MyHandler );
 	}
 	

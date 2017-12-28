@@ -4,8 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.concurrent.Semaphore;
-
 import com.teamdev.jxmaps.ControlPosition;
 import com.teamdev.jxmaps.Icon;
 import com.teamdev.jxmaps.LatLng;
@@ -18,17 +16,12 @@ import com.teamdev.jxmaps.PolylineOptions;
 import com.teamdev.jxmaps.swing.MapView;
 
 
+import parser.Parser;
+
+
 @SuppressWarnings("serial")
 public class BusMap extends MapView{
-	private LatLng aldini = new LatLng(44.4904617,11.3296486);
-	private LatLng liceoRighi = new LatLng(44.49196, 11.32933);
-	
-	private Semaphore s;
     public BusMap() {
-        // Setting of a ready handler to MapView object. onMapReady will be called when map initialization is done and
-        // the map object is ready to use. Current implementation of onMapReady customizes the map object.
-    	s = new Semaphore(0);
-    	
     	setOnMapReadyHandler(this::onMapReady);
     }
     
@@ -42,8 +35,7 @@ public class BusMap extends MapView{
         // Initializing the busline with created path
         polyline.setPath(path);
         // Creating a busline options object
-        PolylineOptions options = new PolylineOptions();
-                        
+        PolylineOptions options = new PolylineOptions();   
         
         // Setting geodesic property value
         options.setGeodesic(true);
@@ -70,27 +62,26 @@ public class BusMap extends MapView{
 
     }
     
-    public void addStops() throws FileNotFoundException {
-    	Marker marker = new Marker(getMap());
-    	Marker marker2 = new Marker(getMap());
+    public void addStops(String filenameStops) throws FileNotFoundException {
+    	
+    	Parser stopsParser;
+    	List<LatLng> stopsPoints;
+    	stopsParser = new Parser(filenameStops);
+    	stopsPoints = stopsParser.getListOfPoint();
+    	int sizeOfStopsList = stopsPoints.size();
     	Icon icon = new Icon();
     	InputStream inputstream = new FileInputStream("./res/stop.png");
     	icon.loadFromStream(inputstream, "png");
-    	marker.setIcon(icon);
-    	marker2.setIcon(icon);
     	
-        marker.setPosition(aldini);
-        marker2.setPosition(liceoRighi);
-    	
+    	for (int i=0; i<sizeOfStopsList; i++) {
+	    	Marker marker = new Marker(getMap());
+	    	marker.setIcon(icon);
+	    	marker.setPosition(stopsPoints.get(i));	
+		}
     }
     
     public void moveBus(Marker m, LatLng ll) {
     	m.setPosition(ll);
-    }
-    
-    public void waitForMap() throws InterruptedException {
-    	s.acquire();
-    	s.release();
     }
     
     public void onMapReady(MapStatus status) {
@@ -111,13 +102,6 @@ public class BusMap extends MapView{
             getMap().setCenter(new LatLng(44.493889, 11.342778));
             // Setting initial zoom value
             getMap().setZoom(14.0);      
-            try {
-				addStops();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-            s.release(); 
-        }
+        }	
     }
 }

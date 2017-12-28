@@ -11,6 +11,8 @@ import utils.OntologyReference;
 import utils.SIBConfiguration;
 import utils.Triple;
 
+
+
 public class Bus extends Thread {
 
 	private String name;
@@ -27,17 +29,27 @@ public class Bus extends Thread {
 	
 	@Override
 	public void run() {
+		LatLng nextPoint;
+		Double latNextPoint;
+		Integer stopIndex;
+		//get list of point
+		Parser parserForPoints;
+	   	List<LatLng> listOfPoints;
+		parserForPoints = new Parser(filenamePoints);
+		listOfPoints = parserForPoints.getListOfPoint();
+		int size1 = listOfPoints.size();
+		
 		//create hash map for stops
 		Parser stopsParser;
     	List<LatLng> stopsPoints;
     	stopsParser = new Parser(filenameStops);
     	stopsPoints = stopsParser.getListOfPoint();
 		int sizeOfStopsList = stopsPoints.size();
-		
+		//insert into hash map all the stop
 		for (int i=0; i<sizeOfStopsList; i++)
 			stopsList.put(stopsPoints.get(i).getLat(), i );
 		
-		LatLng nextPoint;
+		//connect to sib
 		KPICore kp = new KPICore(SIBConfiguration.getInstance().getHost(),
 				SIBConfiguration.getInstance().getPort(),
 				SIBConfiguration.getInstance().getSmartSpaceName());
@@ -58,14 +70,7 @@ public class Bus extends Thread {
 		else
 			System.out.println ("Bus correctly inserted " + name);
 		
-		//get list of stops
-		Parser p1;
-    	List<LatLng> points1;
-    	p1 = new Parser(filenamePoints);
-		points1 = p1.getListOfPoint();
-		int size1 = points1.size();
-		
-		//move bus: for each point insert new triple
+		//move bus: for each point insert new locationData and new Status(in Transit)
 		
 		String locationDataName = name + "LocationData";
 		String booleanDataNameTrue = name + "booleanDataTrue";
@@ -74,9 +79,8 @@ public class Bus extends Thread {
 		Vector<Vector<String>> newTripleToInsert = new Vector<>();
 		Vector<Vector<String>> newBoolean = new Vector<>();
 		Vector<Vector<String>> oldTriple = new Vector<>();
-		Vector<Vector<String>> newStatus = new Vector<>();
-		nextPoint = points1.get(0);
 		
+		//write datatype of objects
 		Vector<String> locationData = new Triple(
 				OntologyReference.NS + locationDataName,
 				OntologyReference.RDF_TYPE,
@@ -101,6 +105,11 @@ public class Bus extends Thread {
 		newTripleToInsert.add(locationData);
 		newBoolean.add(booleanDataFalse);
 		newBoolean.add(booleanDataTrue);
+		
+		
+		//get first point and write relative data
+		nextPoint = listOfPoints.get(0);
+		
 		kp.insert(newBoolean);
 		Vector<String> busLocationDataArch = new Triple(
 				OntologyReference.NS + name,
@@ -138,14 +147,16 @@ public class Bus extends Thread {
 			e.printStackTrace();
 		}
 		
+		//now, starting from the second point, update data
 		for (int i = 1; i < size1; i++) {
-			nextPoint = points1.get(i);
-			Double latNextPoint = new Double(nextPoint.getLat());
-			Integer stopIndex = stopsList.get(latNextPoint);		
-			
+			nextPoint = listOfPoints.get(i);
+			latNextPoint = new Double(nextPoint.getLat());
+			stopIndex = stopsList.get(latNextPoint);	
 			newTripleToInsert = new Vector<>();
 			
+			//check whether the next point is a bus stop
 			if  (stopIndex != null){
+				//in this case bus is not in transit
 				newTripleToInsert.add(new Triple(
 				OntologyReference.NS + name,
 				OntologyReference.IS_IN_TRANSIT,
