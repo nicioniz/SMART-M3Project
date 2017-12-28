@@ -1,5 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<gpx>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" creator="mapstogpx.com" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">
+  <metadata>
+    <link href="http://www.mapstogpx.com">
+      <text>Sverrir Sigmundarson</text>
+    </link>
+    <!--desc>Map data ©2017 Google</desc-->
+    <!--copyright author="Google Inc">
+    	<year>2017</year>
+    	<license>https://developers.google.com/maps/terms</license>
+    </copyright-->
+    <!--url>https://www.google.co.uk/maps/dir/44.4888224,11.3178094/44.4900049,11.3409947/44.4913209,11.3417484/44.4932602,11.3358634/44.4958144,11.3371014/44.494885,11.3426091/44.5011844,11.3445257/44.4981623,11.3564492/44.4995336,11.3589808/44.5037237,11.3678277/@44.4942851,11.3344282,14.67z/data=!4m2!4m1!3e2?hl=it&hl=en</url-->
+    <time>2017-11-30T15:00:59Z</time>
+  </metadata>
+  <wpt lat="44.4888224" lon="11.3178094">
+    <name>40134 Bologna BO</name>
+    <desc>Strada Statale Porrettana, 220, 40134 Bologna BO, Italy</desc>
+  </wpt>
+  <wpt lat="44.4900049" lon="11.3409947">
+    <name>40123 Bologna BO</name>
+    <desc>Via Urbana, 1a, 40123 Bologna BO, Italy</desc>
+  </wpt>
+  <wpt lat="44.4913209" lon="11.3417484">
+    <name>40123 Bologna BO</name>
+    <desc>Via D'Azeglio, 23, 40123 Bologna BO, Italy</desc>
+  </wpt>
+  <wpt lat="44.4932602" lon="11.3358634">
+    <name>40123 Bologna BO</name>
+    <desc>Piazza Malpighi, 13, 40123 Bologna BO, Italy</desc>
+  </wpt>
+  <wpt lat="44.4958144" lon="11.3371014">
+    <name>40121 Bologna BO</name>
+    <desc>Via Ugo Bassi, 31b, 40121 Bologna BO, Italy</desc>
+  </wpt>
+  <wpt lat="44.494885" lon="11.3426091">
+    <name>40125 Bologna BO</name>
+    <desc>Via dell'Indipendenza, 1, 40125 Bologna BO, Italy</desc>
+  </wpt>
+  <wpt lat="44.5011844" lon="11.3445257">
+    <name>40126 Bologna BO</name>
+    <desc>Via Irnerio, 1, 40126 Bologna BO, Italy</desc>
+  </wpt>
+  <wpt lat="44.4981623" lon="11.3564492">
+    <name>44.4981623</name>
+  </wpt>
+  <wpt lat="44.4995336" lon="11.3589808">
+    <name>40127 Bologna BO</name>
+    <desc>Via San Donato, 25, 40127 Bologna BO, Italy</desc>
+  </wpt>
+  <wpt lat="44.5037237" lon="11.3678277">
+    <name>40127 Bologna BO</name>
+    <desc>Via San Donato, 61A, 40127 Bologna BO, Italy</desc>
+</wpt>
 
 <trk>
   <name>40134 Bologna BO to 40136 Bologna BO</name>
@@ -21,9 +72,11 @@
     <name>TP005</name>
   </trkpt>
   
-   <trkpt lat="44.492244" lon="11.329362">
-    <name>TP005</name>
+  
+  <trkpt lat="44.492191" lon="11.329344">
+    <name>Liceo Righi</name>
   </trkpt>
+  
   
   <trkpt lat="44.49232" lon="11.32921">
     <name>TP006</name>
@@ -47,9 +100,11 @@
     <name>TP012</name>
   </trkpt>
 
- <trkpt lat="44.495536" lon="11.328299">
-  <name>TP012</name>
+
+  <trkpt lat="44.495536" lon="11.328299">
+  <name>Porta Sant'Isaia</name>
   </trkpt>
+
 
   <trkpt lat="44.49565" lon="11.32818">
     <name>TP013</name>
@@ -109,9 +164,12 @@
     <name>TP031</name>
   </trkpt>
   
+  
+  
   <trkpt lat="44.499820" lon="11.328130">
-    <name>TP031</name>
+    <name>Porta San Felice</name>
   </trkpt>
+  
   
   <trkpt lat="44.50054" lon="11.32946">
     <name>TP032</name>

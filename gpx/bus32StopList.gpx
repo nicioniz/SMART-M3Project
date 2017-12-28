@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<gpx>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" creator="mapstogpx.com" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">
  
 <trk>
   <name>40134 Bologna BO to 40136 Bologna BO</name>
   <number>1</number>
   <trkseg>
-
-  <trkpt lat="44.492244" lon="11.329362">
+  
+  <trkpt lat="44.492191" lon="11.329344">
     <name>Liceo Righi</name>
   </trkpt>
   
-   
   <trkpt lat="44.495536" lon="11.328299">
   <name>Porta Sant'Isaia</name>
   </trkpt>
@@ -19,7 +18,6 @@
     <name>Porta San Felice</name>
   </trkpt>
   
- 
   </trkseg>
 </trk>
 </gpx>
