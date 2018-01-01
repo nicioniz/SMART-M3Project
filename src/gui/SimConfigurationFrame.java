@@ -28,8 +28,10 @@ public class SimConfigurationFrame extends JFrame {
 	private JCheckBox lineNo32CheckBox, lineNo20CheckBox;
 	private JLabel lblSimulationVelocity;
 	private JSlider velocitySlider;
-	private JLabel lblSimulationDays;
+	private JLabel simulationDaysLabel;
 	private JTextField simulationDaysTextField;
+	private JLabel busRidesLabel;
+	private JTextField busRidesTextField;
 		
 	public SimConfigurationFrame() {
 		setTitle("SimConfiguration");
@@ -84,12 +86,12 @@ public class SimConfigurationFrame extends JFrame {
 		JButton startSimButton = new JButton("START SIM");
 		startSimButton.addActionListener(this::startSimButtonPressed);
 		
-		lblSimulationDays = new JLabel("Simulation Days");
-		GridBagConstraints gbc_lblSimulationDays = new GridBagConstraints();
-		gbc_lblSimulationDays.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSimulationDays.gridx = 0;
-		gbc_lblSimulationDays.gridy = 4;
-		simulationDaysContentPane.add(lblSimulationDays, gbc_lblSimulationDays);
+		simulationDaysLabel = new JLabel("Simulation Days");
+		GridBagConstraints gbc_simulationDaysLabel = new GridBagConstraints();
+		gbc_simulationDaysLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_simulationDaysLabel.gridx = 0;
+		gbc_simulationDaysLabel.gridy = 4;
+		simulationDaysContentPane.add(simulationDaysLabel, gbc_simulationDaysLabel);
 		
 		simulationDaysTextField = new JTextField();
 		GridBagConstraints gbc_simulationDaysTextField = new GridBagConstraints();
@@ -99,6 +101,22 @@ public class SimConfigurationFrame extends JFrame {
 		gbc_simulationDaysTextField.gridy = 4;
 		simulationDaysContentPane.add(simulationDaysTextField, gbc_simulationDaysTextField);
 		simulationDaysTextField.setColumns(10);
+		
+		busRidesLabel = new JLabel("Bus rides for day");
+		GridBagConstraints gbc_busRidesLabel = new GridBagConstraints();
+		gbc_busRidesLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_busRidesLabel.gridx = 0;
+		gbc_busRidesLabel.gridy = 5;
+		simulationDaysContentPane.add(busRidesLabel, gbc_busRidesLabel);
+		
+		busRidesTextField = new JTextField();
+		GridBagConstraints gbc_busRidesTextField = new GridBagConstraints();
+		gbc_busRidesTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_busRidesTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_busRidesTextField.gridx = 2;
+		gbc_busRidesTextField.gridy = 5;
+		simulationDaysContentPane.add(busRidesTextField, gbc_busRidesTextField);
+		busRidesTextField.setColumns(10);
 		
 		GridBagConstraints gbc_startSimButton = new GridBagConstraints();
 		gbc_startSimButton.insets = new Insets(0, 0, 0, 5);
@@ -114,6 +132,10 @@ public class SimConfigurationFrame extends JFrame {
 		tempSimulationDays = simulationDaysTextField.getText();
 		int simulationDays = Integer.parseInt(tempSimulationDays);
 		SimulationConfig.getInstance().setSimulationDays(simulationDays);
+		String tempBusRides = "";
+		tempBusRides = busRidesTextField.getText();
+		int busRides = Integer.parseInt(tempBusRides);
+		SimulationConfig.getInstance().setBusRides(busRides);
 		//wait for map, otherwise can't call addStops()..
 		busMap.waitReady();
 		double simVel = velocitySlider.getValue() / 10.0;

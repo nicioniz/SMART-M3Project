@@ -6,6 +6,7 @@ public class SimulationConfig {
 	private int peopleWaitingAtBusStop = 0;
 	private int percErrorPeopleWaitingAtBusStop = 0;
 	private int simulationDays;
+	private int busRides;
 	
 	private static SimulationConfig instance = null;
 	
@@ -47,5 +48,13 @@ public class SimulationConfig {
 	
 	public int getSimulationDays() {
 		return simulationDays;
+	}
+	
+	public void setBusRides(int rides) {
+		this.busRides = rides;
+	}
+	
+	public int getBusRides() {
+		return busRides;
 	}
 }
