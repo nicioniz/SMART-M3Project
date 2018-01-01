@@ -111,7 +111,8 @@ public class SimConfigurationFrame extends JFrame {
 	
 	public void startSimButtonPressed(ActionEvent e) {
 		this.busMap = new BusMap();
-		//wait fro map, otherwise can't call addStops()..
+	//	int days = getSimulationDays();
+		//wait for map, otherwise can't call addStops()..
 		busMap.waitReady();
 		double simVel = velocitySlider.getValue() / 10.0;
 		SimulationConfig.getInstance().setSimulationVelocity(simVel);
@@ -126,14 +127,14 @@ public class SimConfigurationFrame extends JFrame {
 			}
 			BusVisualizerAggregator aggregator = new BusVisualizerAggregator("BUS32", busMap);
 			aggregator.start();
-			new Bus("BUS32", "gpx/bus32.gpx","gpx/bus32StopList.gpx").start();
+			new Bus("BUS32", "gpx/bus32.gpx","gpx/bus32StopList.gpx", 2).start();
 		}
 		if(lineNo20CheckBox.isSelected()) {
 			
 			BusVisualizerAggregator aggregator2 = new BusVisualizerAggregator("BUS20", busMap);
 			aggregator2.start();
 			//===============CORREGGERE PATH PER LE FERMATE DEL 20 !!!===============
-			new Bus("BUS20", "gpx/bus20.gpx", "gpx/bus32StopList.gpx").start();
+			new Bus("BUS20", "gpx/bus20.gpx", "gpx/bus32StopList.gpx", 2).start();
 		}
 		new BusMapFrame(busMap);		
 		this.dispose();
