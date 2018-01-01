@@ -18,38 +18,43 @@ import main.BusMap;
 import simulationConfiguration.SimulationConfig;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class SimConfigurationFrame extends JFrame {
 
-	private JPanel contentPane;
+	private JPanel simulationDaysContentPane;
 	private BusMap busMap;
 	private JCheckBox lineNo32CheckBox, lineNo20CheckBox;
 	private JLabel lblSimulationVelocity;
 	private JSlider velocitySlider;
+	private JLabel lblSimulationDays;
+	private JTextField simulationDaysTextField;
+	private int simulationDays;
+	private String tempSimulationDays = ""; //serve perchè dalla textfield posso prendere solo stringhe, poi la converto in int
 	
 	public SimConfigurationFrame() {
 		setTitle("SimConfiguration");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
+		simulationDaysContentPane = new JPanel();
+		simulationDaysContentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(simulationDaysContentPane);
 		
-		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		contentPane.setLayout(gbl_contentPane);
+		GridBagLayout gbl_simulationDaysContentPane = new GridBagLayout();
+		gbl_simulationDaysContentPane.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_simulationDaysContentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_simulationDaysContentPane.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_simulationDaysContentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		simulationDaysContentPane.setLayout(gbl_simulationDaysContentPane);
 		
 		lblSimulationVelocity = new JLabel("Simulation velocity");
 		GridBagConstraints gbc_lblSimulationVelocity = new GridBagConstraints();
 		gbc_lblSimulationVelocity.insets = new Insets(0, 0, 5, 0);
 		gbc_lblSimulationVelocity.gridx = 2;
 		gbc_lblSimulationVelocity.gridy = 2;
-		contentPane.add(lblSimulationVelocity, gbc_lblSimulationVelocity);
+		simulationDaysContentPane.add(lblSimulationVelocity, gbc_lblSimulationVelocity);
 		
 		lineNo32CheckBox = new JCheckBox("Line No. 32");
 		lineNo32CheckBox.setSelected(true);
@@ -57,10 +62,7 @@ public class SimConfigurationFrame extends JFrame {
 		gbc_lineNo32CheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_lineNo32CheckBox.gridx = 0;
 		gbc_lineNo32CheckBox.gridy = 2;
-		contentPane.add(lineNo32CheckBox, gbc_lineNo32CheckBox);
-		
-		JButton startSimButton = new JButton("START SIM");
-		startSimButton.addActionListener(this::startSimButtonPressed);
+		simulationDaysContentPane.add(lineNo32CheckBox, gbc_lineNo32CheckBox);
 		
 		lineNo20CheckBox = new JCheckBox("Line No. 20");
 		lineNo20CheckBox.setSelected(true);
@@ -68,7 +70,7 @@ public class SimConfigurationFrame extends JFrame {
 		gbc_lineNo20CheckBox.insets = new Insets(0, 0, 5, 5);
 		gbc_lineNo20CheckBox.gridx = 0;
 		gbc_lineNo20CheckBox.gridy = 3;
-		contentPane.add(lineNo20CheckBox, gbc_lineNo20CheckBox);
+		simulationDaysContentPane.add(lineNo20CheckBox, gbc_lineNo20CheckBox);
 		
 		velocitySlider = new JSlider();
 		velocitySlider.setToolTipText("Simulation velocity (from 0.1x to 2.0x)");
@@ -79,13 +81,32 @@ public class SimConfigurationFrame extends JFrame {
 		gbc_velocitySlider.insets = new Insets(0, 0, 5, 0);
 		gbc_velocitySlider.gridx = 2;
 		gbc_velocitySlider.gridy = 3;
-		contentPane.add(velocitySlider, gbc_velocitySlider);
+		simulationDaysContentPane.add(velocitySlider, gbc_velocitySlider);
+		
+		JButton startSimButton = new JButton("START SIM");
+		startSimButton.addActionListener(this::startSimButtonPressed);
+		
+		lblSimulationDays = new JLabel("Simulation Days");
+		GridBagConstraints gbc_lblSimulationDays = new GridBagConstraints();
+		gbc_lblSimulationDays.insets = new Insets(0, 0, 5, 5);
+		gbc_lblSimulationDays.gridx = 0;
+		gbc_lblSimulationDays.gridy = 4;
+		simulationDaysContentPane.add(lblSimulationDays, gbc_lblSimulationDays);
+		
+		simulationDaysTextField = new JTextField();
+		GridBagConstraints gbc_simulationDaysTextField = new GridBagConstraints();
+		gbc_simulationDaysTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_simulationDaysTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_simulationDaysTextField.gridx = 2;
+		gbc_simulationDaysTextField.gridy = 4;
+		simulationDaysContentPane.add(simulationDaysTextField, gbc_simulationDaysTextField);
+		simulationDaysTextField.setColumns(10);
 		
 		GridBagConstraints gbc_startSimButton = new GridBagConstraints();
 		gbc_startSimButton.insets = new Insets(0, 0, 0, 5);
 		gbc_startSimButton.gridx = 0;
-		gbc_startSimButton.gridy = 5;
-		contentPane.add(startSimButton, gbc_startSimButton);
+		gbc_startSimButton.gridy = 6;
+		simulationDaysContentPane.add(startSimButton, gbc_startSimButton);
 	}
 	
 	public void startSimButtonPressed(ActionEvent e) {
@@ -94,6 +115,8 @@ public class SimConfigurationFrame extends JFrame {
 		busMap.waitReady();
 		double simVel = velocitySlider.getValue() / 10.0;
 		SimulationConfig.getInstance().setSimulationVelocity(simVel);
+		tempSimulationDays = simulationDaysTextField.getText();
+		simulationDays = Integer.parseInt(tempSimulationDays);
 		
 		if(lineNo32CheckBox.isSelected()) {
 			try {
@@ -114,5 +137,10 @@ public class SimConfigurationFrame extends JFrame {
 		}
 		new BusMapFrame(busMap);		
 		this.dispose();
+	}
+	
+	//metodo che restituisce i giorni della simulazione
+	public int getSimulationDays() {
+		return simulationDays;
 	}
 }
