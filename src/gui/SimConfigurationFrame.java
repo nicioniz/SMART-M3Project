@@ -30,9 +30,7 @@ public class SimConfigurationFrame extends JFrame {
 	private JSlider velocitySlider;
 	private JLabel lblSimulationDays;
 	private JTextField simulationDaysTextField;
-	private int simulationDays;
-	private String tempSimulationDays = ""; //serve perchè dalla textfield posso prendere solo stringhe, poi la converto in int
-	
+		
 	public SimConfigurationFrame() {
 		setTitle("SimConfiguration");
 		setResizable(false);
@@ -111,13 +109,15 @@ public class SimConfigurationFrame extends JFrame {
 	
 	public void startSimButtonPressed(ActionEvent e) {
 		this.busMap = new BusMap();
-	//	int days = getSimulationDays();
+
+		String tempSimulationDays = "";
+		tempSimulationDays = simulationDaysTextField.getText();
+		int simulationDays = Integer.parseInt(tempSimulationDays);
+		SimulationConfig.getInstance().setSimulationDays(simulationDays);
 		//wait for map, otherwise can't call addStops()..
 		busMap.waitReady();
 		double simVel = velocitySlider.getValue() / 10.0;
 		SimulationConfig.getInstance().setSimulationVelocity(simVel);
-		tempSimulationDays = simulationDaysTextField.getText();
-		simulationDays = Integer.parseInt(tempSimulationDays);
 		
 		if(lineNo32CheckBox.isSelected()) {
 			try {
@@ -127,21 +127,16 @@ public class SimConfigurationFrame extends JFrame {
 			}
 			BusVisualizerAggregator aggregator = new BusVisualizerAggregator("BUS32", busMap);
 			aggregator.start();
-			new Bus("BUS32", "gpx/bus32.gpx","gpx/bus32StopList.gpx", 2).start();
+			new Bus("BUS32", "gpx/bus32.gpx","gpx/bus32StopList.gpx", simulationDays).start();
 		}
 		if(lineNo20CheckBox.isSelected()) {
 			
 			BusVisualizerAggregator aggregator2 = new BusVisualizerAggregator("BUS20", busMap);
 			aggregator2.start();
 			//===============CORREGGERE PATH PER LE FERMATE DEL 20 !!!===============
-			new Bus("BUS20", "gpx/bus20.gpx", "gpx/bus32StopList.gpx", 2).start();
+			new Bus("BUS20", "gpx/bus20.gpx", "gpx/bus32StopList.gpx", simulationDays).start();
 		}
 		new BusMapFrame(busMap);		
 		this.dispose();
-	}
-	
-	//metodo che restituisce i giorni della simulazione
-	public int getSimulationDays() {
-		return simulationDays;
 	}
 }

@@ -5,6 +5,7 @@ public class SimulationConfig {
 	private double simulationVelocity = 1;
 	private int peopleWaitingAtBusStop = 0;
 	private int percErrorPeopleWaitingAtBusStop = 0;
+	private int simulationDays;
 	
 	private static SimulationConfig instance = null;
 	
@@ -40,4 +41,11 @@ public class SimulationConfig {
 		this.percErrorPeopleWaitingAtBusStop = percErrorPeopleAtBusStop;
 	}
 	
+	public void setSimulationDays(int days) {
+		this.simulationDays = days;
+	}
+	
+	public int getSimulationDays() {
+		return simulationDays;
+	}
 }
