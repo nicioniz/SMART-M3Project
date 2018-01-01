@@ -158,7 +158,6 @@ public class BusStop extends Thread {
 			}
 		}
 		
-		
 	}
 	
 	private int getWaitingPeople() {
