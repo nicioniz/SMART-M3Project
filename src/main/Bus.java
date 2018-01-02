@@ -17,13 +17,15 @@ public class Bus extends Thread {
 
 	private String name;
 	private int days;
+	private int busRides;
 	private String filenamePoints; 
 	private String filenameStops; 
 	private HashMap<Double, Integer> stopsList;
 
-	public Bus(String name, String filenamePoints, String filenameStops, int days) {
+	public Bus(String name, String filenamePoints, String filenameStops, int days, int busRides) {
 		this.name = name;
 		this.days = days;
+		this.busRides = busRides;
 		this.filenamePoints = filenamePoints;
 		this.filenameStops = filenameStops;
 		stopsList = new HashMap<Double, Integer>();
@@ -132,64 +134,76 @@ public class Bus extends Thread {
 			//the bus must repeat this cycle 'days' times
 			
 		for (int day=0; day<days; day++) {
-			for (int i = 0; i < listOfPointSize; i++) {
-				nextPoint = listOfPoints.get(i);
-				latNextPoint = new Double(nextPoint.getLat());
-				stopIndex = stopsList.get(latNextPoint);	
-				newTripleToInsert = new Vector<>();
-				
-				//check whether the next point is a bus stop
-				if  (stopIndex != null){
-					//in this case bus is not in transit
-					newTripleToInsert.add(new Triple(
-					OntologyReference.NS + name,
-					OntologyReference.IS_IN_TRANSIT,
-					OntologyReference.BOOLEAN + booleanDataNameFalse,
-					Triple.URI,
-					Triple.URI).getAsVector());
-				}else {
-					newTripleToInsert.add(new Triple(
-					OntologyReference.NS + name,
-					OntologyReference.IS_IN_TRANSIT,
-					OntologyReference.BOOLEAN + booleanDataNameTrue,
-					Triple.URI,
-					Triple.URI).getAsVector());
-				}
+			for (int ride=0; ride<busRides; ride++) {
+				for (int i = 0; i < listOfPointSize; i++) {
+					nextPoint = listOfPoints.get(i);
+					latNextPoint = new Double(nextPoint.getLat());
+					stopIndex = stopsList.get(latNextPoint);	
+					newTripleToInsert = new Vector<>();
+					
+					//check whether the next point is a bus stop
+					if  (stopIndex != null){
+						//in this case bus is not in transit
+						newTripleToInsert.add(new Triple(
+						OntologyReference.NS + name,
+						OntologyReference.IS_IN_TRANSIT,
+						OntologyReference.BOOLEAN + booleanDataNameFalse,
+						Triple.URI,
+						Triple.URI).getAsVector());
+					}else {
+						newTripleToInsert.add(new Triple(
+						OntologyReference.NS + name,
+						OntologyReference.IS_IN_TRANSIT,
+						OntologyReference.BOOLEAN + booleanDataNameTrue,
+						Triple.URI,
+						Triple.URI).getAsVector());
+					}
 
-				newTripleToInsert.add(new Triple(
-						OntologyReference.NS + locationDataName,
-						OntologyReference.HAS_LAT,
-						String.valueOf(nextPoint.getLat()),
-						Triple.URI,
-						Triple.LITERAL).getAsVector());
-				
-				newTripleToInsert.add(new Triple(
-						OntologyReference.NS + locationDataName,
-						OntologyReference.HAS_LON,
-						String.valueOf(nextPoint.getLng()),
-						Triple.URI,
-						Triple.LITERAL).getAsVector());
-				
-				if (i==0)
-					kp.insert(newTripleToInsert);
-				else
-					kp.update(newTripleToInsert, oldTriple);
-				
-				oldTriple = newTripleToInsert;
+					newTripleToInsert.add(new Triple(
+							OntologyReference.NS + locationDataName,
+							OntologyReference.HAS_LAT,
+							String.valueOf(nextPoint.getLat()),
+							Triple.URI,
+							Triple.LITERAL).getAsVector());
+					
+					newTripleToInsert.add(new Triple(
+							OntologyReference.NS + locationDataName,
+							OntologyReference.HAS_LON,
+							String.valueOf(nextPoint.getLng()),
+							Triple.URI,
+							Triple.LITERAL).getAsVector());
+					
+					if (i==0)
+						kp.insert(newTripleToInsert);
+					else
+						kp.update(newTripleToInsert, oldTriple);
+					
+					oldTriple = newTripleToInsert;
+					try {
+						Thread.sleep(Math.round(100/SimulationConfig.getInstance().getSimulationVelocity()));
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				kp.remove(newTripleToInsert);
+				System.out.printf("ride %d terminated\n", ride+1);
 				try {
-					Thread.sleep(Math.round(100/SimulationConfig.getInstance().getSimulationVelocity()));
+					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
-			kp.remove(newTripleToInsert);
-			System.out.printf("Day %d terminated\n", day);
+			//this barrier is needed to avoid that one bus start day i+1 before another bus has finished day i
+			SimulationConfig.getInstance().waitForBarrier();
+			
+			System.out.printf("day %d terminated\n", day+1);
 			try {
-				Thread.sleep(200);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
+		
 		
 	}
 }
