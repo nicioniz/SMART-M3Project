@@ -69,7 +69,7 @@
     <name>TP004</name>
   </trkpt>
   
-    <trkpt lat="44.488928" lon="11.318318">
+  <trkpt lat="44.488928" lon="11.318318">
     <name>Villa Benni </name>
   </trkpt>
   
@@ -99,6 +99,11 @@
   <trkpt lat="44.48961" lon="11.32092">
     <name>TP012</name>
   </trkpt>
+  
+  <trkpt lat="44.489671" lon="11.321495">
+    <name>Orsoni </name>
+  </trkpt>
+  
   <trkpt lat="44.4899" lon="11.32221">
     <name>TP013</name>
   </trkpt>
@@ -122,7 +127,7 @@
   </trkpt>
   <trkpt lat="44.49017" lon="11.32355">
     <name>TP020</name>
-  </trkpt>
+  </trkpt>  
   <trkpt lat="44.4902" lon="11.32405">
     <name>TP021</name>
   </trkpt>
@@ -132,6 +137,11 @@
   <trkpt lat="44.49024" lon="11.32488">
     <name>TP023</name>
   </trkpt>
+  
+  <trkpt lat="44.490189" lon="11.324950">
+    <name>San Giuseppe </name>
+  </trkpt>
+  
   <trkpt lat="44.4903" lon="11.32605">
     <name>TP024</name>
   </trkpt>
@@ -147,6 +157,11 @@
   <trkpt lat="44.49036" lon="11.32766">
     <name>TP028</name>
   </trkpt>
+  
+  <trkpt lat="44.490354" lon="11.328270">
+    <name>Porta saragozza - Risorgimento </name>
+  </trkpt>
+  
   <trkpt lat="44.49043" lon="11.32894">
     <name>TP029</name>
   </trkpt>
@@ -180,6 +195,11 @@
   <trkpt lat="44.4903937" lon="11.3308095">
     <name>TP039</name>
   </trkpt>
+  
+  <trkpt lat="44.490334" lon="11.331040">
+    <name>Porta saragozza - Frassinago </name>
+  </trkpt>
+  
   <trkpt lat="44.49008" lon="11.3323">
     <name>TP040</name>
   </trkpt>
@@ -189,6 +209,11 @@
   <trkpt lat="44.49003" lon="11.33314">
     <name>TP042</name>
   </trkpt>
+  
+  <trkpt lat="44.490023" lon="11.333847">
+    <name>Nosadella </name>
+  </trkpt>
+  
   <trkpt lat="44.49004" lon="11.33413">
     <name>TP043</name>
   </trkpt>
@@ -210,6 +235,11 @@
   <trkpt lat="44.49031" lon="11.33657">
     <name>TP049</name>
   </trkpt>
+  
+  <trkpt lat="44.490335" lon="11.336897">
+    <name>Collegio di Spagna </name>
+  </trkpt>
+  
   <trkpt lat="44.49036" lon="11.33704">
     <name>TP050</name>
   </trkpt>
@@ -243,6 +273,11 @@
   <trkpt lat="44.4901" lon="11.33999">
     <name>TP060</name>
   </trkpt>
+  
+  <trkpt lat="44.490014" lon="11.340675">
+    <name>Urbana </name>
+  </trkpt>
+  
   <trkpt lat="44.49001" lon="11.34099">
     <name>TP061</name>
   </trkpt>
@@ -273,6 +308,11 @@
   <trkpt lat="44.4913297" lon="11.3417519">
     <name>TP070</name>
   </trkpt>
+  
+  <trkpt lat="44.491354" lon="11.340565">
+    <name>Carbonesi </name>
+  </trkpt>
+  
   <trkpt lat="44.49136" lon="11.34015">
     <name>TP071</name>
   </trkpt>
@@ -339,6 +379,11 @@
   <trkpt lat="44.49366" lon="11.33612">
     <name>TP092</name>
   </trkpt>
+  
+  <trkpt lat="44.494167" lon="11.336425">
+    <name>Piazza Malpighi </name>
+  </trkpt>
+  
   <trkpt lat="44.49376" lon="11.33617">
     <name>TP093</name>
   </trkpt>
@@ -396,6 +441,11 @@
   <trkpt lat="44.49534" lon="11.33972">
     <name>TP111</name>
   </trkpt>
+  
+  <trkpt lat="44.495281" lon="11.339996">
+    <name>Ugo Bassi </name>
+  </trkpt>
+  
   <trkpt lat="44.49525" lon="11.34036">
     <name>TP112</name>
   </trkpt>
@@ -429,6 +479,11 @@
   <trkpt lat="44.49541" lon="11.34274">
     <name>TP122</name>
   </trkpt>
+  
+  <trkpt lat="44.495441" lon="11.342846">
+    <name>San Pietro </name>
+  </trkpt>
+  
   <trkpt lat="44.49554" lon="11.34278">
     <name>TP123</name>
   </trkpt>
@@ -462,6 +517,11 @@
   <trkpt lat="44.49997" lon="11.34404">
     <name>TP133</name>
   </trkpt>
+  
+  <trkpt lat="44.500593" lon="11.344249">
+    <name>VIII Agosto </name>
+  </trkpt>
+  
   <trkpt lat="44.50072" lon="11.34427">
     <name>TP134</name>
   </trkpt>
@@ -495,6 +555,11 @@
   <trkpt lat="44.50074" lon="11.34616">
     <name>TP144</name>
   </trkpt>
+  
+  <trkpt lat="44.500551" lon="11.346893">
+    <name>Sferisterio </name>
+  </trkpt>
+  
   <trkpt lat="44.50047" lon="11.34727">
     <name>TP145</name>
   </trkpt>
@@ -516,6 +581,11 @@
   <trkpt lat="44.50004" lon="11.34903">
     <name>TP151</name>
   </trkpt>
+  
+  <trkpt lat="44.499782" lon="11.349797">
+    <name>Irnerio </name>
+  </trkpt>
+  
   <trkpt lat="44.49968" lon="11.35046">
     <name>TP152</name>
   </trkpt>
@@ -555,6 +625,11 @@
   <trkpt lat="44.49873" lon="11.35422">
     <name>TP164</name>
   </trkpt>
+  
+  <trkpt lat="44.498417" lon="11.355141">
+    <name>Porta San Donato </name>
+  </trkpt>
+  
   <trkpt lat="44.49839" lon="11.35556">
     <name>TP165</name>
   </trkpt>
@@ -618,6 +693,11 @@
   <trkpt lat="44.49938" lon="11.35861">
     <name>TP574</name>
   </trkpt>
+  
+  <trkpt lat="44.499353" lon="11.358672">
+    <name>Sant'Egidio </name>
+  </trkpt>
+  
   <trkpt lat="44.49951" lon="11.35888">
     <name>TP575</name>
   </trkpt>
@@ -633,9 +713,6 @@
   <trkpt lat="44.49967" lon="11.3592">
     <name>TP579</name>
   </trkpt>
-  <trkpt lat="44.49968" lon="11.35921">
-    <name>TP580</name>
-  </trkpt>
   <trkpt lat="44.49969" lon="11.35921">
     <name>TP581</name>
   </trkpt>
@@ -645,32 +722,14 @@
   <trkpt lat="44.4997" lon="11.35922">
     <name>TP583</name>
   </trkpt>
-  <trkpt lat="44.4997" lon="11.35923">
-    <name>TP584</name>
-  </trkpt>
   <trkpt lat="44.49971" lon="11.35923">
     <name>TP585</name>
-  </trkpt>
-  <trkpt lat="44.49971" lon="11.35924">
-    <name>TP586</name>
-  </trkpt>
-  <trkpt lat="44.49972" lon="11.35924">
-    <name>TP587</name>
   </trkpt>
   <trkpt lat="44.49972" lon="11.35925">
     <name>TP588</name>
   </trkpt>
-  <trkpt lat="44.49972" lon="11.35926">
-    <name>TP589</name>
-  </trkpt>
-  <trkpt lat="44.49973" lon="11.35926">
-    <name>TP590</name>
-  </trkpt>
   <trkpt lat="44.49973" lon="11.35927">
     <name>TP591</name>
-  </trkpt>
-  <trkpt lat="44.49973" lon="11.35928">
-    <name>TP592</name>
   </trkpt>
   <trkpt lat="44.49974" lon="11.35929">
     <name>TP593</name>
@@ -681,17 +740,11 @@
   <trkpt lat="44.49974" lon="11.35931">
     <name>TP595</name>
   </trkpt>
-  <trkpt lat="44.49974" lon="11.35932">
-    <name>TP596</name>
-  </trkpt>
   <trkpt lat="44.49974" lon="11.35933">
     <name>TP597</name>
   </trkpt>
   <trkpt lat="44.49974" lon="11.35934">
     <name>TP598</name>
-  </trkpt>
-  <trkpt lat="44.49974" lon="11.35935">
-    <name>TP599</name>
   </trkpt>
   <trkpt lat="44.49976" lon="11.35941">
     <name>TP600</name>
@@ -753,6 +806,11 @@
   <trkpt lat="44.50248" lon="11.36222">
     <name>TP619</name>
   </trkpt>
+  
+  <trkpt lat="44.502794" lon="11.362953">
+    <name>Mercato San Donato </name>
+  </trkpt>
+  
   <trkpt lat="44.50335" lon="11.36391">
     <name>TP620</name>
   </trkpt>
@@ -807,6 +865,11 @@
   <trkpt lat="44.50396" lon="11.36645">
     <name>TP637</name>
   </trkpt>
+  
+  <trkpt lat="44.503931" lon="11.366527">
+    <name>Centro Zanardi </name>
+  </trkpt>
+  
   <trkpt lat="44.50393" lon="11.36655">
     <name>TP638</name>
   </trkpt>

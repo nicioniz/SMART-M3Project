@@ -6,8 +6,80 @@
   <number>1</number>
   <trkseg>
   
-   <trkpt lat="44.488928" lon="11.318318">
+  <trkpt lat="44.488928" lon="11.318318">
     <name>Villa Benni </name>
+  </trkpt>
+  
+  <trkpt lat="44.489671" lon="11.321495">
+    <name>Orsoni </name>
+  </trkpt>
+  
+  <trkpt lat="44.490189" lon="11.324950">
+    <name>San Giuseppe </name>
+  </trkpt>
+  
+  <trkpt lat="44.490354" lon="11.328270">
+    <name>Porta saragozza - Risorgimento </name>
+  </trkpt>
+  
+  <trkpt lat="44.490334" lon="11.331040">
+    <name>Porta saragozza - Frassinago </name>
+  </trkpt>
+  
+  <trkpt lat="44.490023" lon="11.333847">
+    <name>Nosadella </name>
+  </trkpt>
+  
+  <trkpt lat="44.490335" lon="11.336897">
+    <name>Collegio di Spagna </name>
+  </trkpt>
+  
+  <trkpt lat="44.490014" lon="11.340675">
+    <name>Urbana </name>
+  </trkpt>
+  
+  <trkpt lat="44.491354" lon="11.340565">
+    <name>Carbonesi </name>
+  </trkpt>
+  
+  <trkpt lat="44.494167" lon="11.336425">
+    <name>Piazza Malpighi </name>
+  </trkpt>
+  
+  <trkpt lat="44.495281" lon="11.339996">
+    <name>Ugo Bassi </name>
+  </trkpt>
+  
+  <trkpt lat="44.495441" lon="11.342846">
+    <name>San Pietro </name>
+  </trkpt>
+  
+  <trkpt lat="44.500593" lon="11.344249">
+    <name>VIII Agosto </name>
+  </trkpt>
+  
+  <trkpt lat="44.500551" lon="11.346893">
+    <name>Sferisterio </name>
+  </trkpt>
+  
+  <trkpt lat="44.499782" lon="11.349797">
+    <name>Irnerio </name>
+  </trkpt>
+  
+  <trkpt lat="44.498417" lon="11.355141">
+    <name>Porta San Donato </name>
+  </trkpt>
+  
+  <trkpt lat="44.499353" lon="11.358672">
+    <name>Sant'Egidio </name>
+  </trkpt>
+  
+  <trkpt lat="44.502794" lon="11.362953">
+    <name>Mercato San Donato </name>
+  </trkpt>
+  
+  <trkpt lat="44.503931" lon="11.366527">
+    <name>Centro Zanardi </name>
   </trkpt>
    
   </trkseg>
