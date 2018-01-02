@@ -1,5 +1,8 @@
 package simulationConfiguration;
 
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+
 public class SimulationConfig {
 
 	private double simulationVelocity = 1;
@@ -7,6 +10,7 @@ public class SimulationConfig {
 	private int percErrorPeopleWaitingAtBusStop = 0;
 	private int simulationDays;
 	private int busRides;
+	private CyclicBarrier barrier;
 	
 	private static SimulationConfig instance = null;
 	
@@ -16,6 +20,20 @@ public class SimulationConfig {
 		if(instance == null)
 			instance = new SimulationConfig();
 		return instance;
+	}
+	
+	public void setWaitingThreadForBarrier(int numThreads) {
+		barrier = new CyclicBarrier(numThreads);
+	}
+	
+	public void waitForBarrier() {
+		try {
+			barrier.await();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (BrokenBarrierException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public double getSimulationVelocity() {
