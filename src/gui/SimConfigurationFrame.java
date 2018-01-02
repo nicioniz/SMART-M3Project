@@ -32,7 +32,7 @@ public class SimConfigurationFrame extends JFrame {
 	private JTextField simulationDaysTextField;
 	private JLabel busRidesLabel;
 	private JTextField busRidesTextField;
-		
+	
 	public SimConfigurationFrame() {
 		setTitle("SimConfiguration");
 		setResizable(false);
@@ -127,7 +127,7 @@ public class SimConfigurationFrame extends JFrame {
 	
 	public void startSimButtonPressed(ActionEvent e) {
 		this.busMap = new BusMap();
-
+		int numberOfStartedThread = 0;
 		String tempSimulationDays = "";
 		tempSimulationDays = simulationDaysTextField.getText();
 		int simulationDays = Integer.parseInt(tempSimulationDays);
@@ -140,25 +140,28 @@ public class SimConfigurationFrame extends JFrame {
 		busMap.waitReady();
 		double simVel = velocitySlider.getValue() / 10.0;
 		SimulationConfig.getInstance().setSimulationVelocity(simVel);
+		new BusMapFrame(busMap);	
 		
 		if(lineNo32CheckBox.isSelected()) {
 			try {
+				numberOfStartedThread++;
 				busMap.addStops("gpx/bus32StopList.gpx");
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
 			}
-			BusVisualizerAggregator aggregator = new BusVisualizerAggregator("BUS32", busMap);
-			aggregator.start();
-			new Bus("BUS32", "gpx/bus32.gpx","gpx/bus32StopList.gpx", simulationDays).start();
+			
+			BusVisualizerAggregator aggregator32 = new BusVisualizerAggregator("BUS32", busMap);
+			aggregator32.start();
+			new Bus("BUS32", "gpx/bus32.gpx","gpx/bus32StopList.gpx", simulationDays, busRides).start();
 		}
 		if(lineNo20CheckBox.isSelected()) {
-			
-			BusVisualizerAggregator aggregator2 = new BusVisualizerAggregator("BUS20", busMap);
-			aggregator2.start();
+			numberOfStartedThread++;
+			BusVisualizerAggregator aggregator20 = new BusVisualizerAggregator("BUS20", busMap);
+			aggregator20.start();
 			//===============CORREGGERE PATH PER LE FERMATE DEL 20 !!!===============
-			new Bus("BUS20", "gpx/bus20.gpx", "gpx/bus32StopList.gpx", simulationDays).start();
+			new Bus("BUS20", "gpx/bus20.gpx", "gpx/bus32StopList.gpx", simulationDays, busRides ).start();
 		}
-		new BusMapFrame(busMap);		
+		SimulationConfig.getInstance().setWaitingThreadForBarrier(numberOfStartedThread);
 		this.dispose();
 	}
 }
