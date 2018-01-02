@@ -56,4 +56,13 @@ public class OntologyReference {
 	
 	//SensorType class
 	public static final String SENSOR_TYPE = NS + "SensorType";
+	
+	//Boolean instances
+	public static final String TRUE = NS + "True";
+	public static final String FALSE = NS + "False";
+	
+	//SensorType instances
+	public static final String GPS = NS + "GPS";
+	public static final String CAMERA = NS + "Camera";
+	public static final String FAREBOX = NS + "Farebox";
 }
