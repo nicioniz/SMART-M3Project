@@ -37,7 +37,7 @@ public class HandlerSubscriptionLocationData implements iKPIC_subscribeHandler2 
 		{
 			temp+="Obsolete triple s =" + oldTriples.elementAt(i).elementAt(0) + "  + predicate" + oldTriples.elementAt(i).elementAt(1) + "object =" + oldTriples.elementAt(i).elementAt(2) + "\n";
 		}
-		System.out.println(temp);
+	//	System.out.println(temp);
 		
 		
 		
@@ -45,13 +45,13 @@ public class HandlerSubscriptionLocationData implements iKPIC_subscribeHandler2 
 
 	@Override
 	public void kpic_SPARQLEventHandler(SSAP_sparql_response newResults, SSAP_sparql_response oldResults, String indSequence, String subID) {
-		System.out.println("\nNotification " + indSequence  +" id = " + subID + "\n");
+	//	System.out.println("\nNotification " + indSequence  +" id = " + subID + "\n");
 		
 		if (newResults != null)
 		{
 			Vector<Vector<String[]>> data = newResults.getResults();
 			for(Vector<String[]> riga : data) {
-				System.out.println("Location data:" + riga.get(0)[2] + "has lat: " + riga.get(1)[2]+ " has lon: " + riga.get(2)[2]); 	
+		//		System.out.println("Location data:" + riga.get(0)[2] + "has lat: " + riga.get(1)[2]+ " has lon: " + riga.get(2)[2]); 	
 				String lat = riga.get(1)[2]+"0";
 				String lon = riga.get(2)[2]+"0";
 				try {
@@ -72,7 +72,7 @@ public class HandlerSubscriptionLocationData implements iKPIC_subscribeHandler2 
 		
 		if (oldResults != null)
 		{
-			System.out.println("obsolete: \n " + oldResults.print_as_string());
+	//		System.out.println("obsolete: \n " + oldResults.print_as_string());
 			
 		}
 	}
