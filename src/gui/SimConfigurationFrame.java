@@ -155,11 +155,16 @@ public class SimConfigurationFrame extends JFrame {
 			new Bus("BUS32", "gpx/bus32.gpx","gpx/bus32StopList.gpx", simulationDays, busRides).start();
 		}
 		if(lineNo20CheckBox.isSelected()) {
-			numberOfStartedThread++;
+			try {
+				numberOfStartedThread++;
+				busMap.addStops("gpx/bus20StopList.gpx");
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+			
 			BusVisualizerAggregator aggregator20 = new BusVisualizerAggregator("BUS20", busMap);
 			aggregator20.start();
-			//===============CORREGGERE PATH PER LE FERMATE DEL 20 !!!===============
-			new Bus("BUS20", "gpx/bus20.gpx", "gpx/bus32StopList.gpx", simulationDays, busRides ).start();
+			new Bus("BUS20", "gpx/bus20.gpx", "gpx/bus20StopList.gpx", simulationDays, busRides ).start();
 		}
 		SimulationConfig.getInstance().setWaitingThreadForBarrier(numberOfStartedThread);
 		this.dispose();

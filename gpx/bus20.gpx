@@ -58,6 +58,7 @@
   <trkpt lat="44.4888474" lon="11.3178039">
     <name>TP001</name>
   </trkpt>
+
   <trkpt lat="44.48885" lon="11.31787">
     <name>TP002</name>
   </trkpt>
@@ -67,6 +68,11 @@
   <trkpt lat="44.48889" lon="11.31804">
     <name>TP004</name>
   </trkpt>
+  
+    <trkpt lat="44.488928" lon="11.318318">
+    <name>Villa Benni </name>
+  </trkpt>
+  
   <trkpt lat="44.48912" lon="11.31884">
     <name>TP005</name>
   </trkpt>
@@ -76,6 +82,8 @@
   <trkpt lat="44.48925" lon="11.31929">
     <name>TP007</name>
   </trkpt>
+  
+  
   <trkpt lat="44.48931" lon="11.31955">
     <name>TP008</name>
   </trkpt>
