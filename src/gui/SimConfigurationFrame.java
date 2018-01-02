@@ -101,6 +101,7 @@ public class SimConfigurationFrame extends JFrame {
 		gbc_simulationDaysTextField.gridy = 4;
 		simulationDaysContentPane.add(simulationDaysTextField, gbc_simulationDaysTextField);
 		simulationDaysTextField.setColumns(10);
+		simulationDaysTextField.setText("1");
 		
 		busRidesLabel = new JLabel("Bus rides for day");
 		GridBagConstraints gbc_busRidesLabel = new GridBagConstraints();
@@ -117,6 +118,7 @@ public class SimConfigurationFrame extends JFrame {
 		gbc_busRidesTextField.gridy = 5;
 		simulationDaysContentPane.add(busRidesTextField, gbc_busRidesTextField);
 		busRidesTextField.setColumns(10);
+		busRidesTextField.setText("1");
 		
 		GridBagConstraints gbc_startSimButton = new GridBagConstraints();
 		gbc_startSimButton.insets = new Insets(0, 0, 0, 5);
