@@ -72,11 +72,9 @@
     <name>TP005</name>
   </trkpt>
   
-  
   <trkpt lat="44.492191" lon="11.329344">
-    <name>Liceo Righi</name>
+    <name>Porta Saragozza - Liceo Righi</name>
   </trkpt>
-  
   
   <trkpt lat="44.49232" lon="11.32921">
     <name>TP006</name>
@@ -100,11 +98,9 @@
     <name>TP012</name>
   </trkpt>
 
-
   <trkpt lat="44.495536" lon="11.328299">
   <name>Porta Sant'Isaia</name>
   </trkpt>
-
 
   <trkpt lat="44.49565" lon="11.32818">
     <name>TP013</name>
@@ -162,14 +158,11 @@
   </trkpt>
   <trkpt lat="44.4996" lon="11.32759">
     <name>TP031</name>
-  </trkpt>
-  
-  
+  </trkpt> 
   
   <trkpt lat="44.499820" lon="11.328130">
     <name>Porta San Felice</name>
-  </trkpt>
-  
+  </trkpt> 
   
   <trkpt lat="44.50054" lon="11.32946">
     <name>TP032</name>
@@ -189,6 +182,11 @@
   <trkpt lat="44.50143" lon="11.33125">
     <name>TP037</name>
   </trkpt>
+  
+  <trkpt lat="44.50173" lon="11.332003">
+    <name>Porta Lame</name>
+  </trkpt>
+  
   <trkpt lat="44.50193" lon="11.33222">
     <name>TP038</name>
   </trkpt>
@@ -231,26 +229,17 @@
   <trkpt lat="44.5022" lon="11.33323">
     <name>TP051</name>
   </trkpt>
-  <trkpt lat="44.50219" lon="11.33326">
-    <name>TP052</name>
-  </trkpt>
   <trkpt lat="44.50219" lon="11.33329">
     <name>TP053</name>
   </trkpt>
   <trkpt lat="44.50219" lon="11.33333">
     <name>TP054</name>
   </trkpt>
-  <trkpt lat="44.50219" lon="11.33336">
-    <name>TP055</name>
-  </trkpt>
   <trkpt lat="44.5022" lon="11.33339">
     <name>TP056</name>
   </trkpt>
   <trkpt lat="44.50221" lon="11.33342">
     <name>TP057</name>
-  </trkpt>
-  <trkpt lat="44.50222" lon="11.33345">
-    <name>TP058</name>
   </trkpt>
   <trkpt lat="44.50224" lon="11.33348">
     <name>TP059</name>
@@ -260,9 +249,6 @@
   </trkpt>
   <trkpt lat="44.50227" lon="11.33353">
     <name>TP061</name>
-  </trkpt>
-  <trkpt lat="44.50229" lon="11.33356">
-    <name>TP062</name>
   </trkpt>
   <trkpt lat="44.50232" lon="11.33357">
     <name>TP063</name>
@@ -276,17 +262,11 @@
   <trkpt lat="44.50239" lon="11.33361">
     <name>TP066</name>
   </trkpt>
-  <trkpt lat="44.50242" lon="11.33362">
-    <name>TP067</name>
-  </trkpt>
   <trkpt lat="44.50246" lon="11.33363">
     <name>TP068</name>
   </trkpt>
   <trkpt lat="44.50255" lon="11.3337">
     <name>TP069</name>
-  </trkpt>
-  <trkpt lat="44.50266" lon="11.33377">
-    <name>TP070</name>
   </trkpt>
   <trkpt lat="44.50269" lon="11.3338">
     <name>TP071</name>
@@ -387,6 +367,11 @@
   <trkpt lat="44.50517" lon="11.34284">
     <name>TP103</name>
   </trkpt>
+  
+  <trkpt lat="44.505033" lon="11.343124">
+    <name>Stazione Centrale</name>
+  </trkpt>
+  
   <trkpt lat="44.50507" lon="11.34342">
     <name>TP104</name>
   </trkpt>
@@ -423,6 +408,11 @@
   <trkpt lat="44.50456" lon="11.34612">
     <name>TP115</name>
   </trkpt>
+  
+  <trkpt lat="44.504429" lon="11.346391">
+    <name>Porta Galliera</name>
+  </trkpt>
+  
   <trkpt lat="44.50434" lon="11.34701">
     <name>TP116</name>
   </trkpt>
@@ -453,6 +443,11 @@
   <trkpt lat="44.50302" lon="11.35069">
     <name>TP125</name>
   </trkpt>
+  
+  <trkpt lat="44.502748" lon="11.351184">
+    <name>Borgo</name>
+  </trkpt>
+  
   <trkpt lat="44.50279" lon="11.35126">
     <name>TP126</name>
   </trkpt>
@@ -498,6 +493,11 @@
   <trkpt lat="44.50204" lon="11.35308">
     <name>TP140</name>
   </trkpt>
+  
+  <trkpt lat="44.501768" lon="11.353752">
+    <name>Porta Mascarella</name>
+  </trkpt>
+  
   <trkpt lat="44.50142" lon="11.35482">
     <name>TP141</name>
   </trkpt>
@@ -588,6 +588,11 @@
   <trkpt lat="44.49793" lon="11.35657">
     <name>TP170</name>
   </trkpt>
+  
+  <trkpt lat="44.497494" lon="11.356514">
+    <name>Porta San Donato</name>
+  </trkpt>
+  
   <trkpt lat="44.49651" lon="11.35668">
     <name>TP171</name>
   </trkpt>
@@ -600,6 +605,11 @@
   <trkpt lat="44.49489" lon="11.3569">
     <name>TP174</name>
   </trkpt>
+  
+  <trkpt lat="44.494500" lon="11.356896">
+    <name>Porta San Vitale</name>
+  </trkpt>
+  
   <trkpt lat="44.49427" lon="11.35694">
     <name>TP175</name>
   </trkpt>
@@ -621,6 +631,11 @@
   <trkpt lat="44.49222" lon="11.35718">
     <name>TP181</name>
   </trkpt>
+  
+  <trkpt lat="44.491797" lon="11.357180">
+    <name>Porta Maggiore</name>
+  </trkpt>
+  
   <trkpt lat="44.49021" lon="11.35743">
     <name>TP182</name>
   </trkpt>
@@ -648,6 +663,11 @@
   <trkpt lat="44.48703" lon="11.35776">
     <name>TP190</name>
   </trkpt>
+  
+  <trkpt lat="44.486647" lon="11.357777">
+    <name>Carducci</name>
+  </trkpt>
+  
   <trkpt lat="44.48612" lon="11.35789">
     <name>TP191</name>
   </trkpt>
@@ -717,6 +737,11 @@
   <trkpt lat="44.48454" lon="11.35578">
     <name>TP213</name>
   </trkpt>
+  
+  <trkpt lat="44.484666" lon="11.355258">
+    <name>Porta Santo Stefano</name>
+  </trkpt>
+  
   <trkpt lat="44.48479" lon="11.35412">
     <name>TP214</name>
   </trkpt>
@@ -729,12 +754,22 @@
   <trkpt lat="44.48497" lon="11.3526">
     <name>TP217</name>
   </trkpt>
+  
+  <trkpt lat="44.484999" lon="11.352417">
+    <name>Giardini Margherita</name>
+  </trkpt>
+  
   <trkpt lat="44.48507" lon="11.35191">
     <name>TP218</name>
   </trkpt>
   <trkpt lat="44.48525" lon="11.35036">
     <name>TP219</name>
   </trkpt>
+  
+  <trkpt lat="44.485353" lon="11.349417">
+    <name>Porta Castiglione</name>
+  </trkpt>
+  
   <trkpt lat="44.48539" lon="11.349">
     <name>TP220</name>
   </trkpt>
@@ -777,6 +812,11 @@
   <trkpt lat="44.48592" lon="11.34447">
     <name>TP233</name>
   </trkpt>
+  
+  <trkpt lat="44.485997" lon="11.344235">
+    <name>Pcheggio Staveco</name>
+  </trkpt>
+  
   <trkpt lat="44.48611" lon="11.34275">
     <name>TP234</name>
   </trkpt>
@@ -810,6 +850,11 @@
   <trkpt lat="44.4867" lon="11.33904">
     <name>TP244</name>
   </trkpt>
+  
+  <trkpt lat="44.487018" lon="11.338265">
+    <name>Porta San Mamolo</name>
+  </trkpt>
+  
   <trkpt lat="44.48704" lon="11.33817">
     <name>TP245</name>
   </trkpt>
@@ -846,6 +891,11 @@
   <trkpt lat="44.48847" lon="11.33444">
     <name>TP256</name>
   </trkpt>
+  
+  <trkpt lat="44.488557" lon="11.334304">
+    <name>Aldini</name>
+  </trkpt>
+  
   <trkpt lat="44.48881" lon="11.33357">
     <name>TP257</name>
   </trkpt>
@@ -861,6 +911,11 @@
   <trkpt lat="44.48996" lon="11.33047">
     <name>TP261</name>
   </trkpt>
+  
+  <trkpt lat="44.490089" lon="11.330394">
+    <name>Porta Saragozza - Villa Cassarini</name>
+  </trkpt>
+  
   <trkpt lat="44.49003" lon="11.3303">
     <name>TP262</name>
   </trkpt>
