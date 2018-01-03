@@ -90,23 +90,7 @@ public class Bus extends Thread {
 					Triple.URI,
 					Triple.URI).getAsVector();
 			
-			Vector<String> booleanDataFalse = new Triple(
-					OntologyReference.NS + booleanDataNameFalse,
-					OntologyReference.RDF_TYPE,
-					OntologyReference.BOOLEAN,
-					Triple.URI,
-					Triple.URI).getAsVector();
-			
-			Vector<String> booleanDataTrue = new Triple(
-					OntologyReference.NS + booleanDataNameTrue,
-					OntologyReference.RDF_TYPE,
-					OntologyReference.BOOLEAN,
-					Triple.URI,
-					Triple.URI).getAsVector();
-			
 			newTripleToInsert.add(locationData);
-			newBoolean.add(booleanDataFalse);
-			newBoolean.add(booleanDataTrue);
 			
 			Vector<String> busLocationDataArch = new Triple(
 					OntologyReference.NS + name,
@@ -117,7 +101,6 @@ public class Bus extends Thread {
 			
 			newTripleToInsert.add(busLocationDataArch);
 			
-			kp.insert(newBoolean);
 			kp.insert(newTripleToInsert);
 			
 			newTripleToInsert.remove(locationData);
@@ -147,14 +130,14 @@ public class Bus extends Thread {
 						newTripleToInsert.add(new Triple(
 						OntologyReference.NS + name,
 						OntologyReference.IS_IN_TRANSIT,
-						OntologyReference.BOOLEAN + booleanDataNameFalse,
+						OntologyReference.FALSE,
 						Triple.URI,
 						Triple.URI).getAsVector());
 					}else {
 						newTripleToInsert.add(new Triple(
 						OntologyReference.NS + name,
 						OntologyReference.IS_IN_TRANSIT,
-						OntologyReference.BOOLEAN + booleanDataNameTrue,
+						OntologyReference.TRUE,
 						Triple.URI,
 						Triple.URI).getAsVector());
 					}
