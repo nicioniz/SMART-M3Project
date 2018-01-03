@@ -9,10 +9,13 @@ import com.teamdev.jxmaps.Icon;
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.MapOptions;
 import com.teamdev.jxmaps.MapStatus;
+import com.teamdev.jxmaps.MapMouseEvent;
 import com.teamdev.jxmaps.MapTypeControlOptions;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.Polyline;
 import com.teamdev.jxmaps.PolylineOptions;
+import com.teamdev.jxmaps.MouseEvent;
+import com.teamdev.jxmaps.InfoWindow;
 import com.teamdev.jxmaps.swing.MapView;
 
 
@@ -21,6 +24,9 @@ import parser.Parser;
 
 @SuppressWarnings("serial")
 public class BusMap extends MapView{
+	
+	InfoWindow infoWindow = null;
+	
     public BusMap() {
     	setOnMapReadyHandler(this::onMapReady);
     }
@@ -58,8 +64,19 @@ public class BusMap extends MapView{
     	marker.setIcon(icon);
     	
         marker.setPosition(ll);        
+        
+        // Adding event listener that intercepts clicking on marker
+        marker.addEventListener("click", new MapMouseEvent() {
+            @Override
+            public void onEvent(MouseEvent mouseEvent) {
+            	// Creating info window
+                infoWindow = new InfoWindow(getMap());
+                // Showing info window under the marker
+                infoWindow.open(getMap(), marker);
+            }
+        });
+        
         return marker;
-
     }
     
     public void addStops(String filenameStops) throws FileNotFoundException {
@@ -77,6 +94,17 @@ public class BusMap extends MapView{
 	    	Marker marker = new Marker(getMap());
 	    	marker.setIcon(icon);
 	    	marker.setPosition(stopsPoints.get(i));	
+	    	
+	    	// Adding event listener that intercepts clicking on marker
+            marker.addEventListener("click", new MapMouseEvent() {
+                @Override
+                public void onEvent(MouseEvent mouseEvent) {
+                	// Creating info window
+                    infoWindow = new InfoWindow(getMap());
+                    // Showing info window under the marker
+                    infoWindow.open(getMap(), marker);
+                }
+            });
 		}
     }
     
@@ -101,7 +129,7 @@ public class BusMap extends MapView{
             // Setting the map center
             getMap().setCenter(new LatLng(44.493889, 11.342778));
             // Setting initial zoom value
-            getMap().setZoom(14.0);      
+            getMap().setZoom(14.0);  
         }	
     }
 }
