@@ -6,12 +6,12 @@ import java.util.concurrent.CyclicBarrier;
 public class SimulationConfig {
 
 	private double simulationVelocity = 1;
-	private int peopleWaitingAtBusStop = 0;
-	private int percErrorPeopleWaitingAtBusStop = 0;
 	private int simulationDays;
 	private int busRides;
 	private CyclicBarrier barrier;
-	
+	private int maxInspectors;
+	private int inspectorPresencePercentageProbability;
+
 	private static SimulationConfig instance = null;
 	
 	private SimulationConfig() {}
@@ -43,22 +43,6 @@ public class SimulationConfig {
 	public void setSimulationVelocity(double simulationVelocity) {
 		this.simulationVelocity = simulationVelocity;
 	}
-
-	public int getPeopleWaitingAtBusStop() {
-		return peopleWaitingAtBusStop;
-	}
-
-	public void setPeopleWaitingAtBusStop(int peopleAtBusStop) {
-		this.peopleWaitingAtBusStop = peopleAtBusStop;
-	}
-
-	public int getPercErrorPeopleWaitingAtBusStop() {
-		return percErrorPeopleWaitingAtBusStop;
-	}
-
-	public void setPercErrorPeopleWaitingAtBusStop(int percErrorPeopleAtBusStop) {
-		this.percErrorPeopleWaitingAtBusStop = percErrorPeopleAtBusStop;
-	}
 	
 	public void setSimulationDays(int days) {
 		this.simulationDays = days;
@@ -75,4 +59,21 @@ public class SimulationConfig {
 	public int getBusRides() {
 		return busRides;
 	}
+		
+	public int getMaxInspectors() {
+		return maxInspectors;
+	}
+
+	public void setMaxInspectors(int maxInspectors) {
+		this.maxInspectors = maxInspectors;
+	}
+
+	public int getInspectorPresencePercentageProbability() {
+		return inspectorPresencePercentageProbability;
+	}
+
+	public void setInspectorPresencePercentageProbability(int inspectorPresencePercentageProbability) {
+		this.inspectorPresencePercentageProbability = probabilityInspectorPresence;
+	}
+
 }
