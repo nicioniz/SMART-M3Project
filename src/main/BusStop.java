@@ -14,17 +14,19 @@ import utils.Triple;
 public class BusStop {
 
 	private String name;
+	private String nameWithoutSpaces;
 	private String id;
 	private LatLng location;
 	private boolean inspectorPresent;
 		
 	private KPICore kp;
-	Vector<Vector<String>> oldInspectorPresenceTriple;
+	Vector<Vector<String>> oldInspectorPresenceTriple = new Vector<>();
 	
 	private Random r;
 	
 	public BusStop(String name, String id, LatLng location) {
 		this.name = name;
+		nameWithoutSpaces = name.replace(' ', '_');
 		this.id = id;
 		this.location = location;
 		r = new Random(System.currentTimeMillis());
@@ -33,7 +35,7 @@ public class BusStop {
 	}
 		
 	private void insertIntoSIB() {
-		String locationDataName = "BusStop" + name + "LocationData";
+		String locationDataName = "BusStop" + nameWithoutSpaces + "LocationData";
 		
 		kp = new KPICore(SIBConfiguration.getInstance().getHost(),
 				SIBConfiguration.getInstance().getPort(),
@@ -71,7 +73,7 @@ public class BusStop {
 		newTripleToInsert.add(locationDataLon);
 		
 		Vector<String> typeTriple = new Triple(
-				OntologyReference.NS + "BusStop" + name,
+				OntologyReference.NS + "BusStop" + nameWithoutSpaces,
 				OntologyReference.RDF_TYPE,
 				OntologyReference.BUS_STOP,
 				Triple.URI,
@@ -79,7 +81,7 @@ public class BusStop {
 		newTripleToInsert.add(typeTriple);
 		
 		Vector<String> tripleId = new Triple(
-				OntologyReference.NS + "BusStop" + name,
+				OntologyReference.NS + "BusStop" + nameWithoutSpaces,
 				OntologyReference.HAS_ID,
 				id,
 				Triple.URI,
@@ -87,7 +89,7 @@ public class BusStop {
 		newTripleToInsert.add(tripleId);
 		
 		Vector<String> tripleName = new Triple(
-				OntologyReference.NS + "BusStop" + name,
+				OntologyReference.NS + "BusStop" + nameWithoutSpaces,
 				OntologyReference.HAS_NAME,
 				name,
 				Triple.URI,
@@ -95,7 +97,7 @@ public class BusStop {
 		newTripleToInsert.add(tripleName);
 		
 		Vector<String> tripleLocationData = new Triple(
-				OntologyReference.NS + "BusStop" + name,
+				OntologyReference.NS + "BusStop" + nameWithoutSpaces,
 				OntologyReference.HAS_LOCATION_DATA,
 				OntologyReference.NS + locationDataName,
 				Triple.URI,
@@ -112,7 +114,7 @@ public class BusStop {
 		else
 			inspectorPresent = false;
 		oldInspectorPresenceTriple.add(new Triple(
-				OntologyReference.NS + "BusStop" + name,
+				OntologyReference.NS + "BusStop" + nameWithoutSpaces,
 				OntologyReference.IS_INSPECTOR_PRESENT,
 				isInspectorPresent() ? OntologyReference.TRUE : OntologyReference.FALSE,
 				Triple.URI,
@@ -133,7 +135,7 @@ public class BusStop {
 	private void updateSIB() {
 		Vector<Vector<String>> newInspectorPresenceTriple = new Vector<>();
 		newInspectorPresenceTriple.add(new Triple(
-				OntologyReference.NS + "BusStop" + name,
+				OntologyReference.NS + "BusStop" + nameWithoutSpaces,
 				OntologyReference.IS_INSPECTOR_PRESENT,
 				isInspectorPresent() ? OntologyReference.TRUE : OntologyReference.FALSE,
 				Triple.URI,
@@ -157,8 +159,8 @@ public class BusStop {
 		return false;
 	}
 
-
-
-	
+	public String getNameWithoutSpaces() {
+		return nameWithoutSpaces;
+	}
 		
 }
