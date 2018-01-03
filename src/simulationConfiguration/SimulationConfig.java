@@ -73,7 +73,7 @@ public class SimulationConfig {
 	}
 
 	public void setInspectorPresencePercentageProbability(int inspectorPresencePercentageProbability) {
-		this.inspectorPresencePercentageProbability = probabilityInspectorPresence;
+		this.inspectorPresencePercentageProbability = inspectorPresencePercentageProbability;
 	}
 
 }
