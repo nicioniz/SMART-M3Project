@@ -11,23 +11,42 @@ import utils.OntologyReference;
 import utils.SIBConfiguration;
 import utils.Triple;
 
-public class BusStop extends Thread {
+public class BusStop {
 
 	private String name;
 	private String id;
 	private LatLng location;
+	private boolean inspectorPresent;
 	
 	private Random r;
 	
 	public BusStop(String name, String id, LatLng location) {
-		super();
 		this.name = name;
 		this.id = id;
 		this.location = location;
 		r = new Random(System.currentTimeMillis());
+		generateInspector();
 	}
+		
+	private void generateInspector() {
+		boolean probabilityPresence = r.nextInt(101) <= SimulationConfig.getInstance().getInspectorPresencePercentageProbability();
+		if(probabilityPresence && SimulationConfig.getInstance().addInspector())
+			inspectorPresent = true;
+		else
+			inspectorPresent = false;
+	}
+
+	public boolean isInspectorPresent() {
+		return inspectorPresent;
+	}
+
+	public void setInspectorPresent(boolean inspectorPresent) {
+		this.inspectorPresent = inspectorPresent;
+	}
+
+
+
 	
-	@Override
 	public void run() {
 		
 		String sensorName = "BusStop" + name + "Sensor";
@@ -151,7 +170,7 @@ public class BusStop extends Thread {
 			oldTriple = newTripleToInsert;
 			
 			try {
-				sleep(1000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
