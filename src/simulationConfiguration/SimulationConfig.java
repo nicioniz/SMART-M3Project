@@ -11,7 +11,9 @@ public class SimulationConfig {
 	private CyclicBarrier barrier;
 	private int maxInspectors;
 	private int inspectorPresencePercentageProbability;
-
+	private int numberOfPresentInsectors = 0;
+	
+	
 	private static SimulationConfig instance = null;
 	
 	private SimulationConfig() {}
@@ -76,4 +78,19 @@ public class SimulationConfig {
 		this.inspectorPresencePercentageProbability = inspectorPresencePercentageProbability;
 	}
 
+	public int getNumberOfPresentInsectors() {
+		return numberOfPresentInsectors;
+	}
+	
+	public boolean addInspector(int numberOfAddedInspectors) {
+		if(numberOfPresentInsectors + numberOfAddedInspectors <= maxInspectors) {
+			numberOfPresentInsectors += numberOfAddedInspectors;
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean addInspector() {
+		return addInspector(1);
+	}
 }
