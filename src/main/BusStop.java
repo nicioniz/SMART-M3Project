@@ -17,6 +17,9 @@ public class BusStop {
 	private String id;
 	private LatLng location;
 	private boolean inspectorPresent;
+		
+	private KPICore kp;
+	Vector<Vector<String>> oldInspectorPresenceTriple;
 	
 	private Random r;
 	
@@ -25,34 +28,14 @@ public class BusStop {
 		this.id = id;
 		this.location = location;
 		r = new Random(System.currentTimeMillis());
+		insertIntoSIB();
 		generateInspector();
 	}
 		
-	private void generateInspector() {
-		boolean probabilityPresence = r.nextInt(101) <= SimulationConfig.getInstance().getInspectorPresencePercentageProbability();
-		if(probabilityPresence && SimulationConfig.getInstance().addInspector())
-			inspectorPresent = true;
-		else
-			inspectorPresent = false;
-	}
-
-	public boolean isInspectorPresent() {
-		return inspectorPresent;
-	}
-
-	public void setInspectorPresent(boolean inspectorPresent) {
-		this.inspectorPresent = inspectorPresent;
-	}
-
-
-
-	
-	public void run() {
-		
-		String sensorName = "BusStop" + name + "Sensor";
+	private void insertIntoSIB() {
 		String locationDataName = "BusStop" + name + "LocationData";
 		
-		KPICore kp = new KPICore(SIBConfiguration.getInstance().getHost(),
+		kp = new KPICore(SIBConfiguration.getInstance().getHost(),
 				SIBConfiguration.getInstance().getPort(),
 				SIBConfiguration.getInstance().getSmartSpaceName());
 		
@@ -62,15 +45,6 @@ public class BusStop {
 			System.out.println ("Bus joined SIB correctly");
 		
 		Vector<Vector<String>> newTripleToInsert = new Vector<>();
-		Vector<Vector<String>> oldTriple = new Vector<>();
-		
-		Vector<String> sensor = new Triple(
-				OntologyReference.NS + sensorName,
-				OntologyReference.RDF_TYPE,
-				OntologyReference.SENSOR,
-				Triple.URI,
-				Triple.URI).getAsVector();
-		newTripleToInsert.add(sensor);
 		
 		Vector<String> locationDataTypeTriple = new Triple(
 				OntologyReference.NS + locationDataName,
@@ -120,14 +94,6 @@ public class BusStop {
 				Triple.LITERAL).getAsVector();
 		newTripleToInsert.add(tripleName);
 		
-		Vector<String> tripleSensor = new Triple(
-				OntologyReference.NS + "BusStop" + name,
-				OntologyReference.HAS_SENSOR,
-				OntologyReference.NS + sensorName,
-				Triple.URI,
-				Triple.URI).getAsVector();
-		newTripleToInsert.add(tripleSensor);
-		
 		Vector<String> tripleLocationData = new Triple(
 				OntologyReference.NS + "BusStop" + name,
 				OntologyReference.HAS_LOCATION_DATA,
@@ -136,52 +102,63 @@ public class BusStop {
 				Triple.URI).getAsVector();
 		newTripleToInsert.add(tripleLocationData);
 		
-		newTripleToInsert.add(new Triple(OntologyReference.NS + name,
-				OntologyReference.HAS_WAITING_PERSON,
-				getWaitingPeople() + "",
-				Triple.URI,
-				Triple.LITERAL).getAsVector());
-		
 		kp.insert(newTripleToInsert);
+	}
 
-		newTripleToInsert.remove(sensor);
-		newTripleToInsert.remove(locationDataTypeTriple);
-		newTripleToInsert.remove(locationDataLat);
-		newTripleToInsert.remove(locationDataLon);
-		newTripleToInsert.remove(typeTriple);
-		newTripleToInsert.remove(tripleId);
-		newTripleToInsert.remove(tripleName);
-		newTripleToInsert.remove(tripleSensor);
-		newTripleToInsert.remove(tripleLocationData);
+	private void generateInspector() {
+		boolean probabilityPresence = r.nextInt(101) <= SimulationConfig.getInstance().getInspectorPresencePercentageProbability();
+		if(probabilityPresence && SimulationConfig.getInstance().addInspector())
+			inspectorPresent = true;
+		else
+			inspectorPresent = false;
+		oldInspectorPresenceTriple.add(new Triple(
+				OntologyReference.NS + "BusStop" + name,
+				OntologyReference.IS_INSPECTOR_PRESENT,
+				isInspectorPresent() ? OntologyReference.TRUE : OntologyReference.FALSE,
+				Triple.URI,
+				Triple.URI).getAsVector());
 		
-		oldTriple = newTripleToInsert;
-		
-		for(;;) {
-			
-			newTripleToInsert = new Vector<>();
-			
-			newTripleToInsert.add(new Triple(OntologyReference.NS + name,
-					OntologyReference.HAS_WAITING_PERSON,
-					getWaitingPeople() + "",
-					Triple.URI,
-					Triple.LITERAL).getAsVector());
-			
-			kp.update(newTripleToInsert, oldTriple);
-			oldTriple = newTripleToInsert;
-			
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
+		kp.insert(oldInspectorPresenceTriple);
+	}
+
+	public boolean isInspectorPresent() {
+		return inspectorPresent;
+	}
+
+	public void setInspectorPresent(boolean inspectorPresent) {
+		this.inspectorPresent = inspectorPresent;
+		updateSIB();
 	}
 	
-	private int getWaitingPeople() {
-		int error = (int)Math.round(SimulationConfig.getInstance().getPeopleWaitingAtBusStop() * SimulationConfig.getInstance().getPercErrorPeopleWaitingAtBusStop() / 100.0);
-		return r.nextInt(2 * error + 1) - error + SimulationConfig.getInstance().getPeopleWaitingAtBusStop();
+	private void updateSIB() {
+		Vector<Vector<String>> newInspectorPresenceTriple = new Vector<>();
+		newInspectorPresenceTriple.add(new Triple(
+				OntologyReference.NS + "BusStop" + name,
+				OntologyReference.IS_INSPECTOR_PRESENT,
+				isInspectorPresent() ? OntologyReference.TRUE : OntologyReference.FALSE,
+				Triple.URI,
+				Triple.URI).getAsVector());
+		
+		kp.update(newInspectorPresenceTriple, oldInspectorPresenceTriple);
+		oldInspectorPresenceTriple = newInspectorPresenceTriple;
 	}
+
+	/**
+	 * 
+	 * @return When the bus arrives in a busStop, it call this method.
+	 * If the method returns true, the inspector was present and now he isn't (he is on the bus)
+	 * If the method returns false the inspector wasn't present and now he is still not present
+	 */
+	public boolean getInspector() {
+		if(isInspectorPresent()) {
+			setInspectorPresent(false);
+			return true;
+		}
+		return false;
+	}
+
+
+
+	
 		
 }
