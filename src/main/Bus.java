@@ -2,6 +2,7 @@ package main;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 import com.teamdev.jxmaps.LatLng;
 import parser.Parser;
@@ -11,24 +12,56 @@ import utils.OntologyReference;
 import utils.SIBConfiguration;
 import utils.Triple;
 
-
-
 public class Bus extends Thread {
 
 	private String name;
 	private int days;
+	private String line;
 	private int busRides;
 	private String filenamePoints; 
 	private String filenameStops; 
 	private HashMap<Double, Integer> stopsList;
+	private Random random;
 
-	public Bus(String name, String filenamePoints, String filenameStops, int days, int busRides) {
+	public Bus(String name, String line, String filenamePoints, String filenameStops, int days, int busRides) {
 		this.name = name;
 		this.days = days;
+		this.line = line;
 		this.busRides = busRides;
 		this.filenamePoints = filenamePoints;
 		this.filenameStops = filenameStops;
 		stopsList = new HashMap<Double, Integer>();
+		random = new Random();
+	}
+	
+	private void insertSensor(String busSensorName, String busType, String autobusName, Vector<Vector<String>> newTripleToInsert ) {
+		Vector<String> busSensorGPS = new Triple(
+				OntologyReference.NS + busSensorName,
+				OntologyReference.HAS_SENSOR_TYPE,
+				busType,
+				Triple.URI,
+				Triple.URI).getAsVector();
+		
+		newTripleToInsert.add(busSensorGPS);
+		
+		Vector<String> busSensorGPSId = new Triple(
+				OntologyReference.NS + busSensorName,
+				OntologyReference.HAS_ID,
+				String.valueOf(random.nextInt(1000)),
+				Triple.URI,
+				Triple.LITERAL).getAsVector();
+		
+		newTripleToInsert.add(busSensorGPSId);
+		
+		Vector<String> busSensorGPSArch = new Triple(
+				OntologyReference.NS + autobusName,
+				OntologyReference.HAS_SENSOR,
+				OntologyReference.NS + busSensorName,
+				Triple.URI,
+				Triple.URI).getAsVector();
+		
+		newTripleToInsert.add(busSensorGPSArch);
+		
 	}
 	
 	@Override
@@ -42,6 +75,15 @@ public class Bus extends Thread {
 		parserForPoints = new Parser(filenamePoints);
 		listOfPoints = parserForPoints.getListOfPoint();
 		int listOfPointSize = listOfPoints.size();
+		
+		Vector<Vector<String>> newTripleToInsert = new Vector<>();
+	//	Vector<Vector<String>> oldTriple = new Vector<>();
+		Vector<Vector<String>> newTriplePoint = new Vector<>();
+		Vector<Vector<String>> oldTriplePoint = new Vector<>();
+		Vector<Vector<String>> newRide = new Vector<>();
+		Vector<Vector<String>> oldRide = new Vector<>();
+		Vector<Vector<String>> currentAndNextStop = new Vector<>();
+		Vector<Vector<String>> oldCurrentAndNextStop = new Vector<>();
 		
 		//create hash map for stops
 		Parser stopsParser;
@@ -74,67 +116,185 @@ public class Bus extends Thread {
 		else
 			System.out.println ("Bus correctly inserted " + name);
 	
-			String locationDataName = name + "LocationData";
-			String booleanDataNameTrue = name + "booleanDataTrue";
-			String booleanDataNameFalse = name + "booleanDataFalse";
-
-			Vector<Vector<String>> newTripleToInsert = new Vector<>();
-			Vector<Vector<String>> newBoolean = new Vector<>();
-			Vector<Vector<String>> oldTriple = new Vector<>();
+		String locationDataName = name + "LocationData";
+		String busLineName =  name+"BusLine";
+		String busRideName = name+"BusRide";
+		String busSensorNameGPS = name+"GPSSensor";
+		String busSensorNameCameraEnter = name+"CameraEnterSensor";
+		String busSensorNameCameraExit = name+"CameraExitSensor";
+		String busSensorFareBoxEnter = name+"FareBoxEnterSensor";
+		String busSensorFareBoxExit = name+"FareBoxExitSensor";
 			
-			//write datatype of objects
-			Vector<String> locationData = new Triple(
-					OntologyReference.NS + locationDataName,
-					OntologyReference.RDF_TYPE,
-					OntologyReference.LOCATION_DATA,
-					Triple.URI,
-					Triple.URI).getAsVector();
+		//write datatype of objects
+		Vector<String> locationData = new Triple(
+				OntologyReference.NS + locationDataName,
+				OntologyReference.RDF_TYPE,
+				OntologyReference.LOCATION_DATA,
+				Triple.URI,
+				Triple.URI).getAsVector();
 			
-			newTripleToInsert.add(locationData);
+		newTripleToInsert.add(locationData);
 			
-			Vector<String> busLocationDataArch = new Triple(
-					OntologyReference.NS + name,
-					OntologyReference.HAS_LOCATION_DATA,
-					OntologyReference.NS + locationDataName,
-					Triple.URI,
-					Triple.URI).getAsVector();
+		Vector<String> busLocationDataArch = new Triple(
+				OntologyReference.NS + name,
+				OntologyReference.HAS_LOCATION_DATA,
+				OntologyReference.NS + locationDataName,
+				Triple.URI,
+				Triple.URI).getAsVector();
 			
-			newTripleToInsert.add(busLocationDataArch);
+		newTripleToInsert.add(busLocationDataArch);
 			
-			kp.insert(newTripleToInsert);
+		Vector<String> busId = new Triple(
+				OntologyReference.NS + name,
+				OntologyReference.HAS_ID,
+				String.valueOf(random.nextInt(100)),
+				Triple.URI,
+				Triple.LITERAL).getAsVector();
 			
-			newTripleToInsert.remove(locationData);
-			newTripleToInsert.remove(busLocationDataArch);
+		newTripleToInsert.add(busId);
 			
-			oldTriple = newTripleToInsert;
+		//insert line for autobus
+		Vector<String> busLine = new Triple(
+				OntologyReference.NS + busLineName,
+				OntologyReference.RDF_TYPE,
+				OntologyReference.BUS_LINE,
+				Triple.URI,
+				Triple.URI).getAsVector();
 			
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			//move bus: for each point insert new locationData and new Status(in Transit) 
-			//the bus must repeat this cycle 'days' times
+		newTripleToInsert.add(busLine);
+		
+		Vector<String> busLineNumber = new Triple(
+				OntologyReference.NS + busLineName,
+				OntologyReference.HAS_NUMBER,
+				line,
+				Triple.URI,
+				Triple.LITERAL).getAsVector();
+			
+		newTripleToInsert.add(busLineNumber);
+		
+		//insert arch between bus and line
+		Vector<String> busLineArch = new Triple(
+				OntologyReference.NS + name,
+				OntologyReference.ON_LINE,
+				OntologyReference.NS + busLineName,
+				Triple.URI,
+				Triple.URI).getAsVector();
+		
+		newTripleToInsert.add(busLineArch);
+		
+		//insert max seats
+		Vector<String> busMaxSeats = new Triple(
+				OntologyReference.NS + name,
+				OntologyReference.HAS_MAX_SEATS,
+				String.valueOf(SimulationConfig.getInstance().getAutobusMaxSeats()),
+				Triple.URI,
+				Triple.LITERAL).getAsVector();
+		newTripleToInsert.add(busMaxSeats);		
+			
+		//insert gps sensor with type, id and arch with current bus
+		insertSensor(busSensorNameGPS, OntologyReference.GPS, name, newTripleToInsert);
+		//insert enterCamera sensor with type, id and arch with current bus
+		insertSensor(busSensorNameCameraEnter, OntologyReference.CAMERA, name, newTripleToInsert);
+		//insert exitCamera sensor with type, id and arch with current bus
+		insertSensor(busSensorNameCameraExit, OntologyReference.CAMERA, name, newTripleToInsert);
+		//insert enterFareBox sensor with type, id and arch with current bus
+		insertSensor(busSensorFareBoxEnter, OntologyReference.FAREBOX, name, newTripleToInsert);
+		//insert exitFareBox sensor with type, id and arch with current bus
+		insertSensor(busSensorFareBoxExit, OntologyReference.FAREBOX, name, newTripleToInsert);
+		
+		//insert all previous triples
+		kp.insert(newTripleToInsert);
+			
+		//move bus: for each point insert new locationData and new Status(in Transit) 
+		//the bus must repeat this cycle 'days' times
 			
 		for (int day=0; day<days; day++) {
 			for (int ride=0; ride<busRides; ride++) {
+				//insert ride data into SIB
+				newRide = new Vector<>();
+
+				kp.insert(
+						OntologyReference.NS + busRideName + ride,
+						OntologyReference.RDF_TYPE,
+						OntologyReference.RIDE,
+						Triple.URI,
+						Triple.URI);
+				
+				kp.insert(
+						OntologyReference.NS + busLineName,
+						OntologyReference.HAS_RIDE,
+						OntologyReference.NS + busRideName + ride,
+						Triple.URI,
+						Triple.URI);
+				
+				kp.insert(
+						OntologyReference.NS + busRideName + ride,
+						OntologyReference.AT_TIME,
+						"time"+ride,
+						Triple.URI,
+						Triple.LITERAL);
+				
+				newRide.add(new Triple(
+						OntologyReference.NS + name,
+						OntologyReference.ON_RIDE,
+						OntologyReference.NS + busRideName + ride,
+						Triple.URI,
+						Triple.URI).getAsVector());
+				
+				if (ride==0) {
+					kp.insert(newRide);
+				}else {
+					kp.update(newRide, oldRide);
+				}
+				oldRide= newRide;				
+				
 				for (int i = 0; i < listOfPointSize; i++) {
 					nextPoint = listOfPoints.get(i);
 					latNextPoint = new Double(nextPoint.getLat());
 					stopIndex = stopsList.get(latNextPoint);	
-					newTripleToInsert = new Vector<>();
+					newTriplePoint = new Vector<>();
 					
 					//check whether the next point is a bus stop
 					if  (stopIndex != null){
+						currentAndNextStop = new Vector<>();
 						//in this case bus is not in transit
-						newTripleToInsert.add(new Triple(
+						newTriplePoint.add(new Triple(
 						OntologyReference.NS + name,
 						OntologyReference.IS_IN_TRANSIT,
 						OntologyReference.FALSE,
 						Triple.URI,
 						Triple.URI).getAsVector());
+						
+						//update current stop
+
+						Vector<String> currentStop = new Triple(
+								OntologyReference.NS + name,
+								OntologyReference.HAS_CURR_STOP,
+								String.valueOf(stopIndex),
+								Triple.URI,
+								Triple.LITERAL).getAsVector();
+						
+						currentAndNextStop.add(currentStop);
+						
+						//update next stop
+						
+						Vector<String> nextStop = new Triple(
+								OntologyReference.NS + name,
+								OntologyReference.HAS_NEXT_STOP,
+								String.valueOf(stopIndex+1),
+								Triple.URI,
+								Triple.LITERAL).getAsVector();
+						
+						currentAndNextStop.add(nextStop);
+						
+						if (stopIndex==0)
+							kp.insert(currentAndNextStop);
+						else
+							kp.update(currentAndNextStop, oldCurrentAndNextStop);
+						oldCurrentAndNextStop = currentAndNextStop;
+						
 					}else {
-						newTripleToInsert.add(new Triple(
+						newTriplePoint.add(new Triple(
 						OntologyReference.NS + name,
 						OntologyReference.IS_IN_TRANSIT,
 						OntologyReference.TRUE,
@@ -142,33 +302,35 @@ public class Bus extends Thread {
 						Triple.URI).getAsVector());
 					}
 
-					newTripleToInsert.add(new Triple(
+					newTriplePoint.add(new Triple(
 							OntologyReference.NS + locationDataName,
 							OntologyReference.HAS_LAT,
 							String.valueOf(nextPoint.getLat()),
 							Triple.URI,
 							Triple.LITERAL).getAsVector());
 					
-					newTripleToInsert.add(new Triple(
+					newTriplePoint.add(new Triple(
 							OntologyReference.NS + locationDataName,
 							OntologyReference.HAS_LON,
 							String.valueOf(nextPoint.getLng()),
 							Triple.URI,
 							Triple.LITERAL).getAsVector());
-					
+									
 					if (i==0)
-						kp.insert(newTripleToInsert);
+						kp.insert(newTriplePoint);
 					else
-						kp.update(newTripleToInsert, oldTriple);
-					
-					oldTriple = newTripleToInsert;
+						kp.update(newTriplePoint, oldTriplePoint);
+					oldTriplePoint = newTriplePoint;
+
 					try {
 						Thread.sleep(Math.round(100/SimulationConfig.getInstance().getSimulationVelocity()));
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
-				kp.remove(newTripleToInsert);
+				
+				kp.remove(currentAndNextStop);
+				kp.remove(newTriplePoint);
 				System.out.printf("ride %d terminated\n", ride+1);
 				try {
 					Thread.sleep(500);

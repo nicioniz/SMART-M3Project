@@ -55,19 +55,6 @@
   <name>40134 Bologna BO to 40127 Bologna BO</name>
   <number>1</number>
   <trkseg>
-  <trkpt lat="44.4888474" lon="11.3178039">
-    <name>TP001</name>
-  </trkpt>
-
-  <trkpt lat="44.48885" lon="11.31787">
-    <name>TP002</name>
-  </trkpt>
-  <trkpt lat="44.48887" lon="11.31796">
-    <name>TP003</name>
-  </trkpt>
-  <trkpt lat="44.48889" lon="11.31804">
-    <name>TP004</name>
-  </trkpt>
   
   <trkpt lat="44.488928" lon="11.318318">
     <name>Villa Benni </name>

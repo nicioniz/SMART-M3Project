@@ -12,6 +12,7 @@ public class SimulationConfig {
 	private int maxInspectors;
 	private int inspectorPresencePercentageProbability;
 	private int numberOfPresentInsectors = 0;
+	private int autobusMaxSeats = 80;
 	
 	
 	private static SimulationConfig instance = null;
@@ -52,6 +53,10 @@ public class SimulationConfig {
 	
 	public int getSimulationDays() {
 		return simulationDays;
+	}
+	
+	public int getAutobusMaxSeats() {
+		return autobusMaxSeats;
 	}
 	
 	public void setBusRides(int rides) {

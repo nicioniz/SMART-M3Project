@@ -24,7 +24,6 @@ public class OntologyReference {
 	public static final String HAS_PERSON_DATA = NS + "hasPersonData";
 	public static final String ON_RIDE = NS + "onRide";
 	
-
 	//LocationDAta class
 	public static final String LOCATION_DATA = NS + "LocationData";
 	public static final String HAS_LAT = NS + "hasLat";
@@ -40,7 +39,8 @@ public class OntologyReference {
 	
 	//Sensor class
 	public static final String SENSOR = NS + "Sensor";
-	
+	public static final String HAS_SENSOR_TYPE = NS + "hasSensorType";
+
 	//Ride class
 	public static final String RIDE = NS + "Ride";
 	public static final String AT_TIME = NS + "atTime";
@@ -53,7 +53,8 @@ public class OntologyReference {
 	//BusLine class
 	public static final String BUS_LINE = NS + "BusLine";
 	public static final String HAS_NUMBER = NS + "hasNumber";
-	
+	public static final String HAS_RIDE = NS + "hasRide";
+
 	//SensorType class
 	public static final String SENSOR_TYPE = NS + "SensorType";
 	

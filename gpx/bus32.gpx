@@ -56,21 +56,6 @@
   <name>40134 Bologna BO to 40136 Bologna BO</name>
   <number>1</number>
   <trkseg>
-  <trkpt lat="44.4904617" lon="11.3296486">
-    <name>TP001</name>
-  </trkpt>
-  <trkpt lat="44.49078" lon="11.32966">
-    <name>TP002</name>
-  </trkpt>
-  <trkpt lat="44.49085" lon="11.32966">
-    <name>TP003</name>
-  </trkpt>
-  <trkpt lat="44.49099" lon="11.32965">
-    <name>TP004</name>
-  </trkpt>
-  <trkpt lat="44.49196" lon="11.32933">
-    <name>TP005</name>
-  </trkpt>
   
   <trkpt lat="44.492191" lon="11.329344">
     <name>Porta Saragozza - Liceo Righi</name>
@@ -942,6 +927,22 @@
   </trkpt>
   <trkpt lat="44.4904" lon="11.32966">
     <name>TP270</name>
+  </trkpt>
+  
+  <trkpt lat="44.4904617" lon="11.3296486">
+    <name>TP001</name>
+  </trkpt>
+  <trkpt lat="44.49078" lon="11.32966">
+    <name>TP002</name>
+  </trkpt>
+  <trkpt lat="44.49085" lon="11.32966">
+    <name>TP003</name>
+  </trkpt>
+  <trkpt lat="44.49099" lon="11.32965">
+    <name>TP004</name>
+  </trkpt>
+  <trkpt lat="44.49196" lon="11.32933">
+    <name>TP005</name>
   </trkpt>
   </trkseg>
 </trk>

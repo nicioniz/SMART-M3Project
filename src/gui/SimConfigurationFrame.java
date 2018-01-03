@@ -154,7 +154,7 @@ public class SimConfigurationFrame extends JFrame {
 			
 			BusVisualizerAggregator aggregator32 = new BusVisualizerAggregator("BUS32", busMap);
 			aggregator32.start();
-			new Bus("BUS32", "gpx/bus32.gpx","gpx/bus32StopList.gpx", simulationDays, busRides).start();
+			new Bus("BUS32", "32" , "gpx/bus32.gpx","gpx/bus32StopList.gpx", simulationDays, busRides).start();
 		}
 		if(lineNo20CheckBox.isSelected()) {
 			try {
@@ -166,7 +166,7 @@ public class SimConfigurationFrame extends JFrame {
 			
 			BusVisualizerAggregator aggregator20 = new BusVisualizerAggregator("BUS20", busMap);
 			aggregator20.start();
-			new Bus("BUS20", "gpx/bus20.gpx", "gpx/bus20StopList.gpx", simulationDays, busRides ).start();
+			new Bus("BUS20", "20" , "gpx/bus20.gpx", "gpx/bus20StopList.gpx", simulationDays, busRides ).start();
 		}
 		SimulationConfig.getInstance().setWaitingThreadForBarrier(numberOfStartedThread);
 		this.dispose();
