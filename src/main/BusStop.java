@@ -30,10 +30,13 @@ public class BusStop {
 		this.id = id;
 		this.location = location;
 		r = new Random(System.currentTimeMillis());
-		insertIntoSIB();
-		generateInspector();
 	}
 		
+	public void init() {
+		insertIntoSIB();
+		generateInspector();		
+	}
+	
 	private void insertIntoSIB() {
 		String locationDataName = "BusStop" + nameWithoutSpaces + "LocationData";
 		
