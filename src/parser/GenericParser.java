@@ -8,7 +8,9 @@ import org.xml.sax.XMLReader;
 
 public class GenericParser {
 
-	public GenericParser(String fileName, ContentHandler handler) {
+	private XMLReader xmlReader;
+	
+	public GenericParser() {
 		SAXParserFactory spf = SAXParserFactory.newInstance();
 
 		try{
@@ -16,13 +18,11 @@ public class GenericParser {
 			spf.setValidating(true);
 
 			SAXParser saxParser = spf.newSAXParser();
-			XMLReader xmlReader = saxParser.getXMLReader();
+			xmlReader = saxParser.getXMLReader();
 			ErrorChecker errors = new ErrorChecker();
 
 			xmlReader.setErrorHandler(errors);
 			xmlReader.setFeature("http://apache.org/xml/features/validation/schema", true);
-			xmlReader.setContentHandler(handler);
-			xmlReader.parse(fileName);
 
 		}catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -30,5 +30,17 @@ public class GenericParser {
 		}
 	}
 	
+	public void setContentHandler(ContentHandler handler) {
+		xmlReader.setContentHandler(handler);
+	}
+	
+	public void parse(String fileName) {
+		try {
+			xmlReader.parse(fileName);
+		}catch (Exception e) {
+			System.err.println(e.getMessage());
+			System.exit(1);
+		}
+	}
 	
 }

@@ -7,10 +7,13 @@ import com.teamdev.jxmaps.LatLng;
 
 public class BusPathParser extends GenericParser{
 	
-	private static SAXHandlerGPX handler = new SAXHandlerGPX();
+	private SAXHandlerGPX handler;
 	
 	public BusPathParser(String fileName) {
-		super(fileName, handler);
+		super();
+		handler = new SAXHandlerGPX();
+		this.setContentHandler(handler);
+		this.parse(fileName);
 	}
 	
 	public List<LatLng> getListOfPoint(){

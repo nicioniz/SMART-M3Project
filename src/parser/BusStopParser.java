@@ -6,10 +6,13 @@ import main.BusStop;
 
 public class BusStopParser extends GenericParser {
 
-	private static SAXHandlerGPXBusStop handler = new SAXHandlerGPXBusStop();
+	private SAXHandlerGPXBusStop handler;
 	
 	public BusStopParser(String fileName) {
-		super(fileName, handler);
+		super();
+		handler = new SAXHandlerGPXBusStop();
+		this.setContentHandler(handler);
+		this.parse(fileName);
 	}
 	
 	public List<BusStop> getBusStops(){
