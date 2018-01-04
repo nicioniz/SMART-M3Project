@@ -5,20 +5,21 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
+import java.text.ParseException;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JSpinner;
 import javax.swing.border.EmptyBorder;
 
-import main.BusVisualizerAggregator;
 import main.Bus;
 import main.BusMap;
+import main.BusVisualizerAggregator;
 import simulationConfiguration.SimulationConfig;
-import javax.swing.JLabel;
-import javax.swing.JSlider;
-import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class SimConfigurationFrame extends JFrame {
@@ -29,24 +30,25 @@ public class SimConfigurationFrame extends JFrame {
 	private JLabel lblSimulationVelocity;
 	private JSlider velocitySlider;
 	private JLabel simulationDaysLabel;
-	private JTextField simulationDaysTextField;
 	private JLabel busRidesLabel;
-	private JTextField busRidesTextField;
+	private JCheckBox lineNo11CheckBox;
+	private JSpinner simulationDaysSpinner;
+	private JSpinner busRidesSpinner;
 	
 	public SimConfigurationFrame() {
-		setTitle("SimConfiguration");
 		setResizable(false);
+		setTitle("SimConfiguration");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 397, 316);
 		simulationDaysContentPane = new JPanel();
 		simulationDaysContentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(simulationDaysContentPane);
 		
 		GridBagLayout gbl_simulationDaysContentPane = new GridBagLayout();
 		gbl_simulationDaysContentPane.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_simulationDaysContentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_simulationDaysContentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_simulationDaysContentPane.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_simulationDaysContentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_simulationDaysContentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		simulationDaysContentPane.setLayout(gbl_simulationDaysContentPane);
 		
 		lblSimulationVelocity = new JLabel("Simulation velocity");
@@ -86,57 +88,66 @@ public class SimConfigurationFrame extends JFrame {
 		JButton startSimButton = new JButton("START SIM");
 		startSimButton.addActionListener(this::startSimButtonPressed);
 		
+		lineNo11CheckBox = new JCheckBox("Line No. 11");
+		lineNo11CheckBox.setSelected(true);
+		GridBagConstraints gbc_lineNo11CheckBox = new GridBagConstraints();
+		gbc_lineNo11CheckBox.insets = new Insets(0, 0, 5, 5);
+		gbc_lineNo11CheckBox.gridx = 0;
+		gbc_lineNo11CheckBox.gridy = 4;
+		simulationDaysContentPane.add(lineNo11CheckBox, gbc_lineNo11CheckBox);
+		
 		simulationDaysLabel = new JLabel("Simulation Days");
 		GridBagConstraints gbc_simulationDaysLabel = new GridBagConstraints();
 		gbc_simulationDaysLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_simulationDaysLabel.gridx = 0;
-		gbc_simulationDaysLabel.gridy = 4;
+		gbc_simulationDaysLabel.gridy = 6;
 		simulationDaysContentPane.add(simulationDaysLabel, gbc_simulationDaysLabel);
 		
-		simulationDaysTextField = new JTextField();
-		GridBagConstraints gbc_simulationDaysTextField = new GridBagConstraints();
-		gbc_simulationDaysTextField.insets = new Insets(0, 0, 5, 0);
-		gbc_simulationDaysTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_simulationDaysTextField.gridx = 2;
-		gbc_simulationDaysTextField.gridy = 4;
-		simulationDaysContentPane.add(simulationDaysTextField, gbc_simulationDaysTextField);
-		simulationDaysTextField.setColumns(10);
-		simulationDaysTextField.setText("1");
+		simulationDaysSpinner = new JSpinner();
+		GridBagConstraints gbc_simulationDaysSpinner = new GridBagConstraints();
+		gbc_simulationDaysSpinner.fill = GridBagConstraints.HORIZONTAL;
+		gbc_simulationDaysSpinner.insets = new Insets(0, 0, 5, 0);
+		gbc_simulationDaysSpinner.gridx = 2;
+		gbc_simulationDaysSpinner.gridy = 6;
+		simulationDaysSpinner.setValue(1);
+		simulationDaysContentPane.add(simulationDaysSpinner, gbc_simulationDaysSpinner);
 		
 		busRidesLabel = new JLabel("Bus rides for day");
 		GridBagConstraints gbc_busRidesLabel = new GridBagConstraints();
 		gbc_busRidesLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_busRidesLabel.gridx = 0;
-		gbc_busRidesLabel.gridy = 5;
+		gbc_busRidesLabel.gridy = 7;
 		simulationDaysContentPane.add(busRidesLabel, gbc_busRidesLabel);
 		
-		busRidesTextField = new JTextField();
-		GridBagConstraints gbc_busRidesTextField = new GridBagConstraints();
-		gbc_busRidesTextField.insets = new Insets(0, 0, 5, 0);
-		gbc_busRidesTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_busRidesTextField.gridx = 2;
-		gbc_busRidesTextField.gridy = 5;
-		simulationDaysContentPane.add(busRidesTextField, gbc_busRidesTextField);
-		busRidesTextField.setColumns(10);
-		busRidesTextField.setText("1");
+		busRidesSpinner = new JSpinner();
+		GridBagConstraints gbc_busRidesSpinner = new GridBagConstraints();
+		gbc_busRidesSpinner.fill = GridBagConstraints.HORIZONTAL;
+		gbc_busRidesSpinner.insets = new Insets(0, 0, 5, 0);
+		gbc_busRidesSpinner.gridx = 2;
+		gbc_busRidesSpinner.gridy = 7;
+		busRidesSpinner.setValue(1);
+		simulationDaysContentPane.add(busRidesSpinner, gbc_busRidesSpinner);
 		
 		GridBagConstraints gbc_startSimButton = new GridBagConstraints();
 		gbc_startSimButton.insets = new Insets(0, 0, 0, 5);
 		gbc_startSimButton.gridx = 0;
-		gbc_startSimButton.gridy = 6;
+		gbc_startSimButton.gridy = 9;
 		simulationDaysContentPane.add(startSimButton, gbc_startSimButton);
 	}
 
 	public void startSimButtonPressed(ActionEvent e) {
 		this.busMap = new BusMap();
 		int numberOfStartedThread = 0;
-		String tempSimulationDays = "";
-		tempSimulationDays = simulationDaysTextField.getText();
-		int simulationDays = Integer.parseInt(tempSimulationDays);
+		//necessario per considerare anche i valori scritti manualmente nello spinner
+		try {
+			simulationDaysSpinner.commitEdit();
+			busRidesSpinner.commitEdit();
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		int simulationDays = (Integer) simulationDaysSpinner.getValue();
 		SimulationConfig.getInstance().setSimulationDays(simulationDays);
-		String tempBusRides = "";
-		tempBusRides = busRidesTextField.getText();
-		int busRides = Integer.parseInt(tempBusRides);
+		int busRides = (Integer) busRidesSpinner.getValue();
 		SimulationConfig.getInstance().setBusRides(busRides);
 		//wait for map, otherwise can't call addStops()..
 		busMap.waitReady();
@@ -152,10 +163,10 @@ public class SimConfigurationFrame extends JFrame {
 			numberOfStartedThread++;
 			prepareNewBus("20", simulationDays, busRides);
 		}
-//		if(lineNo11CheckBox.isSelected()) {
-//			numberOfStartedThread++;
-//			prepareNewBus("11", simulationDays, busRides);
-//		}
+		if(lineNo11CheckBox.isSelected()) {
+			numberOfStartedThread++;
+			prepareNewBus("11", simulationDays, busRides);
+		}
 		
 		SimulationConfig.getInstance().setWaitingThreadForBarrier(numberOfStartedThread);
 		this.dispose();
