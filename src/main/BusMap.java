@@ -19,7 +19,7 @@ import com.teamdev.jxmaps.InfoWindow;
 import com.teamdev.jxmaps.swing.MapView;
 
 
-import parser.Parser;
+import parser.BusPathParser;
 
 
 @SuppressWarnings("serial")
@@ -81,9 +81,9 @@ public class BusMap extends MapView{
     
     public void addStops(String filenameStops) throws FileNotFoundException {
     	
-    	Parser stopsParser;
+    	BusPathParser stopsParser;
     	List<LatLng> stopsPoints;
-    	stopsParser = new Parser(filenameStops);
+    	stopsParser = new BusPathParser(filenameStops);
     	stopsPoints = stopsParser.getListOfPoint();
     	int sizeOfStopsList = stopsPoints.size();
     	Icon icon = new Icon();

@@ -13,7 +13,7 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		initializer();
 		SimConfigurationFrame configurator = new SimConfigurationFrame();
-		configurator.setVisible(true);		
+		configurator.setVisible(true);
 	}
 
 	private static void initializer() {
