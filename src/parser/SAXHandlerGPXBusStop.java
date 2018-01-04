@@ -16,7 +16,8 @@ public class SAXHandlerGPXBusStop extends DefaultHandler {
 
 	private List<BusStop> busStop = new ArrayList<>();
 	
-	private Boolean inName = false;
+	private boolean inTrkpt = false;
+	private boolean inName = false;
 	private LatLng actualLocation;
 	private String actualName;
 	
@@ -27,6 +28,7 @@ public class SAXHandlerGPXBusStop extends DefaultHandler {
 		switch (localName) {
 		case "trkpt": 
 			actualLocation = new LatLng(Double.parseDouble(attributes.getValue("lat")), Double.parseDouble(attributes.getValue("lon")));
+			inTrkpt = true;
 			break;
 		case "name":
 			inName = true;
@@ -40,6 +42,7 @@ public class SAXHandlerGPXBusStop extends DefaultHandler {
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		switch (localName) {
 		case "trkpt": 
+			inTrkpt = false;
 			busStop.add(new BusStop(actualName, "" + (i++), actualLocation));
 			break;
 		case "name":
@@ -52,7 +55,7 @@ public class SAXHandlerGPXBusStop extends DefaultHandler {
 	
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
-		if(inName)
+		if(inName && inTrkpt)
 			actualName = new String(ch, start, length).trim();
 	}
 	
