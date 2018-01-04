@@ -126,7 +126,7 @@ public class SimConfigurationFrame extends JFrame {
 		gbc_startSimButton.gridy = 6;
 		simulationDaysContentPane.add(startSimButton, gbc_startSimButton);
 	}
-	
+
 	public void startSimButtonPressed(ActionEvent e) {
 		this.busMap = new BusMap();
 		int numberOfStartedThread = 0;
@@ -145,30 +145,31 @@ public class SimConfigurationFrame extends JFrame {
 		new BusMapFrame(busMap);	
 		
 		if(lineNo32CheckBox.isSelected()) {
-			try {
-				numberOfStartedThread++;
-				busMap.addStops("gpx/bus32StopList.gpx");
-			} catch (FileNotFoundException e1) {
-				e1.printStackTrace();
-			}
-			
-			BusVisualizerAggregator aggregator32 = new BusVisualizerAggregator("BUS32", busMap);
-			aggregator32.start();
-			new Bus("BUS32", "32" , "gpx/bus32.gpx","gpx/bus32StopList.gpx", simulationDays, busRides).start();
+			numberOfStartedThread++;
+			prepareNewBus("32", simulationDays, busRides);
 		}
 		if(lineNo20CheckBox.isSelected()) {
-			try {
-				numberOfStartedThread++;
-				busMap.addStops("gpx/bus20StopList.gpx");
-			} catch (FileNotFoundException e1) {
-				e1.printStackTrace();
-			}
-			
-			BusVisualizerAggregator aggregator20 = new BusVisualizerAggregator("BUS20", busMap);
-			aggregator20.start();
-			new Bus("BUS20", "20" , "gpx/bus20.gpx", "gpx/bus20StopList.gpx", simulationDays, busRides ).start();
+			numberOfStartedThread++;
+			prepareNewBus("20", simulationDays, busRides);
 		}
+//		if(lineNo11CheckBox.isSelected()) {
+//			numberOfStartedThread++;
+//			prepareNewBus("11", simulationDays, busRides);
+//		}
+		
 		SimulationConfig.getInstance().setWaitingThreadForBarrier(numberOfStartedThread);
 		this.dispose();
+	}
+	
+	private void prepareNewBus(String busNumber, int simulationDays, int busRides) {
+		try {
+			busMap.addStops("gpx/bus" + busNumber + "StopList.gpx");
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		BusVisualizerAggregator aggregator = new BusVisualizerAggregator("BUS" + busNumber, busMap);
+		aggregator.start();
+		new Bus("BUS" + busNumber, busNumber , "gpx/bus" + busNumber + ".gpx","gpx/bus" + busNumber + "StopList.gpx", simulationDays, busRides).start();
 	}
 }
