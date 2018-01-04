@@ -66,4 +66,10 @@ public class OntologyReference {
 	public static final String GPS = NS + "GPS";
 	public static final String CAMERA = NS + "Camera";
 	public static final String FAREBOX = NS + "Farebox";
+	
+	//Person Data
+	public static final String PERSON_DATA = NS + "PersonData";
+	public static final String HAS_REAL_PERSON = NS + "hasRealPerson";
+	public static final String HAS_PAYING_PERSON = NS + "hasPayingPerson";
+	
 }
