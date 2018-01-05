@@ -66,6 +66,7 @@ public class Bus extends Thread {
 	
 	@Override
 	public void run() {
+		LatLng currentPoint;
 		LatLng nextPoint;
 		Double latNextPoint;
 		Integer stopIndex;
@@ -211,6 +212,7 @@ public class Bus extends Thread {
 			
 		for (int day=0; day<days; day++) {
 			for (int ride=0; ride<busRides; ride++) {
+				int currentStopIndex = 0;
 				//insert ride data into SIB
 				newRide = new Vector<>();
 
@@ -250,8 +252,8 @@ public class Bus extends Thread {
 				oldRide= newRide;				
 				
 				for (int i = 0; i < listOfPointSize; i++) {
-					nextPoint = listOfPoints.get(i);
-					stopIndex = stopsList.get(nextPoint.getLat()+"-"+nextPoint.getLng());	
+					currentPoint = listOfPoints.get(i);
+					stopIndex = stopsList.get(currentPoint.getLat()+"-"+currentPoint.getLng());	
 					newTriplePoint = new Vector<>();
 					
 					//check whether the next point is a bus stop
@@ -267,23 +269,30 @@ public class Bus extends Thread {
 						
 						//update current stop
 						
-						//BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latLng);
+						BusStop currentBusStop = BusStopManager.getInstance().getBusStopFromLatLngString(line, currentPoint.getLat()+"-"+currentPoint.getLng());
 
 						Vector<String> currentStop = new Triple(
 								OntologyReference.NS + name,
 								OntologyReference.HAS_CURR_STOP,
-								String.valueOf(stopIndex),
+								currentBusStop.getUri(),
 								Triple.URI,
 								Triple.LITERAL).getAsVector();
 						
 						currentAndNextStop.add(currentStop);
 						
+						//if i==listOfPointSize this is the last stop, so take the first stop as next
+						if (currentStopIndex!=sizeOfStopsList-1)
+							nextPoint = stopsPoints.get(currentStopIndex+1);
+						else 
+							nextPoint = stopsPoints.get(0);							
+						BusStop nextBusStop = BusStopManager.getInstance().getBusStopFromLatLngString(line, nextPoint.getLat()+"-"+nextPoint.getLng());
+
 						//update next stop
-						
+
 						Vector<String> nextStop = new Triple(
 								OntologyReference.NS + name,
 								OntologyReference.HAS_NEXT_STOP,
-								String.valueOf(stopIndex+1),
+								nextBusStop.getUri(),
 								Triple.URI,
 								Triple.LITERAL).getAsVector();
 						
@@ -294,7 +303,7 @@ public class Bus extends Thread {
 						else
 							kp.update(currentAndNextStop, oldCurrentAndNextStop);
 						oldCurrentAndNextStop = currentAndNextStop;
-						
+						currentStopIndex++;
 					}else {
 						newTriplePoint.add(new Triple(
 						OntologyReference.NS + name,
@@ -307,14 +316,14 @@ public class Bus extends Thread {
 					newTriplePoint.add(new Triple(
 							OntologyReference.NS + locationDataName,
 							OntologyReference.HAS_LAT,
-							String.valueOf(nextPoint.getLat()),
+							String.valueOf(currentPoint.getLat()),
 							Triple.URI,
 							Triple.LITERAL).getAsVector());
 					
 					newTriplePoint.add(new Triple(
 							OntologyReference.NS + locationDataName,
 							OntologyReference.HAS_LON,
-							String.valueOf(nextPoint.getLng()),
+							String.valueOf(currentPoint.getLng()),
 							Triple.URI,
 							Triple.LITERAL).getAsVector());
 									
