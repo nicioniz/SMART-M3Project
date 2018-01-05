@@ -72,10 +72,19 @@ public class Bus extends Thread {
 	
 	@Override
 	public void run() {
+
+		//DA CAPIRE QUALI DI QUESTE VARIABILI VANNO ELIMINATE E MESSE NELLA SIB
+		int descendedRealPerson;
+		int descendedPayingPerson;
+		int ascendedRealPerson;
+		int ascendedPayingPerson;
+		int realPerson = 0;
+		int payingPerson = 0;
 		LatLng currentPoint;
 		LatLng nextPoint;
 		Double latNextPoint;
 		Integer stopIndex;
+		
 		//get list of point
 		BusPathParser parserForPoints;
 	   	List<LatLng> listOfPoints;
@@ -84,7 +93,6 @@ public class Bus extends Thread {
 		int listOfPointSize = listOfPoints.size();
 		
 		Vector<Vector<String>> newTripleToInsert = new Vector<>();
-	//	Vector<Vector<String>> oldTriple = new Vector<>();
 		Vector<Vector<String>> newTriplePoint = new Vector<>();
 		Vector<Vector<String>> oldTriplePoint = new Vector<>();
 		Vector<Vector<String>> newRide = new Vector<>();
@@ -92,17 +100,13 @@ public class Bus extends Thread {
 		Vector<Vector<String>> currentAndNextStop = new Vector<>();
 		Vector<Vector<String>> oldCurrentAndNextStop = new Vector<>();
 		
-		//create hash map for stops
-//		BusPathParser stopsParser;
-//    	List<LatLng> stopsPoints;
-//    	stopsParser = new BusPathParser(filenameStops);
-//    	stopsPoints = stopsParser.getListOfPoint();
 		List<LatLng> stopsPoints = BusStopManager.getInstance().getStopsPoints(line);
 		int sizeOfStopsList = stopsPoints.size();
 
 		//insert into hash map all the stop
 		for (int i=0; i<sizeOfStopsList; i++)
 			stopsList.put(stopsPoints.get(i).getLat()+"-"+stopsPoints.get(i).getLng(), i );
+	
 		//if the line is circular add one stop, since the last stop is the first stop
 		if (circular)
 			sizeOfStopsList++;
@@ -129,7 +133,8 @@ public class Bus extends Thread {
 			System.out.println ("Bus correctly inserted " + name);
 	
 		String locationDataName = name + "LocationData";
-		String busLineName =  "BusLine";
+		String personDataName = name + "PersonData";
+		String busLineName =  name+"BusLine";
 		String busRideName = name+"BusRide";
 		String busSensorNameGPS = name+"GPSSensor";
 		String busSensorNameCameraEnter = name+"CameraEnterSensor";
@@ -146,6 +151,15 @@ public class Bus extends Thread {
 				Triple.URI).getAsVector();
 			
 		newTripleToInsert.add(locationData);
+		
+		Vector<String> personData = new Triple(
+				OntologyReference.NS + personDataName,
+				OntologyReference.RDF_TYPE,
+				OntologyReference.PERSON_DATA,
+				Triple.URI,
+				Triple.URI).getAsVector();
+			
+		newTripleToInsert.add(personData);
 			
 		Vector<String> busLocationDataArch = new Triple(
 				OntologyReference.NS + name,
@@ -155,6 +169,15 @@ public class Bus extends Thread {
 				Triple.URI).getAsVector();
 			
 		newTripleToInsert.add(busLocationDataArch);
+		
+		Vector<String> busPersonDataArch = new Triple(
+				OntologyReference.NS + name,
+				OntologyReference.HAS_PERSON_DATA,
+				OntologyReference.NS + personDataName,
+				Triple.URI,
+				Triple.URI).getAsVector();
+			
+		newTripleToInsert.add(busPersonDataArch);
 			
 		Vector<String> busId = new Triple(
 				OntologyReference.NS + name,
@@ -270,6 +293,16 @@ public class Bus extends Thread {
 					if  (stopIndex != null){
 						// check if this is the last stop, if it is the case don't do anything
 						if (currentStopIndex < sizeOfStopsList-1 ) {
+						
+							//person generation logic
+							//PER ORA NON VIENE USATA LA SIB
+//							ascendedRealPerson = generateAscendingRealPerson(realPerson, SimulationConfig.getInstance().getAutobusMaxSeats());
+//							ascendedPayingPerson = generateAscendingPayingPerson(ascendedRealPerson);
+//							descendedRealPerson = generateDescendingRealPerson(realPerson);
+//							descendedPayingPerson = generateDescendingPayingPerson(descendedRealPerson);
+//							realPerson += ascendedRealPerson - descendedRealPerson;
+//							payingPerson += ascendedPayingPerson - descendedPayingPerson;
+//							
 							currentAndNextStop = new Vector<>();
 							//in this case bus is not in transit
 							newTriplePoint.add(new Triple(
@@ -282,7 +315,6 @@ public class Bus extends Thread {
 							//update current stop
 							
 							BusStop currentBusStop = BusStopManager.getInstance().getBusStopFromLatLngString(line, currentPoint.getLat()+"-"+currentPoint.getLng());
-
 							Vector<String> currentStop = new Triple(
 									OntologyReference.NS + name,
 									OntologyReference.HAS_CURR_STOP,
@@ -309,6 +341,32 @@ public class Bus extends Thread {
 									Triple.LITERAL).getAsVector();
 							
 							currentAndNextStop.add(nextStop);
+							
+/*
+ ** 					INCOMPLETO, dovremmo inserire sulla SIB i dati di realPerson e payingPerson
+ ** 						
+ *						//update real person after current stop
+ *							Vector<String> realPersonAfterCurrentStop = new Triple(
+
+							OntologyReference.NS + name,
+							OntologyReference.HAS_CURR_STOP,
+							String.valueOf(stopIndex),
+							Triple.URI,
+							Triple.LITERAL).getAsVector();
+																			
+							currentAndNextStop.add(realPersonAfterCurrentStop);
+																			
+							//update paying person after current stop 
+																			
+							Vector<String> payingPersonAfterCurrentStop = new Triple(
+							OntologyReference.NS + name,
+							OntologyReference.HAS_CURR_STOP,
+							String.valueOf(stopIndex),
+							Triple.URI,
+							Triple.LITERAL).getAsVector();
+																		
+							currentAndNextStop.add(payingPersonAfterCurrentStop);
+**/													
 							
 							if (currentStopIndex==0)
 								kp.insert(currentAndNextStop);
@@ -374,8 +432,28 @@ public class Bus extends Thread {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}
-		
-		
+		}	
 	}
+	
+	public int generateAscendingRealPerson(int realPerson, int maxSeats) {
+		int availableSpace = maxSeats - realPerson;
+		int ascendedRealPerson = (int)Math.ceil(random.nextInt(availableSpace) / 3.0);
+		return ascendedRealPerson;
+	}
+		
+	public int generateAscendingPayingPerson(int ascendedRealPerson) {
+		int ascendedPayingPerson = random.nextInt(ascendedRealPerson);
+		return ascendedPayingPerson;
+	}
+	
+	public int generateDescendingRealPerson(int realPerson) {
+		int descendedRealPerson = (int)Math.ceil(random.nextInt(realPerson) / 2.5);
+		return descendedRealPerson;	
+	}
+		
+	public int generateDescendingPayingPerson(int descendedRealPerson) {
+		int descendedPayingPerson = random.nextInt(descendedRealPerson);
+		return descendedPayingPerson;
+	}
+	
 }
