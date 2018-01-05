@@ -20,7 +20,7 @@ public class Bus extends Thread {
 	private int busRides;
 	private String filenamePoints; 
 	private String filenameStops; 
-	private HashMap<Double, Integer> stopsList;
+	private HashMap<String, Integer> stopsList;
 	private Random random;
 
 	public Bus(String name, String line, String filenamePoints, String filenameStops, int days, int busRides) {
@@ -30,7 +30,7 @@ public class Bus extends Thread {
 		this.busRides = busRides;
 		this.filenamePoints = filenamePoints;
 		this.filenameStops = filenameStops;
-		stopsList = new HashMap<Double, Integer>();
+		stopsList = new HashMap<String, Integer>();
 		random = new Random();
 	}
 	
@@ -94,7 +94,7 @@ public class Bus extends Thread {
 		int sizeOfStopsList = stopsPoints.size();
 		//insert into hash map all the stop
 		for (int i=0; i<sizeOfStopsList; i++)
-			stopsList.put(stopsPoints.get(i).getLat(), i );
+			stopsList.put(stopsPoints.get(i).getLat()+"-"+stopsPoints.get(i).getLng(), i );
 		
 		//connect to sib
 		KPICore kp = new KPICore(SIBConfiguration.getInstance().getHost(),
@@ -118,7 +118,7 @@ public class Bus extends Thread {
 			System.out.println ("Bus correctly inserted " + name);
 	
 		String locationDataName = name + "LocationData";
-		String busLineName =  name+"BusLine";
+		String busLineName =  "BusLine";
 		String busRideName = name+"BusRide";
 		String busSensorNameGPS = name+"GPSSensor";
 		String busSensorNameCameraEnter = name+"CameraEnterSensor";
@@ -156,7 +156,7 @@ public class Bus extends Thread {
 			
 		//insert line for autobus
 		Vector<String> busLine = new Triple(
-				OntologyReference.NS + busLineName,
+				OntologyReference.NS + busLineName + line,
 				OntologyReference.RDF_TYPE,
 				OntologyReference.BUS_LINE,
 				Triple.URI,
@@ -165,7 +165,7 @@ public class Bus extends Thread {
 		newTripleToInsert.add(busLine);
 		
 		Vector<String> busLineNumber = new Triple(
-				OntologyReference.NS + busLineName,
+				OntologyReference.NS + busLineName + line,
 				OntologyReference.HAS_NUMBER,
 				line,
 				Triple.URI,
@@ -177,7 +177,7 @@ public class Bus extends Thread {
 		Vector<String> busLineArch = new Triple(
 				OntologyReference.NS + name,
 				OntologyReference.ON_LINE,
-				OntologyReference.NS + busLineName,
+				OntologyReference.NS + busLineName + line,
 				Triple.URI,
 				Triple.URI).getAsVector();
 		
@@ -251,8 +251,7 @@ public class Bus extends Thread {
 				
 				for (int i = 0; i < listOfPointSize; i++) {
 					nextPoint = listOfPoints.get(i);
-					latNextPoint = new Double(nextPoint.getLat());
-					stopIndex = stopsList.get(latNextPoint);	
+					stopIndex = stopsList.get(nextPoint.getLat()+"-"+nextPoint.getLng());	
 					newTriplePoint = new Vector<>();
 					
 					//check whether the next point is a bus stop
@@ -267,6 +266,8 @@ public class Bus extends Thread {
 						Triple.URI).getAsVector());
 						
 						//update current stop
+						
+						//BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latLng);
 
 						Vector<String> currentStop = new Triple(
 								OntologyReference.NS + name,
