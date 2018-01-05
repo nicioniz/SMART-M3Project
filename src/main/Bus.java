@@ -66,6 +66,14 @@ public class Bus extends Thread {
 	
 	@Override
 	public void run() {
+		//DA CAPIRE QUALI DI QUESTE VARIABILI VANNO ELIMINATE E MESSE NELLA SIB
+		int descendedRealPerson;
+		int descendedPayingPerson;
+		int ascendedRealPerson;
+		int ascendedPayingPerson;
+		int realPerson = 0;
+		int payingPerson = 0;
+		
 		LatLng nextPoint;
 		Double latNextPoint;
 		Integer stopIndex;
@@ -118,6 +126,7 @@ public class Bus extends Thread {
 			System.out.println ("Bus correctly inserted " + name);
 	
 		String locationDataName = name + "LocationData";
+		String personDataName = name + "PersonData";
 		String busLineName =  name+"BusLine";
 		String busRideName = name+"BusRide";
 		String busSensorNameGPS = name+"GPSSensor";
@@ -135,6 +144,15 @@ public class Bus extends Thread {
 				Triple.URI).getAsVector();
 			
 		newTripleToInsert.add(locationData);
+		
+		Vector<String> personData = new Triple(
+				OntologyReference.NS + personDataName,
+				OntologyReference.RDF_TYPE,
+				OntologyReference.PERSON_DATA,
+				Triple.URI,
+				Triple.URI).getAsVector();
+			
+		newTripleToInsert.add(personData);
 			
 		Vector<String> busLocationDataArch = new Triple(
 				OntologyReference.NS + name,
@@ -144,6 +162,15 @@ public class Bus extends Thread {
 				Triple.URI).getAsVector();
 			
 		newTripleToInsert.add(busLocationDataArch);
+		
+		Vector<String> busPersonDataArch = new Triple(
+				OntologyReference.NS + name,
+				OntologyReference.HAS_PERSON_DATA,
+				OntologyReference.NS + personDataName,
+				Triple.URI,
+				Triple.URI).getAsVector();
+			
+		newTripleToInsert.add(busPersonDataArch);
 			
 		Vector<String> busId = new Triple(
 				OntologyReference.NS + name,
@@ -257,6 +284,16 @@ public class Bus extends Thread {
 					
 					//check whether the next point is a bus stop
 					if  (stopIndex != null){
+						
+						//person generation logic
+						//PER ORA NON VIENE USATA LA SIB
+						ascendedRealPerson = generateAscendingRealPerson(realPerson, SimulationConfig.getInstance().getAutobusMaxSeats());
+						ascendedPayingPerson = generateAscendingPayingPerson(ascendedRealPerson);
+						descendedRealPerson = generateDescendingRealPerson(realPerson);
+						descendedPayingPerson = generateDescendingPayingPerson(descendedRealPerson);
+						realPerson += ascendedRealPerson - descendedRealPerson;
+						payingPerson += ascendedPayingPerson - descendedPayingPerson;
+						
 						currentAndNextStop = new Vector<>();
 						//in this case bus is not in transit
 						newTriplePoint.add(new Triple(
@@ -277,6 +314,31 @@ public class Bus extends Thread {
 						
 						currentAndNextStop.add(currentStop);
 						
+/*
+ * 					INCOMPLETO, dovremmo inserire sulla SIB i dati di realPerson e payingPerson
+ * 						
+						//update real person after current stop
+						Vector<String> realPersonAfterCurrentStop = new Triple(
+								OntologyReference.NS + name,
+								OntologyReference.HAS_CURR_STOP,
+								String.valueOf(stopIndex),
+								Triple.URI,
+								Triple.LITERAL).getAsVector();
+												
+						currentAndNextStop.add(realPersonAfterCurrentStop);
+												
+						//update paying person after current stop 
+												
+						Vector<String> payingPersonAfterCurrentStop = new Triple(
+								OntologyReference.NS + name,
+								OntologyReference.HAS_CURR_STOP,
+								String.valueOf(stopIndex),
+								Triple.URI,
+								Triple.LITERAL).getAsVector();
+											
+						currentAndNextStop.add(payingPersonAfterCurrentStop);
+*
+*/						
 						//update next stop
 						
 						Vector<String> nextStop = new Triple(
@@ -348,8 +410,28 @@ public class Bus extends Thread {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}
-		
-		
+		}	
 	}
+	
+	public int generateAscendingRealPerson(int realPerson, int maxSeats) {
+		int availableSpace = maxSeats - realPerson;
+		int ascendedRealPerson = (int)Math.ceil(random.nextInt(availableSpace) / 3.0);
+		return ascendedRealPerson;
+	}
+		
+	public int generateAscendingPayingPerson(int ascendedRealPerson) {
+		int ascendedPayingPerson = random.nextInt(ascendedRealPerson);
+		return ascendedPayingPerson;
+	}
+	
+	public int generateDescendingRealPerson(int realPerson) {
+		int descendedRealPerson = (int)Math.ceil(random.nextInt(realPerson) / 2.5);
+		return descendedRealPerson;	
+	}
+		
+	public int generateDescendingPayingPerson(int descendedRealPerson) {
+		int descendedPayingPerson = random.nextInt(descendedRealPerson);
+		return descendedPayingPerson;
+	}
+	
 }
