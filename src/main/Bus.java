@@ -86,10 +86,11 @@ public class Bus extends Thread {
 		Vector<Vector<String>> oldCurrentAndNextStop = new Vector<>();
 		
 		//create hash map for stops
-		BusPathParser stopsParser;
-    	List<LatLng> stopsPoints;
-    	stopsParser = new BusPathParser(filenameStops);
-    	stopsPoints = stopsParser.getListOfPoint();
+//		BusPathParser stopsParser;
+//    	List<LatLng> stopsPoints;
+//    	stopsParser = new BusPathParser(filenameStops);
+//    	stopsPoints = stopsParser.getListOfPoint();
+		List<LatLng> stopsPoints = BusStopManager.getInstance().getStopsPoints(line);
 		int sizeOfStopsList = stopsPoints.size();
 		//insert into hash map all the stop
 		for (int i=0; i<sizeOfStopsList; i++)
