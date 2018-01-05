@@ -22,6 +22,7 @@ public class Bus extends Thread {
 	private String filenameStops; 
 	private HashMap<String, Integer> stopsList;
 	private Random random;
+	private boolean circular;
 
 	public Bus(String name, String line, String filenamePoints, String filenameStops, int days, int busRides) {
 		this.name = name;
@@ -32,6 +33,11 @@ public class Bus extends Thread {
 		this.filenameStops = filenameStops;
 		stopsList = new HashMap<String, Integer>();
 		random = new Random();
+		if (line.equals("32"))
+			circular = true;
+		else
+			circular = false;
+			
 	}
 	
 	private void insertSensor(String busSensorName, String busType, String autobusName, Vector<Vector<String>> newTripleToInsert ) {
@@ -93,9 +99,13 @@ public class Bus extends Thread {
 //    	stopsPoints = stopsParser.getListOfPoint();
 		List<LatLng> stopsPoints = BusStopManager.getInstance().getStopsPoints(line);
 		int sizeOfStopsList = stopsPoints.size();
+
 		//insert into hash map all the stop
 		for (int i=0; i<sizeOfStopsList; i++)
 			stopsList.put(stopsPoints.get(i).getLat()+"-"+stopsPoints.get(i).getLng(), i );
+		//if the line is circular add one stop, since the last stop is the first stop
+		if (circular)
+			sizeOfStopsList++;
 		
 		//connect to sib
 		KPICore kp = new KPICore(SIBConfiguration.getInstance().getHost(),
@@ -258,52 +268,58 @@ public class Bus extends Thread {
 					
 					//check whether the next point is a bus stop
 					if  (stopIndex != null){
-						currentAndNextStop = new Vector<>();
-						//in this case bus is not in transit
-						newTriplePoint.add(new Triple(
-						OntologyReference.NS + name,
-						OntologyReference.IS_IN_TRANSIT,
-						OntologyReference.FALSE,
-						Triple.URI,
-						Triple.URI).getAsVector());
-						
-						//update current stop
-						
-						BusStop currentBusStop = BusStopManager.getInstance().getBusStopFromLatLngString(line, currentPoint.getLat()+"-"+currentPoint.getLng());
+						// check if this is the last stop, if it is the case don't do anything
+						if (currentStopIndex < sizeOfStopsList-1 ) {
+							currentAndNextStop = new Vector<>();
+							//in this case bus is not in transit
+							newTriplePoint.add(new Triple(
+							OntologyReference.NS + name,
+							OntologyReference.IS_IN_TRANSIT,
+							OntologyReference.FALSE,
+							Triple.URI,
+							Triple.URI).getAsVector());
+							
+							//update current stop
+							
+							BusStop currentBusStop = BusStopManager.getInstance().getBusStopFromLatLngString(line, currentPoint.getLat()+"-"+currentPoint.getLng());
 
-						Vector<String> currentStop = new Triple(
-								OntologyReference.NS + name,
-								OntologyReference.HAS_CURR_STOP,
-								currentBusStop.getUri(),
-								Triple.URI,
-								Triple.LITERAL).getAsVector();
-						
-						currentAndNextStop.add(currentStop);
-						
-						//if i==listOfPointSize this is the last stop, so take the first stop as next
-						if (currentStopIndex!=sizeOfStopsList-1)
-							nextPoint = stopsPoints.get(currentStopIndex+1);
-						else 
-							nextPoint = stopsPoints.get(0);							
-						BusStop nextBusStop = BusStopManager.getInstance().getBusStopFromLatLngString(line, nextPoint.getLat()+"-"+nextPoint.getLng());
+							Vector<String> currentStop = new Triple(
+									OntologyReference.NS + name,
+									OntologyReference.HAS_CURR_STOP,
+									currentBusStop.getUri(),
+									Triple.URI,
+									Triple.LITERAL).getAsVector();
+							
+							currentAndNextStop.add(currentStop);
 
-						//update next stop
+							if (circular && currentStopIndex==sizeOfStopsList-2)
+								nextPoint = stopsPoints.get(0);
+							else
+								nextPoint = stopsPoints.get(currentStopIndex+1);
+							
+							BusStop nextBusStop = BusStopManager.getInstance().getBusStopFromLatLngString(line, nextPoint.getLat()+"-"+nextPoint.getLng());
 
-						Vector<String> nextStop = new Triple(
-								OntologyReference.NS + name,
-								OntologyReference.HAS_NEXT_STOP,
-								nextBusStop.getUri(),
-								Triple.URI,
-								Triple.LITERAL).getAsVector();
-						
-						currentAndNextStop.add(nextStop);
-						
-						if (stopIndex==0)
-							kp.insert(currentAndNextStop);
-						else
-							kp.update(currentAndNextStop, oldCurrentAndNextStop);
-						oldCurrentAndNextStop = currentAndNextStop;
-						currentStopIndex++;
+							//update next stop
+
+							Vector<String> nextStop = new Triple(
+									OntologyReference.NS + name,
+									OntologyReference.HAS_NEXT_STOP,
+									nextBusStop.getUri(),
+									Triple.URI,
+									Triple.LITERAL).getAsVector();
+							
+							currentAndNextStop.add(nextStop);
+							
+							if (currentStopIndex==0)
+								kp.insert(currentAndNextStop);
+							else
+								kp.update(currentAndNextStop, oldCurrentAndNextStop);
+							oldCurrentAndNextStop = currentAndNextStop;
+							currentStopIndex++;
+						}else {
+							System.out.println("last stop");
+						}
+
 					}else {
 						newTriplePoint.add(new Triple(
 						OntologyReference.NS + name,
