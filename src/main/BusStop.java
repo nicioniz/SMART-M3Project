@@ -174,4 +174,10 @@ public class BusStop {
 	public String getLocationString() {
 		return "" + location.getLat() + "-" + location.getLng();
 	}
+
+	public LatLng getLocation() {
+		return location;
+	}
+	
+	
 }
