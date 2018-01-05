@@ -856,43 +856,6 @@
   <trkpt lat="44.503931" lon="11.366527">
     <name>Centro Zanardi </name>
   </trkpt>
-  
-  <trkpt lat="44.50393" lon="11.36655">
-    <name>TP638</name>
-  </trkpt>
-  <trkpt lat="44.50389" lon="11.36674">
-    <name>TP639</name>
-  </trkpt>
-  <trkpt lat="44.50389" lon="11.36675">
-    <name>TP640</name>
-  </trkpt>
-  <trkpt lat="44.50384" lon="11.36695">
-    <name>TP641</name>
-  </trkpt>
-  <trkpt lat="44.5038" lon="11.36717">
-    <name>TP642</name>
-  </trkpt>
-  <trkpt lat="44.50378" lon="11.36723">
-    <name>TP643</name>
-  </trkpt>
-  <trkpt lat="44.50376" lon="11.36735">
-    <name>TP644</name>
-  </trkpt>
-  <trkpt lat="44.50376" lon="11.36736">
-    <name>TP645</name>
-  </trkpt>
-  <trkpt lat="44.50375" lon="11.36762">
-    <name>TP646</name>
-  </trkpt>
-  <trkpt lat="44.50375" lon="11.36773">
-    <name>TP647</name>
-  </trkpt>
-  <trkpt lat="44.50375" lon="11.36783">
-    <name>TP648</name>
-  </trkpt>
-  <trkpt lat="44.5037486" lon="11.3678272">
-    <name>TP649</name>
-  </trkpt>
-  </trkseg>
+   </trkseg>
 </trk>
 </gpx>
