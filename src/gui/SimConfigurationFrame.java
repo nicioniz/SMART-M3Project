@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import main.BusVisualizerAggregator;
 import main.Bus;
 import main.BusMap;
+import main.BusStopManager;
 import simulationConfiguration.SimulationConfig;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
@@ -129,6 +130,7 @@ public class SimConfigurationFrame extends JFrame {
 
 	public void startSimButtonPressed(ActionEvent e) {
 		this.busMap = new BusMap();
+		
 		int numberOfStartedThread = 0;
 		String tempSimulationDays = "";
 		tempSimulationDays = simulationDaysTextField.getText();
@@ -138,6 +140,10 @@ public class SimConfigurationFrame extends JFrame {
 		tempBusRides = busRidesTextField.getText();
 		int busRides = Integer.parseInt(tempBusRides);
 		SimulationConfig.getInstance().setBusRides(busRides);
+		
+		//insert all the stops into the SIB and generate the inspectors. It take some time
+		BusStopManager.getInstance().init();
+		
 		//wait for map, otherwise can't call addStops()..
 		busMap.waitReady();
 		double simVel = velocitySlider.getValue() / 10.0;
