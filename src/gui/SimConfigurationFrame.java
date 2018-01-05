@@ -163,7 +163,7 @@ public class SimConfigurationFrame extends JFrame {
 	
 	private void prepareNewBus(String busNumber, int simulationDays, int busRides) {
 		try {
-			busMap.addStops("gpx/bus" + busNumber + "StopList.gpx");
+			busMap.addStops(busNumber);
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}

@@ -79,13 +79,20 @@ public class BusMap extends MapView{
         return marker;
     }
     
-    public void addStops(String filenameStops) throws FileNotFoundException {
+    /**
+     * 
+     * @param busNumber It also accept the busStop filename (old mode of the method)
+     * @throws FileNotFoundException
+     */
+    public void addStops(String busNumber) throws FileNotFoundException {
     	
 //    	BusPathParser stopsParser;
 //    	List<LatLng> stopsPoints;
 //    	stopsParser = new BusPathParser(filenameStops);
 //    	stopsPoints = stopsParser.getListOfPoint();
-    	List<LatLng> stopsPoints = BusStopManager.getInstance().getStopsPoints(filenameStops.replaceAll("[^\\d]", ""));
+    	
+    	//replaceAll used to maintain compatibility with the old usage of the method
+    	List<LatLng> stopsPoints = BusStopManager.getInstance().getStopsPoints(busNumber.replaceAll("[^\\d]", ""));
     	int sizeOfStopsList = stopsPoints.size();
     	Icon icon = new Icon();
     	InputStream inputstream = new FileInputStream("./res/stop.png");
