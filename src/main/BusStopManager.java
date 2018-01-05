@@ -28,6 +28,7 @@ public class BusStopManager {
 		
 		List<String> fileNames = Arrays.asList(gpxDir.list()).stream()
 						.filter(s -> s.matches("^bus\\d+StopList.gpx$"))
+						.map(s -> "gpx/" + s)
 						.collect(Collectors.toList());
 		for(String s : fileNames)
 			addLine(s);	
