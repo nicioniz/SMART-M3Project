@@ -13,6 +13,12 @@ public class SimulationConfig {
 	private int inspectorPresencePercentageProbability;
 	private int numberOfPresentInsectors = 0;
 	private int autobusMaxSeats = 80;
+	private float ticketPrice;
+	private float ticketEvasion;
+	private int inspectorCost;
+	private int inspectors;
+	private float fine;
+	private int veichleCost;
 	
 	
 	private static SimulationConfig instance = null;
@@ -87,6 +93,54 @@ public class SimulationConfig {
 		return numberOfPresentInsectors;
 	}
 	
+	public float getTicketPrice() {
+		return ticketPrice;
+	}
+
+	public void setTicketPrice(float ticketPrice) {
+		this.ticketPrice = ticketPrice;
+	}
+
+	public float getTicketEvasion() {
+		return ticketEvasion;
+	}
+
+	public void setTicketEvasion(float ticketEvasion) {
+		this.ticketEvasion = ticketEvasion;
+	}
+
+	public int getInspectorCost() {
+		return inspectorCost;
+	}
+
+	public void setInspectorCost(int inspectorCost) {
+		this.inspectorCost = inspectorCost;
+	}
+
+	public int getInspectors() {
+		return inspectors;
+	}
+
+	public void setInspectors(int inspectors) {
+		this.inspectors = inspectors;
+	}
+
+	public float getFine() {
+		return fine;
+	}
+
+	public void setFine(float fine) {
+		this.fine = fine;
+	}
+
+	public int getVeichleCost() {
+		return veichleCost;
+	}
+
+	public void setVeichleCost(int veichleCost) {
+		this.veichleCost = veichleCost;
+	}
+
 	public boolean addInspector(int numberOfAddedInspectors) {
 		if(numberOfPresentInsectors + numberOfAddedInspectors <= maxInspectors) {
 			numberOfPresentInsectors += numberOfAddedInspectors;
