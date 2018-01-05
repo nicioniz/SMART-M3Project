@@ -27,6 +27,9 @@ public class Main {
 			System.out.println ("MAIN Initializer: Joined SIB correctly");
 		insertBooleanInstances();
 		insertSensorTypeInstances();
+		
+		//generate BusStopManager by calling for the first time is getInstance() method
+		BusStopManager.getInstance();
 	}
 
 	private static void insertSensorTypeInstances() {

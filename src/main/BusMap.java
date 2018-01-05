@@ -81,10 +81,11 @@ public class BusMap extends MapView{
     
     public void addStops(String filenameStops) throws FileNotFoundException {
     	
-    	BusPathParser stopsParser;
-    	List<LatLng> stopsPoints;
-    	stopsParser = new BusPathParser(filenameStops);
-    	stopsPoints = stopsParser.getListOfPoint();
+//    	BusPathParser stopsParser;
+//    	List<LatLng> stopsPoints;
+//    	stopsParser = new BusPathParser(filenameStops);
+//    	stopsPoints = stopsParser.getListOfPoint();
+    	List<LatLng> stopsPoints = BusStopManager.getInstance().getStopsPoints(filenameStops.replaceAll("[^\\d]", ""));
     	int sizeOfStopsList = stopsPoints.size();
     	Icon icon = new Icon();
     	InputStream inputstream = new FileInputStream("./res/stop.png");
