@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 import main.Bus;
 import main.BusMap;
 import main.BusVisualizerAggregator;
+import main.BusStopManager;
 import simulationConfiguration.SimulationConfig;
 
 @SuppressWarnings("serial")
@@ -137,6 +138,7 @@ public class SimConfigurationFrame extends JFrame {
 
 	public void startSimButtonPressed(ActionEvent e) {
 		this.busMap = new BusMap();
+		
 		int numberOfStartedThread = 0;
 		//necessario per considerare anche i valori scritti manualmente nello spinner
 		try {
@@ -149,6 +151,10 @@ public class SimConfigurationFrame extends JFrame {
 		SimulationConfig.getInstance().setSimulationDays(simulationDays);
 		int busRides = (Integer) busRidesSpinner.getValue();
 		SimulationConfig.getInstance().setBusRides(busRides);
+		
+		//insert all the stops into the SIB and generate the inspectors. It take some time
+		BusStopManager.getInstance().init();
+		
 		//wait for map, otherwise can't call addStops()..
 		busMap.waitReady();
 		double simVel = velocitySlider.getValue() / 10.0;
@@ -174,7 +180,7 @@ public class SimConfigurationFrame extends JFrame {
 	
 	private void prepareNewBus(String busNumber, int simulationDays, int busRides) {
 		try {
-			busMap.addStops("gpx/bus" + busNumber + "StopList.gpx");
+			busMap.addStops(busNumber);
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}

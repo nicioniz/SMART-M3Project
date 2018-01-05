@@ -30,10 +30,13 @@ public class BusStop {
 		this.id = id;
 		this.location = location;
 		r = new Random(System.currentTimeMillis());
-		insertIntoSIB();
-		generateInspector();
 	}
 		
+	public void init() {
+		insertIntoSIB();
+		generateInspector();		
+	}
+	
 	private void insertIntoSIB() {
 		String locationDataName = "BusStop" + nameWithoutSpaces + "LocationData";
 		
@@ -44,7 +47,7 @@ public class BusStop {
 		if(!kp.join().isConfirmed())
 			System.err.println ("Error joining the SIB");
 		else
-			System.out.println ("Bus joined SIB correctly");
+			System.out.println ("BusStop joined SIB correctly");
 		
 		Vector<Vector<String>> newTripleToInsert = new Vector<>();
 		
@@ -73,7 +76,7 @@ public class BusStop {
 		newTripleToInsert.add(locationDataLon);
 		
 		Vector<String> typeTriple = new Triple(
-				OntologyReference.NS + "BusStop" + nameWithoutSpaces,
+				getUri(),
 				OntologyReference.RDF_TYPE,
 				OntologyReference.BUS_STOP,
 				Triple.URI,
@@ -81,7 +84,7 @@ public class BusStop {
 		newTripleToInsert.add(typeTriple);
 		
 		Vector<String> tripleId = new Triple(
-				OntologyReference.NS + "BusStop" + nameWithoutSpaces,
+				getUri(),
 				OntologyReference.HAS_ID,
 				id,
 				Triple.URI,
@@ -89,7 +92,7 @@ public class BusStop {
 		newTripleToInsert.add(tripleId);
 		
 		Vector<String> tripleName = new Triple(
-				OntologyReference.NS + "BusStop" + nameWithoutSpaces,
+				getUri(),
 				OntologyReference.HAS_NAME,
 				name,
 				Triple.URI,
@@ -97,7 +100,7 @@ public class BusStop {
 		newTripleToInsert.add(tripleName);
 		
 		Vector<String> tripleLocationData = new Triple(
-				OntologyReference.NS + "BusStop" + nameWithoutSpaces,
+				getUri(),
 				OntologyReference.HAS_LOCATION_DATA,
 				OntologyReference.NS + locationDataName,
 				Triple.URI,
@@ -114,7 +117,7 @@ public class BusStop {
 		else
 			inspectorPresent = false;
 		oldInspectorPresenceTriple.add(new Triple(
-				OntologyReference.NS + "BusStop" + nameWithoutSpaces,
+				getUri(),
 				OntologyReference.IS_INSPECTOR_PRESENT,
 				isInspectorPresent() ? OntologyReference.TRUE : OntologyReference.FALSE,
 				Triple.URI,
@@ -135,7 +138,7 @@ public class BusStop {
 	private void updateSIB() {
 		Vector<Vector<String>> newInspectorPresenceTriple = new Vector<>();
 		newInspectorPresenceTriple.add(new Triple(
-				OntologyReference.NS + "BusStop" + nameWithoutSpaces,
+				getUri(),
 				OntologyReference.IS_INSPECTOR_PRESENT,
 				isInspectorPresent() ? OntologyReference.TRUE : OntologyReference.FALSE,
 				Triple.URI,
@@ -159,8 +162,22 @@ public class BusStop {
 		return false;
 	}
 
-	public String getNameWithoutSpaces() {
-		return nameWithoutSpaces;
+	public String getUri() {
+		return OntologyReference.NS + "BusStop" + nameWithoutSpaces;
 	}
 		
+	/**
+	 * 
+	 * @return Return a string that represents the location.
+	 * The format is "Latitude-Longitude"
+	 */
+	public String getLocationString() {
+		return "" + location.getLat() + "-" + location.getLng();
+	}
+
+	public LatLng getLocation() {
+		return location;
+	}
+	
+	
 }

@@ -1,21 +1,16 @@
 package parser;
 
-import java.util.List;
-
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.XMLReader;
 
-import com.teamdev.jxmaps.LatLng;
+public class GenericParser {
 
-
-public class Parser {
+	private XMLReader xmlReader;
 	
-	private List<LatLng> points;
-
-	public Parser(String fileName) {
+	public GenericParser() {
 		SAXParserFactory spf = SAXParserFactory.newInstance();
 
 		try{
@@ -23,15 +18,11 @@ public class Parser {
 			spf.setValidating(true);
 
 			SAXParser saxParser = spf.newSAXParser();
-			XMLReader xmlReader = saxParser.getXMLReader();
-			ContentHandler handler = new SAXHandlerGPX();
+			xmlReader = saxParser.getXMLReader();
 			ErrorChecker errors = new ErrorChecker();
 
 			xmlReader.setErrorHandler(errors);
 			xmlReader.setFeature("http://apache.org/xml/features/validation/schema", true);
-			xmlReader.setContentHandler(handler);
-			xmlReader.parse(fileName);
-			points = ((SAXHandlerGPX) handler).getPoints();
 
 		}catch (Exception e) {
 			System.err.println(e.getMessage());
@@ -39,7 +30,17 @@ public class Parser {
 		}
 	}
 	
-	public List<LatLng> getListOfPoint(){
-		return points;
+	public void setContentHandler(ContentHandler handler) {
+		xmlReader.setContentHandler(handler);
 	}
+	
+	public void parse(String fileName) {
+		try {
+			xmlReader.parse(fileName);
+		}catch (Exception e) {
+			System.err.println(e.getMessage());
+			System.exit(1);
+		}
+	}
+	
 }

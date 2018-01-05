@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 import com.teamdev.jxmaps.LatLng;
-import parser.Parser;
+import parser.BusPathParser;
 import simulationConfiguration.SimulationConfig;
 import sofia_kp.KPICore;
 import utils.OntologyReference;
@@ -70,9 +70,9 @@ public class Bus extends Thread {
 		Double latNextPoint;
 		Integer stopIndex;
 		//get list of point
-		Parser parserForPoints;
+		BusPathParser parserForPoints;
 	   	List<LatLng> listOfPoints;
-		parserForPoints = new Parser(filenamePoints);
+		parserForPoints = new BusPathParser(filenamePoints);
 		listOfPoints = parserForPoints.getListOfPoint();
 		int listOfPointSize = listOfPoints.size();
 		
@@ -86,10 +86,11 @@ public class Bus extends Thread {
 		Vector<Vector<String>> oldCurrentAndNextStop = new Vector<>();
 		
 		//create hash map for stops
-		Parser stopsParser;
-    	List<LatLng> stopsPoints;
-    	stopsParser = new Parser(filenameStops);
-    	stopsPoints = stopsParser.getListOfPoint();
+//		BusPathParser stopsParser;
+//    	List<LatLng> stopsPoints;
+//    	stopsParser = new BusPathParser(filenameStops);
+//    	stopsPoints = stopsParser.getListOfPoint();
+		List<LatLng> stopsPoints = BusStopManager.getInstance().getStopsPoints(line);
 		int sizeOfStopsList = stopsPoints.size();
 		//insert into hash map all the stop
 		for (int i=0; i<sizeOfStopsList; i++)

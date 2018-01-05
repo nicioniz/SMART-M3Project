@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" creator="mapstogpx.com" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">
+ 
+<trk>
+  <name>40134 Bologna BO to 40136 Bologna BO</name>
+  <number>1</number>
+  <trkseg>
+  
+  <trkpt lat="44.479694" lon="11.369955">
+    <name>Largo Lercaro</name>
+  </trkpt>
+  
+  <trkpt lat="44.482087" lon="11.369123">
+    <name>Albini</name>
+  </trkpt>
+  
+  <trkpt lat="44.483445" lon="11.365533">
+    <name>Mezzofanti</name>
+  </trkpt>
+  
+  <trkpt lat="44.484359" lon="11.363091">
+    <name>Savioli</name>
+  </trkpt>
+  
+  <trkpt lat="44.486627" lon="11.361496">
+    <name>Piazza Trento Trieste</name>
+  </trkpt>
+  
+  <trkpt lat="44.487588" lon="11.359716">
+    <name>Dante</name>
+  </trkpt>
+  
+  <trkpt lat="44.487085" lon="11.354042">
+    <name>Fondazza</name>
+  </trkpt>
+  
+  <trkpt lat="44.489638" lon="11.350788">
+    <name>Garganelli</name>
+  </trkpt>
+  
+  <trkpt lat="44.491563" lon="11.345201">
+    <name>Piazza Minghetti</name>
+  </trkpt>
+  
+  <trkpt lat="44.491386" lon="11.342274">
+    <name>Farini</name>
+  </trkpt>
+  
+  <trkpt lat="44.494167" lon="11.336425">
+    <name>Piazza Malpighi </name>
+  </trkpt>
+  
+  <trkpt lat="44.495281" lon="11.339996">
+    <name>Ugo Bassi </name>
+  </trkpt>
+  
+  <trkpt lat="44.495441" lon="11.342846">
+    <name>San Pietro </name>
+  </trkpt>
+  
+  <trkpt lat="44.500593" lon="11.344249">
+    <name>VIII Agosto </name>
+  </trkpt>
+  
+  <trkpt lat="44.504327" lon="11.345380">
+    <name>Piazza XX Settembre</name>
+  </trkpt>
+  
+  <trkpt lat="44.508566" lon="11.346673">
+    <name>Sacro Cuore</name>
+  </trkpt>
+  
+  </trkseg>
+</trk>
+</gpx>

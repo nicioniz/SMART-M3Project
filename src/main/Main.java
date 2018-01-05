@@ -13,7 +13,7 @@ public class Main {
 	public static void main(String[] args) throws InterruptedException {
 		initializer();
 		SimConfigurationFrame configurator = new SimConfigurationFrame();
-		configurator.setVisible(true);		
+		configurator.setVisible(true);
 	}
 
 	private static void initializer() {
@@ -27,6 +27,9 @@ public class Main {
 			System.out.println ("MAIN Initializer: Joined SIB correctly");
 		insertBooleanInstances();
 		insertSensorTypeInstances();
+		
+		//generate BusStopManager by calling for the first time is getInstance() method
+		BusStopManager.getInstance();
 	}
 
 	private static void insertSensorTypeInstances() {
