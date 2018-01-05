@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
 import java.util.stream.Collectors;
 
 import com.teamdev.jxmaps.LatLng;
@@ -59,7 +60,7 @@ public class BusStopManager {
 		initCalled = true;
 	}
 
-	public BusStop getBusStopFromLatLngString(String lineNumber, String latLng) {
+	public synchronized BusStop getBusStopFromLatLngString(String lineNumber, String latLng) {
 		return busStopHashmaps.get(lineNumber).get(latLng);
 	}
 	
@@ -70,13 +71,14 @@ public class BusStopManager {
 	 * @return ATTENTION!!! No control inside this method.
 	 * DO NOT call with the last BusStop of a line!!!
 	 */
-	public BusStop getNextBusStopFromActualLatLngString(String lineNumber, String latLng) {
+	public synchronized BusStop getNextBusStopFromActualLatLngString(String lineNumber, String latLng) {
+		
 		BusStop actual = getBusStopFromLatLngString(lineNumber, latLng);
 		int actualIndex = busStopLists.get(lineNumber).indexOf(actual);
 		return busStopLists.get(lineNumber).get(actualIndex + 1);
 	}
 	
-	public List<LatLng> getStopsPoints(String lineNumber) {
+	public synchronized List<LatLng> getStopsPoints(String lineNumber) {
 		List<LatLng> res = new ArrayList<>();
 		busStopLists.get(lineNumber).stream().forEach(bs -> res.add(bs.getLocation()));
 		return res;
