@@ -23,6 +23,7 @@ public class Bus extends Thread {
 	private HashMap<String, Integer> stopsList;
 	private Random random;
 	private boolean circular;
+	private boolean inspectorPresent;
 
 	public Bus(String name, String line, String filenamePoints, String filenameStops, int days, int busRides) {
 		this.name = name;
@@ -37,6 +38,7 @@ public class Bus extends Thread {
 			circular = true;
 		else
 			circular = false;
+		inspectorPresent = false;
 			
 	}
 	
@@ -292,7 +294,7 @@ public class Bus extends Thread {
 					//check whether the next point is a bus stop
 					if  (stopIndex != null){
 						// check if this is the last stop, if it is the case don't do anything
-						if (currentStopIndex < sizeOfStopsList-1 ) {
+						if (currentStopIndex < sizeOfStopsList-1 ) {							
 						
 							//person generation logic
 							//PER ORA NON VIENE USATA LA SIB
@@ -347,7 +349,31 @@ public class Bus extends Thread {
 									Triple.LITERAL).getAsVector();
 							
 							currentAndNextStop.add(nextStop);
-							
+						
+							if (inspectorPresent && !currentBusStop.isInspectorPresent()) {
+								//if there was a ticket inspector on the bus he must get off
+								currentBusStop.setInspectorPresent(true);
+								inspectorPresent=false;
+							}else if (!inspectorPresent && currentBusStop.isInspectorPresent()) {
+								//if there wasn't a ticket inspector on the bus he must get on
+								inspectorPresent=true;
+								currentBusStop.setInspectorPresent(false);
+							}
+							if (inspectorPresent) {
+								currentAndNextStop.add(new Triple(
+										OntologyReference.NS + name,
+										OntologyReference.IS_INSPECTOR_PRESENT,
+										OntologyReference.TRUE,
+										Triple.URI,
+										Triple.URI).getAsVector());
+							}else {
+								currentAndNextStop.add(new Triple(
+										OntologyReference.NS + name,
+										OntologyReference.IS_INSPECTOR_PRESENT,
+										OntologyReference.FALSE,
+										Triple.URI,
+										Triple.URI).getAsVector());
+							}
 /*
  ** 					INCOMPLETO, dovremmo inserire sulla SIB i dati di realPerson e payingPerson
  ** 						
