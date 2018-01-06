@@ -72,4 +72,12 @@ public class OntologyReference {
 	public static final String HAS_REAL_PERSON = NS + "hasRealPerson";
 	public static final String HAS_PAYING_PERSON = NS + "hasPayingPerson";
 	
+	//GetOn data
+	public static final String GET_ON_DATA = NS + "GetOn";
+	public static final String HAS_GETTING_ON = NS + "hasGettingOn";
+	public static final String HAS_GETTING_ON_PAYING= NS + "hasGettingOnPaying";
+
+
+	
+	
 }
