@@ -24,6 +24,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.teamdev.jxmaps.LatLng;
+
 import main.Bus;
 import main.BusMap;
 import main.BusStopManager;
@@ -340,6 +342,7 @@ public class SimConfigurationFrame extends JFrame {
 		}
 		
 		SimulationConfig.getInstance().setWaitingThreadForBarrier(numberOfStartedThread);
+		busMap.getMap().setCenter(new LatLng(44.4914, 11.3428));
 		this.dispose();
 	}
 	

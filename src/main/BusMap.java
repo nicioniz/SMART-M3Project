@@ -135,7 +135,7 @@ public class BusMap extends MapView{
             // Setting map options
             getMap().setOptions(mapOptions);
             // Setting the map center
-            getMap().setCenter(new LatLng(44.493889, 11.342778));
+            //getMap().setCenter(new LatLng(44.493889, 11.342778));
             // Setting initial zoom value
             getMap().setZoom(14.0);  
         }	
