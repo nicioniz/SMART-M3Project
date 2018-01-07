@@ -374,31 +374,24 @@ public class Bus extends Thread {
 										Triple.URI,
 										Triple.URI).getAsVector());
 							}
-/*
- ** 					INCOMPLETO, dovremmo inserire sulla SIB i dati di realPerson e payingPerson
- ** 						
- *						//update real person after current stop
- *							Vector<String> realPersonAfterCurrentStop = new Triple(
-
-							OntologyReference.NS + name,
-							OntologyReference.HAS_CURR_STOP,
-							String.valueOf(stopIndex),
-							Triple.URI,
-							Triple.LITERAL).getAsVector();
-																			
-							currentAndNextStop.add(realPersonAfterCurrentStop);
-																			
-							//update paying person after current stop 
-																			
-							Vector<String> payingPersonAfterCurrentStop = new Triple(
-							OntologyReference.NS + name,
-							OntologyReference.HAS_CURR_STOP,
-							String.valueOf(stopIndex),
-							Triple.URI,
-							Triple.LITERAL).getAsVector();
-																		
-							currentAndNextStop.add(payingPersonAfterCurrentStop);
-**/													
+							
+							//update personData object
+							currentAndNextStop.add(new Triple(
+									OntologyReference.NS + personDataName ,
+									OntologyReference.HAS_REAL_PERSON,
+									String.valueOf(realPerson),
+									Triple.URI,
+									Triple.LITERAL).getAsVector());			
+							
+							currentAndNextStop.add(new Triple(
+									OntologyReference.NS + personDataName ,
+									OntologyReference.HAS_PAYING_PERSON,
+									String.valueOf(payingPerson),
+									Triple.URI,
+									Triple.LITERAL).getAsVector());		
+							
+							//insert affluence data
+							
 							
 							if (currentStopIndex==0)
 								kp.insert(currentAndNextStop);
