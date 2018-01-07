@@ -49,6 +49,8 @@ public class OntologyReference {
 	public static final String AFFLUEANCE = NS + "Affluence";
 	public static final String OF_REAL_PERSON = NS + "ofRealPerson";
 	public static final String OF_PAYING_PERSON = NS + "ofPayingPerson";
+	public static final String FROM_CURR_STOP = NS + "fromCurrStop";
+	public static final String TO_NEXT_STOP = NS + "toNextStop";
 
 	//BusLine class
 	public static final String BUS_LINE = NS + "BusLine";
