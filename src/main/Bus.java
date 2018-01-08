@@ -309,11 +309,11 @@ public class Bus extends Thread {
 							System.out.printf("\n Bus linea %s corsa %s, salite %d persone paganti\n", line, ride, ascendedPayingPerson);
 							descendedRealPerson = generateDescendingRealPerson(realPerson, currentStopIndex, sizeOfStopsList);
 							System.out.printf("\n Bus linea %s corsa %s, scese %d persone reali\n", line, ride, descendedRealPerson);
-							descendedPayingPerson = generateDescendingPayingPerson(descendedRealPerson, currentStopIndex, sizeOfStopsList, payingPerson); //payingPerson passato come parametro serve solo per far scendere tutti all'ultima fermata
+							descendedPayingPerson = generateDescendingPayingPerson(descendedRealPerson, currentStopIndex, sizeOfStopsList, payingPerson, realPerson); //payingPerson passato come parametro serve solo per far scendere tutti all'ultima fermata
 							System.out.printf("\n Bus linea %s corsa %s, scese %d persone paganti\n", line, ride, descendedPayingPerson);
-							realPerson += ascendedRealPerson - descendedRealPerson;
+							realPerson += (ascendedRealPerson - descendedRealPerson);
 							System.out.printf("\n Bus linea %s corsa %s, persone reali a bordo %d \n", line, ride, realPerson);
-							payingPerson += ascendedPayingPerson - descendedPayingPerson;
+							payingPerson += (ascendedPayingPerson - descendedPayingPerson);
 							System.out.printf("\n Bus linea %s corsa %s, persone paganti a bordo %d\n", line, ride, payingPerson);
 							currentAndNextStop = new Vector<>();
 							//in this case bus is not in transit
@@ -520,7 +520,7 @@ public class Bus extends Thread {
 							System.out.println("last stop");
 							descendedRealPerson = generateDescendingRealPerson(realPerson, currentStopIndex, sizeOfStopsList);
 							System.out.printf("\n Bus linea %s corsa %s, scese %d persone reali\n", line, ride, descendedRealPerson);
-							descendedPayingPerson = generateDescendingPayingPerson(descendedRealPerson, currentStopIndex, sizeOfStopsList, payingPerson);
+							descendedPayingPerson = generateDescendingPayingPerson(descendedRealPerson, currentStopIndex, sizeOfStopsList, payingPerson, realPerson);
 							System.out.printf("\n Bus linea %s corsa %s, scese %d persone paganti\n", line, ride, descendedPayingPerson);
 						}
 
@@ -592,8 +592,12 @@ public class Bus extends Thread {
 		
 	public int generateAscendingPayingPerson(int ascendedRealPerson) {
 		int ascendedPayingPerson = 0;
-		if(ascendedRealPerson > 0)
-			ascendedPayingPerson = random.nextInt(ascendedRealPerson);
+		float ticketEvasion = SimulationConfig.getInstance().getTicketEvasion();
+		if(ascendedRealPerson > 0) {
+			for(int i = 0; i<ascendedRealPerson; i++) 
+				if(random.nextInt(100)/100.0 >= ticketEvasion)
+					ascendedPayingPerson++;
+		}
 		return ascendedPayingPerson;
 	}
 	
@@ -606,10 +610,18 @@ public class Bus extends Thread {
 		return descendedRealPerson;	
 	}
 		
-	public int generateDescendingPayingPerson(int descendedRealPerson, int currentStopIndex, int sizeOfStopsList, int payingPerson) {
+	public int generateDescendingPayingPerson(int descendedRealPerson, int currentStopIndex, int sizeOfStopsList, int payingPerson, int realPerson) {
 		int descendedPayingPerson = 0;
+		float ticketEvasion = SimulationConfig.getInstance().getTicketEvasion();
 		if((descendedRealPerson > 0) && (currentStopIndex < sizeOfStopsList-1))
-			descendedPayingPerson = random.nextInt(descendedRealPerson);
+			if(realPerson == payingPerson) 
+				descendedPayingPerson = descendedRealPerson;
+			else {
+				for(int i = 0; i<descendedRealPerson; i++) { 
+				if(random.nextInt(100)/100.0 >= ticketEvasion)
+					descendedPayingPerson++;
+				}
+			}
 		if((currentStopIndex == sizeOfStopsList-1))
 			descendedPayingPerson = payingPerson;
 		return descendedPayingPerson;
