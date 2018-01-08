@@ -73,7 +73,7 @@ public class SimConfigurationFrame extends JFrame {
 		javax.swing.ToolTipManager.sharedInstance().setInitialDelay(100);
 		
 		setBounds(new Rectangle(61, 24, 400, 500));
-		setResizable(false);
+		setResizable(true);
 		setTitle("SimConfiguration");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 385, 271);
