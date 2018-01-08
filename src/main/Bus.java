@@ -71,7 +71,7 @@ public class Bus extends Thread {
 		newTripleToInsert.add(busSensorGPSArch);
 		
 	}
-	
+
 	@Override
 	public void run() {
 
@@ -86,6 +86,7 @@ public class Bus extends Thread {
 		LatLng nextPoint;
 		Double latNextPoint;
 		Integer stopIndex;
+		int c = 0;
 		
 		//get list of point
 		BusPathParser parserForPoints;
@@ -136,14 +137,16 @@ public class Bus extends Thread {
 	
 		String locationDataName = name + "LocationData";
 		String personDataName = name + "PersonData";
-		String busLineName =  name+"BusLine";
-		String busRideName = name+"BusRide";
+		String busLineName = "BusLine"+line;
+		String busRideName = "BusRide";
 		String busSensorNameGPS = name+"GPSSensor";
 		String busSensorNameCameraEnter = name+"CameraEnterSensor";
 		String busSensorNameCameraExit = name+"CameraExitSensor";
 		String busSensorFareBoxEnter = name+"FareBoxEnterSensor";
 		String busSensorFareBoxExit = name+"FareBoxExitSensor";
-			
+		String affluenceName = name + "Affluence";
+		String getOnName = name + "GetOn";
+
 		//write datatype of objects
 		Vector<String> locationData = new Triple(
 				OntologyReference.NS + locationDataName,
@@ -192,7 +195,7 @@ public class Bus extends Thread {
 			
 		//insert line for autobus
 		Vector<String> busLine = new Triple(
-				OntologyReference.NS + busLineName + line,
+				OntologyReference.NS + busLineName,
 				OntologyReference.RDF_TYPE,
 				OntologyReference.BUS_LINE,
 				Triple.URI,
@@ -201,7 +204,7 @@ public class Bus extends Thread {
 		newTripleToInsert.add(busLine);
 		
 		Vector<String> busLineNumber = new Triple(
-				OntologyReference.NS + busLineName + line,
+				OntologyReference.NS + busLineName,
 				OntologyReference.HAS_NUMBER,
 				line,
 				Triple.URI,
@@ -213,7 +216,7 @@ public class Bus extends Thread {
 		Vector<String> busLineArch = new Triple(
 				OntologyReference.NS + name,
 				OntologyReference.ON_LINE,
-				OntologyReference.NS + busLineName + line,
+				OntologyReference.NS + busLineName,
 				Triple.URI,
 				Triple.URI).getAsVector();
 		
@@ -250,41 +253,43 @@ public class Bus extends Thread {
 				int currentStopIndex = 0;
 				//insert ride data into SIB
 				newRide = new Vector<>();
-
-				kp.insert(
-						OntologyReference.NS + busRideName + ride,
-						OntologyReference.RDF_TYPE,
-						OntologyReference.RIDE,
-						Triple.URI,
-						Triple.URI);
-				
-				kp.insert(
-						OntologyReference.NS + busLineName,
-						OntologyReference.HAS_RIDE,
-						OntologyReference.NS + busRideName + ride,
-						Triple.URI,
-						Triple.URI);
-				
-				kp.insert(
-						OntologyReference.NS + busRideName + ride,
-						OntologyReference.AT_TIME,
-						"time"+ride,
-						Triple.URI,
-						Triple.LITERAL);
-				
-				newRide.add(new Triple(
-						OntologyReference.NS + name,
-						OntologyReference.ON_RIDE,
-						OntologyReference.NS + busRideName + ride,
-						Triple.URI,
-						Triple.URI).getAsVector());
-				
-				if (ride==0) {
-					kp.insert(newRide);
-				}else {
-					kp.update(newRide, oldRide);
-				}
-				oldRide= newRide;				
+				//insert ride information only the first day
+				if(day == 0) {
+					kp.insert(
+							OntologyReference.NS + busRideName + ride,
+							OntologyReference.RDF_TYPE,
+							OntologyReference.RIDE,
+							Triple.URI,
+							Triple.URI);
+					
+					kp.insert(
+							OntologyReference.NS + busLineName,
+							OntologyReference.HAS_RIDE,
+							OntologyReference.NS + busRideName + ride,
+							Triple.URI,
+							Triple.URI);
+					
+					kp.insert(
+							OntologyReference.NS + busRideName + ride,
+							OntologyReference.AT_TIME,
+							"time"+ride,
+							Triple.URI,
+							Triple.LITERAL);
+					
+					newRide.add(new Triple(
+							OntologyReference.NS + name,
+							OntologyReference.ON_RIDE,
+							OntologyReference.NS + busRideName + ride,
+							Triple.URI,
+							Triple.URI).getAsVector());
+					
+					if (ride==0) {
+						kp.insert(newRide);
+					}else {
+						kp.update(newRide, oldRide);
+					}
+					oldRide= newRide;		
+				}		
 				
 				for (int i = 0; i < listOfPointSize; i++) {
 					currentPoint = listOfPoints.get(i);
@@ -310,7 +315,6 @@ public class Bus extends Thread {
 							System.out.printf("\n Bus linea %s corsa %s, persone reali a bordo %d \n", line, ride, realPerson);
 							payingPerson += ascendedPayingPerson - descendedPayingPerson;
 							System.out.printf("\n Bus linea %s corsa %s, persone paganti a bordo %d\n", line, ride, payingPerson);
-//							
 							currentAndNextStop = new Vector<>();
 							//in this case bus is not in transit
 							newTriplePoint.add(new Triple(
@@ -323,10 +327,11 @@ public class Bus extends Thread {
 							//update current stop
 							
 							BusStop currentBusStop = BusStopManager.getInstance().getBusStopFromLatLngString(line, currentPoint.getLat()+"-"+currentPoint.getLng());
+							String currentBusStopUri = currentBusStop.getUri();
 							Vector<String> currentStop = new Triple(
 									OntologyReference.NS + name,
 									OntologyReference.HAS_CURR_STOP,
-									currentBusStop.getUri(),
+									currentBusStopUri,
 									Triple.URI,
 									Triple.LITERAL).getAsVector();
 							
@@ -340,11 +345,11 @@ public class Bus extends Thread {
 							BusStop nextBusStop = BusStopManager.getInstance().getBusStopFromLatLngString(line, nextPoint.getLat()+"-"+nextPoint.getLng());
 
 							//update next stop
-
+							String nextBusStopUri = nextBusStop.getUri();
 							Vector<String> nextStop = new Triple(
 									OntologyReference.NS + name,
 									OntologyReference.HAS_NEXT_STOP,
-									nextBusStop.getUri(),
+									nextBusStopUri,
 									Triple.URI,
 									Triple.LITERAL).getAsVector();
 							
@@ -390,8 +395,105 @@ public class Bus extends Thread {
 									Triple.URI,
 									Triple.LITERAL).getAsVector());		
 							
-							//insert affluence data
+							//insert how many people are present
+							kp.insert(
+									OntologyReference.NS + affluenceName + c,
+									OntologyReference.OF_REAL_PERSON,
+									String.valueOf(realPerson),
+									Triple.URI,
+									Triple.LITERAL);
+
+							kp.insert(
+									OntologyReference.NS + affluenceName + c,
+									OntologyReference.OF_PAYING_PERSON,
+									String.valueOf(payingPerson),
+									Triple.URI,
+									Triple.LITERAL);
+						
+							kp.insert(
+									OntologyReference.NS + affluenceName + c,
+									OntologyReference.ON_LINE,
+									busLineName,
+									Triple.URI,
+									Triple.URI);
+
+							kp.insert(
+									OntologyReference.NS + affluenceName + c,
+									OntologyReference.ON_RIDE,
+									busRideName + ride,
+									Triple.URI,
+									Triple.URI);
 							
+							kp.insert(
+									OntologyReference.NS + affluenceName + c,
+									OntologyReference.FROM_CURR_STOP,
+									currentBusStopUri,
+									Triple.URI,
+									Triple.URI);
+							
+							kp.insert(
+									OntologyReference.NS + affluenceName + c,
+									OntologyReference.TO_NEXT_STOP,
+									nextBusStopUri,
+									Triple.URI,
+									Triple.URI);	
+							
+							kp.insert(
+									OntologyReference.NS + affluenceName + c,
+									OntologyReference.HAS_SIMULATION_DAY,
+									String.valueOf(day),
+									Triple.URI,
+									Triple.LITERAL);	
+									
+							//insert how many people get on 
+							kp.insert(
+									OntologyReference.NS + getOnName + c,
+									OntologyReference.HAS_GETTING_ON,
+									String.valueOf(ascendedRealPerson),
+									Triple.URI,
+									Triple.LITERAL);
+
+							kp.insert(
+									OntologyReference.NS + getOnName + c,
+									OntologyReference.HAS_GETTING_ON_PAYING,
+									String.valueOf(ascendedPayingPerson),
+									Triple.URI,
+									Triple.LITERAL);
+						
+							kp.insert(
+									OntologyReference.NS + getOnName + c,
+									OntologyReference.ON_LINE,
+									busLineName,
+									Triple.URI,
+									Triple.URI);
+
+							kp.insert(
+									OntologyReference.NS + getOnName + c,
+									OntologyReference.ON_RIDE,
+									busRideName + ride,
+									Triple.URI,
+									Triple.URI);
+							
+							kp.insert(
+									OntologyReference.NS + getOnName + c,
+									OntologyReference.FROM_CURR_STOP,
+									currentBusStopUri,
+									Triple.URI,
+									Triple.URI);
+							
+							kp.insert(
+									OntologyReference.NS + getOnName + c,
+									OntologyReference.TO_NEXT_STOP,
+									nextBusStopUri,
+									Triple.URI,
+									Triple.URI);
+							
+							kp.insert(
+									OntologyReference.NS + getOnName + c,
+									OntologyReference.HAS_SIMULATION_DAY,
+									String.valueOf(day),
+									Triple.URI,
+									Triple.LITERAL);
 							
 							if (currentStopIndex==0)
 								kp.insert(currentAndNextStop);
@@ -399,6 +501,7 @@ public class Bus extends Thread {
 								kp.update(currentAndNextStop, oldCurrentAndNextStop);
 							oldCurrentAndNextStop = currentAndNextStop;
 							currentStopIndex++;
+							c++;
 						}else {
 							System.out.println("last stop");
 							descendedRealPerson = generateDescendingRealPerson(realPerson, currentStopIndex, sizeOfStopsList);
