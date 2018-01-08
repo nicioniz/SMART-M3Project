@@ -9,6 +9,7 @@ public class SimulationConfig {
 	private int simulationDays;
 	private int busRides;
 	private CyclicBarrier barrier;
+	private CyclicBarrier endBarrier;
 	private int maxInspectors;
 	private int inspectorPresencePercentageProbability;
 	private int numberOfPresentInsectors = 0;
@@ -35,9 +36,23 @@ public class SimulationConfig {
 		barrier = new CyclicBarrier(numThreads);
 	}
 	
+	public void setEndBarrier(int numThreads) {
+		endBarrier = new CyclicBarrier(numThreads);
+	}
+	
 	public void waitForBarrier() {
 		try {
 			barrier.await();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (BrokenBarrierException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void waitThreadsEnd() {
+		try {
+			endBarrier.await();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (BrokenBarrierException e) {

@@ -30,6 +30,7 @@ import main.Bus;
 import main.BusMap;
 import main.BusStopManager;
 import main.BusVisualizerAggregator;
+import main.StatisticsVisualizer;
 import simulationConfiguration.SimulationConfig;
 
 @SuppressWarnings("serial")
@@ -297,8 +298,7 @@ public class SimConfigurationFrame extends JFrame {
 	}
 
 	public void startSimButtonPressed(ActionEvent e) {
-		this.busMap = new BusMap();
-		
+		this.busMap = new BusMap();		
 		int numberOfStartedThread = 0;
 
 		// retrieving configuration values
@@ -344,6 +344,11 @@ public class SimConfigurationFrame extends JFrame {
 		SimulationConfig.getInstance().setWaitingThreadForBarrier(numberOfStartedThread);
 		busMap.getMap().setCenter(new LatLng(44.4914, 11.3428));
 		this.dispose();
+		SimulationConfig.getInstance().setEndBarrier(numberOfStartedThread+1); // +1 because also this thread is counted
+		SimulationConfig.getInstance().waitThreadsEnd();
+		StatisticsVisualizer statistics = new StatisticsVisualizer("32", simulationDays, busRides);  
+		statistics.getStatistics();
+
 	}
 	
 	private void prepareNewBus(String busNumber, int simulationDays, int busRides) {

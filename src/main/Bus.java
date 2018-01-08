@@ -398,6 +398,13 @@ public class Bus extends Thread {
 							//insert how many people are present
 							kp.insert(
 									OntologyReference.NS + affluenceName + c,
+									OntologyReference.RDF_TYPE,
+									OntologyReference.AFFLUEANCE,
+									Triple.URI,
+									Triple.URI);							
+							
+							kp.insert(
+									OntologyReference.NS + affluenceName + c,
 									OntologyReference.OF_REAL_PERSON,
 									String.valueOf(realPerson),
 									Triple.URI,
@@ -446,6 +453,13 @@ public class Bus extends Thread {
 									Triple.LITERAL);	
 									
 							//insert how many people get on 
+							kp.insert(
+									OntologyReference.NS + getOnName + c,
+									OntologyReference.RDF_TYPE,
+									OntologyReference.GET_ON_DATA,
+									Triple.URI,
+									Triple.URI);
+							
 							kp.insert(
 									OntologyReference.NS + getOnName + c,
 									OntologyReference.HAS_GETTING_ON,
@@ -564,7 +578,8 @@ public class Bus extends Thread {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}	
+		}
+		SimulationConfig.getInstance().waitThreadsEnd();
 	}
 	
 	public int generateAscendingRealPerson(int realPerson, int maxSeats) {
