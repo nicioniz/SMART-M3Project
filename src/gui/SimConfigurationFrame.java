@@ -313,11 +313,13 @@ public class SimConfigurationFrame extends JFrame {
 		int inspectorCost = (Integer) inspectorDailyCostSpinner.getValue();
 		SimulationConfig.getInstance().setInspectorCost(inspectorCost);
 		int inspectors = (Integer) inspectorsSpinner.getValue();
-		SimulationConfig.getInstance().setInspectors(inspectors);
+		SimulationConfig.getInstance().setMaxInspectors(inspectors);
 		float fine = (Float) fineSpinner.getValue();
 		SimulationConfig.getInstance().setFine(fine);
 		int veichleCost = (Integer) veichleCostSpinner.getValue();
 		SimulationConfig.getInstance().setVeichleCost(veichleCost);
+		
+		SimulationConfig.getInstance().setMaxInspectors(10);
 		
 		//insert all the stops into the SIB and generate the inspectors. It take some time
 		BusStopManager.getInstance().init();

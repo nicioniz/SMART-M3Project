@@ -17,7 +17,6 @@ public class SimulationConfig {
 	private float ticketPrice;
 	private float ticketEvasion;
 	private int inspectorCost;
-	private int inspectors;
 	private float fine;
 	private int veichleCost;
 	
@@ -130,14 +129,6 @@ public class SimulationConfig {
 
 	public void setInspectorCost(int inspectorCost) {
 		this.inspectorCost = inspectorCost;
-	}
-
-	public int getInspectors() {
-		return inspectors;
-	}
-
-	public void setInspectors(int inspectors) {
-		this.inspectors = inspectors;
 	}
 
 	public float getFine() {
