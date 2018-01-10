@@ -82,6 +82,7 @@ public class Bus extends Thread {
 		int ascendedPayingPerson;
 		int realPerson = 0;
 		int payingPerson = 0;
+		int fines;
 		LatLng currentPoint;
 		LatLng nextPoint;
 		Double latNextPoint;
@@ -524,6 +525,11 @@ public class Bus extends Thread {
 							System.out.printf("\n Bus linea %s corsa %s, scese %d persone paganti\n", line, ride, descendedPayingPerson);
 						}
 
+						if(inspectorPresent) {
+							fines = realPerson - payingPerson;
+							System.out.printf("\nIl controllore è salito e ha fatto %d multe\n", fines);
+						}
+						
 					}else {
 						newTriplePoint.add(new Triple(
 						OntologyReference.NS + name,

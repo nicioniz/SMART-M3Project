@@ -11,8 +11,8 @@ public class SimulationConfig {
 	private CyclicBarrier barrier;
 	private CyclicBarrier endBarrier;
 	private int maxInspectors;
-	private int inspectorPresencePercentageProbability;
-	private int numberOfPresentInsectors = 0;
+	private int inspectorPresencePercentageProbability = 100;
+	private int numberOfPresentInspectors = 0;
 	private int autobusMaxSeats = 80;
 	private float ticketPrice;
 	private float ticketEvasion;
@@ -103,8 +103,8 @@ public class SimulationConfig {
 		this.inspectorPresencePercentageProbability = inspectorPresencePercentageProbability;
 	}
 
-	public int getNumberOfPresentInsectors() {
-		return numberOfPresentInsectors;
+	public int getNumberOfPresentInspectors() {
+		return numberOfPresentInspectors;
 	}
 	
 	public float getTicketPrice() {
@@ -148,8 +148,8 @@ public class SimulationConfig {
 	}
 
 	public boolean addInspector(int numberOfAddedInspectors) {
-		if(numberOfPresentInsectors + numberOfAddedInspectors <= maxInspectors) {
-			numberOfPresentInsectors += numberOfAddedInspectors;
+		if(numberOfPresentInspectors + numberOfAddedInspectors <= maxInspectors) {
+			numberOfPresentInspectors += numberOfAddedInspectors;
 			return true;
 		}
 		return false;
