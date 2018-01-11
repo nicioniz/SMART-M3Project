@@ -79,4 +79,8 @@ public class OntologyReference {
 	public static final String GET_ON_DATA = NS + "GetOn";
 	public static final String HAS_GETTING_ON = NS + "hasGettingOn";
 	public static final String HAS_GETTING_ON_PAYING= NS + "hasGettingOnPaying";
+	
+	// Report data
+	public static final String HAS_FINES = NS + "hasFines";
+	
 }
