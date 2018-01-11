@@ -601,7 +601,7 @@ public class Bus extends Thread {
 		float ticketEvasion = SimulationConfig.getInstance().getTicketEvasion();
 		if(ascendedRealPerson > 0) {
 			for(int i = 0; i<ascendedRealPerson; i++) 
-				if(random.nextInt(101)/100.0 >= ticketEvasion)
+				if(random.nextInt(101) >= ticketEvasion)
 					ascendedPayingPerson++;
 		}
 		return ascendedPayingPerson;
@@ -624,7 +624,7 @@ public class Bus extends Thread {
 				descendedPayingPerson = descendedRealPerson;
 			else {
 				for(int i = 0; i<descendedRealPerson; i++) { 
-				if(random.nextInt(101)/100.0 >= ticketEvasion)
+				if(random.nextInt(101) >= ticketEvasion)
 					descendedPayingPerson++;
 				}
 			}
