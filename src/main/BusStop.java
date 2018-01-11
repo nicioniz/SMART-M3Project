@@ -178,6 +178,10 @@ public class BusStop {
 	public LatLng getLocation() {
 		return location;
 	}
-	
+
+	public String getName() {
+		return name;
+	}
+
 	
 }
