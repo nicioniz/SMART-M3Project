@@ -16,6 +16,7 @@ public class BusMapFrame extends JFrame{
 		add(map, BorderLayout.CENTER);
 		setSize(1400, 1000);
 		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		setResizable(false);
 	}
