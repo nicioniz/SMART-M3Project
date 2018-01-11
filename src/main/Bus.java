@@ -623,7 +623,7 @@ public class Bus extends Thread {
 			if(realPerson == payingPerson) 
 				descendedPayingPerson = descendedRealPerson;
 			else {
-				for(int i = 0; i<descendedRealPerson; i++) { 
+				for(int i = 0; i<descendedRealPerson && descendedPayingPerson<payingPerson; i++) { 
 				if(random.nextInt(101) >= ticketEvasion)
 					descendedPayingPerson++;
 				}
