@@ -332,15 +332,15 @@ public class SimConfigurationFrame extends JFrame {
 		
 		if(lineNo32CheckBox.isSelected()) {
 			numberOfStartedThread++;
-			prepareNewBus("32", simulationDays, busRides);
+			prepareNewBus("32", simulationDays, busRides, BusColor.ORANGE);
 		}
 		if(lineNo20CheckBox.isSelected()) {
 			numberOfStartedThread++;
-			prepareNewBus("20", simulationDays, busRides);
+			prepareNewBus("20", simulationDays, busRides, BusColor.RED);
 		}
 		if(lineNo11CheckBox.isSelected()) {
 			numberOfStartedThread++;
-			prepareNewBus("11", simulationDays, busRides);
+			prepareNewBus("11", simulationDays, busRides, BusColor.GREEN);
 		}
 		
 		SimulationConfig.getInstance().setWaitingThreadForBarrier(numberOfStartedThread);
@@ -353,14 +353,14 @@ public class SimConfigurationFrame extends JFrame {
 
 	}
 	
-	private void prepareNewBus(String busNumber, int simulationDays, int busRides) {
+	private void prepareNewBus(String busNumber, int simulationDays, int busRides, String busColor) {
 		try {
 			busMap.addStops(busNumber);
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
 		
-		BusVisualizerAggregator aggregator = new BusVisualizerAggregator("BUS" + busNumber, busMap);
+		BusVisualizerAggregator aggregator = new BusVisualizerAggregator(busNumber, busMap, busColor);
 		aggregator.start();
 		new Bus("BUS" + busNumber, busNumber , "gpx/bus" + busNumber + ".gpx","gpx/bus" + busNumber + "StopList.gpx", simulationDays, busRides).start();
 	}
