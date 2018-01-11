@@ -64,8 +64,8 @@ public class SimConfigurationFrame extends JFrame {
 	private Component verticalStrut_2;
 	private JLabel fineLabel;
 	private JSpinner fineSpinner;
-	private JLabel veichleCostLabel;
-	private JSpinner veichleCostSpinner;
+	private JLabel inspectorGenerationLabel;
+	private JSpinner inspectorGenerationSpinner;
 	private Component verticalStrut_4;
 	
 	public SimConfigurationFrame() {
@@ -177,6 +177,7 @@ public class SimConfigurationFrame extends JFrame {
 		busRidesSpinner.setValue(1);
 		
 		ticketPriceLabel = new JLabel("Ticket Price");
+		ticketPriceLabel.setToolTipText("");
 		GridBagConstraints gbc_ticketPriceLabel = new GridBagConstraints();
 		gbc_ticketPriceLabel.fill = GridBagConstraints.BOTH;
 		gbc_ticketPriceLabel.insets = new Insets(0, 0, 5, 5);
@@ -185,7 +186,7 @@ public class SimConfigurationFrame extends JFrame {
 		bottomPanel.add(ticketPriceLabel, gbc_ticketPriceLabel);
 		
 		ticketPriceSpinner = new JSpinner();
-		ticketPriceSpinner.setToolTipText("A float (min 0.5)");
+		ticketPriceSpinner.setToolTipText("Float (min 0.5)");
 		ticketPriceSpinner.setModel(new SpinnerNumberModel(new Float(1), new Float(0.5), null, new Float(0.1)));
 		GridBagConstraints gbc_ticketPriceSpinner = new GridBagConstraints();
 		gbc_ticketPriceSpinner.fill = GridBagConstraints.BOTH;
@@ -204,8 +205,8 @@ public class SimConfigurationFrame extends JFrame {
 		bottomPanel.add(ticketEvasionLabel, gbc_ticketEvasionLabel);
 		
 		ticketEvasionSpinner = new JSpinner();
-		ticketEvasionSpinner.setToolTipText("A float (min 0.1, max 0.9)");
-		ticketEvasionSpinner.setModel(new SpinnerNumberModel(new Float(0.5), new Float(0.1), new Float(0.99), new Float(0.1)));
+		ticketEvasionSpinner.setToolTipText("Int (min 0, max 100)");
+		ticketEvasionSpinner.setModel(new SpinnerNumberModel(25, 0, 100, 1));
 		GridBagConstraints gbc_ticketEvasionSpinner = new GridBagConstraints();
 		gbc_ticketEvasionSpinner.fill = GridBagConstraints.BOTH;
 		gbc_ticketEvasionSpinner.insets = new Insets(0, 0, 5, 5);
@@ -259,7 +260,7 @@ public class SimConfigurationFrame extends JFrame {
 		bottomPanel.add(fineLabel, gbc_fineLabel);
 		
 		fineSpinner = new JSpinner();
-		fineSpinner.setToolTipText("A float (min 0.1)");
+		fineSpinner.setToolTipText("Float (min 0.1)");
 		fineSpinner.setModel(new SpinnerNumberModel(new Float(5), new Float(0.1), null, new Float(0.5)));
 		GridBagConstraints gbc_fineSpinner = new GridBagConstraints();
 		gbc_fineSpinner.fill = GridBagConstraints.BOTH;
@@ -268,23 +269,24 @@ public class SimConfigurationFrame extends JFrame {
 		gbc_fineSpinner.gridy = 3;
 		bottomPanel.add(fineSpinner, gbc_fineSpinner);
 		
-		veichleCostLabel = new JLabel("Veichle Cost");
-		veichleCostLabel.setToolTipText("Daily veichle cost");
-		GridBagConstraints gbc_veichleCostLabel = new GridBagConstraints();
-		gbc_veichleCostLabel.fill = GridBagConstraints.BOTH;
-		gbc_veichleCostLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_veichleCostLabel.gridx = 2;
-		gbc_veichleCostLabel.gridy = 3;
-		bottomPanel.add(veichleCostLabel, gbc_veichleCostLabel);
+		inspectorGenerationLabel = new JLabel("Inspector Generation");
+		inspectorGenerationLabel.setToolTipText("Probability that an inspector appears in a Bus Stop");
+		GridBagConstraints gbc_inspectorGenerationLabel = new GridBagConstraints();
+		gbc_inspectorGenerationLabel.fill = GridBagConstraints.BOTH;
+		gbc_inspectorGenerationLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_inspectorGenerationLabel.gridx = 2;
+		gbc_inspectorGenerationLabel.gridy = 3;
+		bottomPanel.add(inspectorGenerationLabel, gbc_inspectorGenerationLabel);
 		
-		veichleCostSpinner = new JSpinner();
-		veichleCostSpinner.setModel(new SpinnerNumberModel(new Integer(10), new Integer(0), null, new Integer(1)));
-		GridBagConstraints gbc_veichleCostSpinner = new GridBagConstraints();
-		gbc_veichleCostSpinner.fill = GridBagConstraints.BOTH;
-		gbc_veichleCostSpinner.insets = new Insets(0, 0, 5, 5);
-		gbc_veichleCostSpinner.gridx = 3;
-		gbc_veichleCostSpinner.gridy = 3;
-		bottomPanel.add(veichleCostSpinner, gbc_veichleCostSpinner);
+		inspectorGenerationSpinner = new JSpinner();
+		inspectorGenerationSpinner.setToolTipText("Int  (min 0, max 100)");
+		inspectorGenerationSpinner.setModel(new SpinnerNumberModel(10, 0, 100, 1));
+		GridBagConstraints gbc_inspectorGenerationSpinner = new GridBagConstraints();
+		gbc_inspectorGenerationSpinner.fill = GridBagConstraints.BOTH;
+		gbc_inspectorGenerationSpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_inspectorGenerationSpinner.gridx = 3;
+		gbc_inspectorGenerationSpinner.gridy = 3;
+		bottomPanel.add(inspectorGenerationSpinner, gbc_inspectorGenerationSpinner);
 		
 		Component verticalStrut_3 = Box.createVerticalStrut(10);
 		simulationDaysContentPane.add(verticalStrut_3);
@@ -308,7 +310,7 @@ public class SimConfigurationFrame extends JFrame {
 		SimulationConfig.getInstance().setBusRides(busRides);
 		float ticketPrice = (Float) ticketPriceSpinner.getValue();
 		SimulationConfig.getInstance().setTicketPrice(ticketPrice);
-		float ticketEvasion = (Float) ticketEvasionSpinner.getValue();
+		int ticketEvasion = (Integer) ticketEvasionSpinner.getValue();
 		SimulationConfig.getInstance().setTicketEvasion(ticketEvasion);
 		int inspectorCost = (Integer) inspectorDailyCostSpinner.getValue();
 		SimulationConfig.getInstance().setInspectorCost(inspectorCost);
@@ -316,8 +318,8 @@ public class SimConfigurationFrame extends JFrame {
 		SimulationConfig.getInstance().setMaxInspectors(inspectors);
 		float fine = (Float) fineSpinner.getValue();
 		SimulationConfig.getInstance().setFine(fine);
-		int veichleCost = (Integer) veichleCostSpinner.getValue();
-		SimulationConfig.getInstance().setVeichleCost(veichleCost);
+		int inspectorGeneration = (Integer) inspectorGenerationSpinner.getValue();
+		SimulationConfig.getInstance().setInspectorGeneration(inspectorGeneration);
 		
 		SimulationConfig.getInstance().setMaxInspectors(10);
 		
