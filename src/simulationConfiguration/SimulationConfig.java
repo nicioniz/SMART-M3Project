@@ -11,7 +11,7 @@ public class SimulationConfig {
 	private CyclicBarrier barrier;
 	private CyclicBarrier endBarrier;
 	private int maxInspectors;
-	private int inspectorPresencePercentageProbability = 100;
+	private int inspectorPresencePercentageProbability;
 	private int numberOfPresentInspectors = 0;
 	private int autobusMaxSeats = 80;
 	private float ticketPrice;

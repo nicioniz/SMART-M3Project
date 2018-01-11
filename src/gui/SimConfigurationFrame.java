@@ -319,7 +319,7 @@ public class SimConfigurationFrame extends JFrame {
 		int veichleCost = (Integer) veichleCostSpinner.getValue();
 		SimulationConfig.getInstance().setVeichleCost(veichleCost);
 		
-		SimulationConfig.getInstance().setMaxInspectors(10);
+		SimulationConfig.getInstance().setInspectorPresencePercentageProbability(50);
 		
 		//insert all the stops into the SIB and generate the inspectors. It take some time
 		BusStopManager.getInstance().init();
