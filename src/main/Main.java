@@ -1,6 +1,7 @@
 package main;
 
 import gui.SimConfigurationFrame;
+import simulationConfiguration.SimulationConfig;
 import sofia_kp.KPICore;
 import utils.OntologyReference;
 import utils.SIBConfiguration;
@@ -14,6 +15,10 @@ public class Main {
 		initializer();
 		SimConfigurationFrame configurator = new SimConfigurationFrame();
 		configurator.setVisible(true);
+		SimulationConfig.getInstance().getStartSimulationSemaphore().acquire();
+		SimulationConfig.getInstance().waitThreadsEnd();
+		StatisticsVisualizer statistics = new StatisticsVisualizer("32", SimulationConfig.getInstance().getSimulationDays(), SimulationConfig.getInstance().getBusRides());  
+		statistics.getStatistics();
 	}
 
 	private static void initializer() {

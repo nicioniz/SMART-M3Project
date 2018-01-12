@@ -18,7 +18,8 @@ import com.teamdev.jxmaps.MouseEvent;
 import com.teamdev.jxmaps.InfoWindow;
 import com.teamdev.jxmaps.swing.MapView;
 
-
+import gui.BusMarkerClickHandler;
+import gui.BusStopMarkerClickHandler;
 import parser.BusPathParser;
 
 
@@ -55,26 +56,18 @@ public class BusMap extends MapView{
         polyline.setOptions(options);
     }
     
-    public Marker addBus(LatLng ll) throws FileNotFoundException {
+    public Marker addBus(LatLng ll, String busLine, String busColor) throws FileNotFoundException {
     	Marker marker = new Marker(getMap());
     	
     	Icon icon = new Icon();
-    	InputStream inputstream = new FileInputStream("./res/bus.png");
+    	InputStream inputstream = new FileInputStream("./res/bus" + busColor + ".png");
     	icon.loadFromStream(inputstream, "png");
     	marker.setIcon(icon);
     	
         marker.setPosition(ll);        
         
         // Adding event listener that intercepts clicking on marker
-        marker.addEventListener("click", new MapMouseEvent() {
-            @Override
-            public void onEvent(MouseEvent mouseEvent) {
-            	// Creating info window
-                infoWindow = new InfoWindow(getMap());
-                // Showing info window under the marker
-                infoWindow.open(getMap(), marker);
-            }
-        });
+//        marker.addEventListener("click", new BusMarkerClickHandler(busLine, marker, getMap()));
         
         return marker;
     }
@@ -104,15 +97,7 @@ public class BusMap extends MapView{
 	    	marker.setPosition(stopsPoints.get(i));	
 	    	
 	    	// Adding event listener that intercepts clicking on marker
-            marker.addEventListener("click", new MapMouseEvent() {
-                @Override
-                public void onEvent(MouseEvent mouseEvent) {
-                	// Creating info window
-                    infoWindow = new InfoWindow(getMap());
-                    // Showing info window under the marker
-                    infoWindow.open(getMap(), marker);
-                }
-            });
+//            marker.addEventListener("click", new BusStopMarkerClickHandler(BusStopManager.getInstance().getBusStopFromLatLngString(busNumber, stopsPoints.get(i).getLat() + "-" + stopsPoints.get(i).getLng()), getMap(), marker));
 		}
     }
     

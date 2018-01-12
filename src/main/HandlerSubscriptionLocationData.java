@@ -18,10 +18,14 @@ public class HandlerSubscriptionLocationData implements iKPIC_subscribeHandler2 
 
 	private Marker m;
 	private BusMap map;
+	private String lineNumber;
+	private String busColor;
 	
-	public HandlerSubscriptionLocationData(BusMap map) {
+	
+	public HandlerSubscriptionLocationData(BusMap map, String lineNumber, String busColor) {
 		this.map = map;
-		
+		this.lineNumber = lineNumber;
+		this.busColor = busColor;
 	}
 
 	@Override
@@ -57,7 +61,7 @@ public class HandlerSubscriptionLocationData implements iKPIC_subscribeHandler2 
 				try {
 					if (Integer.parseInt(indSequence) == 1) {
 						LatLng point = new LatLng(Double.parseDouble(lat),Double.parseDouble(lon));
-						m = map.addBus(point);
+						m = map.addBus(point, lineNumber, busColor);
 					}
 					else 
 						map.moveBus(m, new LatLng(Double.parseDouble(lat),Double.parseDouble(lon)));

@@ -7,13 +7,16 @@ import utils.SIBConfiguration;
 
 public class BusVisualizerAggregator extends Thread {
 	private String busName;
+	private String busLine;
 	private KPICore kp;
 	private BusMap map;
-
+	private String busColor;
 		
-	public BusVisualizerAggregator(String busName, BusMap map) {
-		this.busName = busName;
+	public BusVisualizerAggregator(String busLine, BusMap map, String busColor) {
+		this.busLine = busLine;
+		this.busName = "BUS" + busLine;
 		this.map = map;
+		this.busColor = busColor;
 		kp = new KPICore(SIBConfiguration.getInstance().getHost(),
 					SIBConfiguration.getInstance().getPort(),
 					SIBConfiguration.getInstance().getSmartSpaceName());
@@ -35,7 +38,7 @@ public class BusVisualizerAggregator extends Thread {
 					+ "?ld <" + OntologyReference.HAS_LON + "> ?lo"
 				+ " }";			
 		
-		HandlerSubscriptionLocationData MyHandler = new HandlerSubscriptionLocationData(map);  
+		HandlerSubscriptionLocationData MyHandler = new HandlerSubscriptionLocationData(map, busLine, busColor);  
 		map.waitReady();
 		kp.subscribeSPARQL(sparqlQuery, MyHandler );
 	}
