@@ -2,6 +2,7 @@ package simulationConfiguration;
 
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Semaphore;
 
 public class SimulationConfig {
 
@@ -19,6 +20,8 @@ public class SimulationConfig {
 	private int inspectorCost;
 	private float fine;
 	private int veichleCost;
+	
+	private Semaphore startSimulationSemaphore = new Semaphore(0);
 	
 	
 	private static SimulationConfig instance = null;
@@ -158,4 +161,10 @@ public class SimulationConfig {
 	public boolean addInspector() {
 		return addInspector(1);
 	}
+
+	public Semaphore getStartSimulationSemaphore() {
+		return startSimulationSemaphore;
+	}
+	
+	
 }

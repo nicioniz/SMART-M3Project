@@ -67,7 +67,7 @@ public class BusMap extends MapView{
         marker.setPosition(ll);        
         
         // Adding event listener that intercepts clicking on marker
-        marker.addEventListener("click", new BusMarkerClickHandler(busLine, marker, getMap()));
+//        marker.addEventListener("click", new BusMarkerClickHandler(busLine, marker, getMap()));
         
         return marker;
     }
@@ -97,7 +97,7 @@ public class BusMap extends MapView{
 	    	marker.setPosition(stopsPoints.get(i));	
 	    	
 	    	// Adding event listener that intercepts clicking on marker
-            marker.addEventListener("click", new BusStopMarkerClickHandler(BusStopManager.getInstance().getBusStopFromLatLngString(busNumber, stopsPoints.get(i).getLat() + "-" + stopsPoints.get(i).getLng()), getMap(), marker));
+//            marker.addEventListener("click", new BusStopMarkerClickHandler(BusStopManager.getInstance().getBusStopFromLatLngString(busNumber, stopsPoints.get(i).getLat() + "-" + stopsPoints.get(i).getLng()), getMap(), marker));
 		}
     }
     

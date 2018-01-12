@@ -31,7 +31,10 @@ import main.BusMap;
 import main.BusStopManager;
 import main.BusVisualizerAggregator;
 import main.StatisticsVisualizer;
+import parser.BusPathParser;
 import simulationConfiguration.SimulationConfig;
+
+
 
 @SuppressWarnings("serial")
 public class SimConfigurationFrame extends JFrame {
@@ -67,6 +70,8 @@ public class SimConfigurationFrame extends JFrame {
 	private JLabel veichleCostLabel;
 	private JSpinner veichleCostSpinner;
 	private Component verticalStrut_4;
+
+	private JFrame f;
 	
 	public SimConfigurationFrame() {
 		javax.swing.ToolTipManager.sharedInstance().setDismissDelay(5000);
@@ -295,6 +300,8 @@ public class SimConfigurationFrame extends JFrame {
 		verticalStrut = Box.createVerticalStrut(10);
 		simulationDaysContentPane.add(verticalStrut);
 		simulationDaysContentPane.add(startSimButton);
+		f = new BusRuntimeVisualizer();
+		f.setVisible(true);
 	}
 
 	public void startSimButtonPressed(ActionEvent e) {
@@ -333,23 +340,32 @@ public class SimConfigurationFrame extends JFrame {
 		if(lineNo32CheckBox.isSelected()) {
 			numberOfStartedThread++;
 			prepareNewBus("32", simulationDays, busRides, BusColor.ORANGE);
+			busMap.addBusline(new BusPathParser("gpx/bus32.gpx").getListOfPoint(), "#FFA500");
 		}
 		if(lineNo20CheckBox.isSelected()) {
 			numberOfStartedThread++;
 			prepareNewBus("20", simulationDays, busRides, BusColor.RED);
+			busMap.addBusline(new BusPathParser("gpx/bus20.gpx").getListOfPoint(), "#FF0000");
 		}
 		if(lineNo11CheckBox.isSelected()) {
 			numberOfStartedThread++;
-			prepareNewBus("11", simulationDays, busRides, BusColor.GREEN);
+			prepareNewBus("11", simulationDays, busRides, BusColor.BLUE);
+			busMap.addBusline(new BusPathParser("gpx/bus11.gpx").getListOfPoint(), "#0000FF");
 		}
+		
+		
 		
 		SimulationConfig.getInstance().setWaitingThreadForBarrier(numberOfStartedThread);
 		busMap.getMap().setCenter(new LatLng(44.4914, 11.3428));
-		this.dispose();
+		
+		
+		SimulationConfig.getInstance().getStartSimulationSemaphore().release();
+		
+		
+		
 		SimulationConfig.getInstance().setEndBarrier(numberOfStartedThread+1); // +1 because also this thread is counted
-		SimulationConfig.getInstance().waitThreadsEnd();
-		StatisticsVisualizer statistics = new StatisticsVisualizer("32", simulationDays, busRides);  
-		statistics.getStatistics();
+
+		dispose();
 
 	}
 	
