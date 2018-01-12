@@ -19,7 +19,6 @@ public class Bus extends Thread {
 	private String line;
 	private int busRides;
 	private String filenamePoints; 
-	private String filenameStops; 
 	private HashMap<String, Integer> stopsList;
 	private Random random;
 	private boolean circular;
@@ -31,7 +30,6 @@ public class Bus extends Thread {
 		this.line = line;
 		this.busRides = busRides;
 		this.filenamePoints = filenamePoints;
-		this.filenameStops = filenameStops;
 		stopsList = new HashMap<String, Integer>();
 		random = new Random();
 		if (line.equals("32"))
@@ -85,9 +83,9 @@ public class Bus extends Thread {
 		int fines;
 		LatLng currentPoint;
 		LatLng nextPoint;
-		Double latNextPoint;
 		Integer stopIndex;
 		int c = 0;
+		int fines_id = 0;
 		
 		//get list of point
 		BusPathParser parserForPoints;
@@ -147,6 +145,7 @@ public class Bus extends Thread {
 		String busSensorFareBoxExit = name+"FareBoxExitSensor";
 		String affluenceName = name + "Affluence";
 		String getOnName = name + "GetOn";
+		String reportName = name +"Report";
 
 		//write datatype of objects
 		Vector<String> locationData = new Triple(
@@ -184,6 +183,16 @@ public class Bus extends Thread {
 				Triple.URI).getAsVector();
 			
 		newTripleToInsert.add(busPersonDataArch);
+		
+		//insert report
+		Vector<String> report = new Triple(
+				OntologyReference.NS + reportName,
+				OntologyReference.RDF_TYPE,
+				OntologyReference.REPORT,
+				Triple.URI,
+				Triple.URI).getAsVector();
+			
+		newTripleToInsert.add(report);
 			
 		Vector<String> busId = new Triple(
 				OntologyReference.NS + name,
@@ -510,6 +519,36 @@ public class Bus extends Thread {
 									Triple.URI,
 									Triple.LITERAL);
 							
+							//insert fines
+							if(inspectorPresent) {
+								fines = realPerson - payingPerson;
+								
+								kp.insert(
+										OntologyReference.NS + reportName + fines_id,
+										OntologyReference.HAS_FINES,
+										String.valueOf(fines),
+										Triple.URI,
+										Triple.LITERAL);
+								
+								//insert arch between report and bus ride
+								kp.insert(
+										OntologyReference.NS + reportName + fines_id,
+										OntologyReference.ON_RIDE,
+										OntologyReference.NS + busRideName + ride,
+										Triple.URI,
+										Triple.URI);
+								
+								//insert arch between busLine and report
+								kp.insert(
+										OntologyReference.NS + reportName + fines_id,
+										OntologyReference.ON_LINE,
+										OntologyReference.NS + busLineName,
+										Triple.URI,
+										Triple.URI);
+								
+								fines_id++;
+							}
+								
 							if (currentStopIndex==0)
 								kp.insert(currentAndNextStop);
 							else
@@ -523,11 +562,6 @@ public class Bus extends Thread {
 							System.out.printf("\n Bus linea %s corsa %s, scese %d persone reali\n", line, ride, descendedRealPerson);
 							descendedPayingPerson = generateDescendingPayingPerson(descendedRealPerson, currentStopIndex, sizeOfStopsList, payingPerson, realPerson);
 							System.out.printf("\n Bus linea %s corsa %s, scese %d persone paganti\n", line, ride, descendedPayingPerson);
-						}
-
-						if(inspectorPresent) {
-							fines = realPerson - payingPerson;
-							System.out.printf("\nIl controllore è salito e ha fatto %d multe\n", fines);
 						}
 						
 					}else {
