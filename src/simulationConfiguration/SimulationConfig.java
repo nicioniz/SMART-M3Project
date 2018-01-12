@@ -12,14 +12,13 @@ public class SimulationConfig {
 	private CyclicBarrier barrier;
 	private CyclicBarrier endBarrier;
 	private int maxInspectors;
-	private int inspectorPresencePercentageProbability;
 	private int numberOfPresentInspectors = 0;
 	private int autobusMaxSeats = 80;
 	private float ticketPrice;
-	private float ticketEvasion;
+	private int ticketEvasion;
 	private int inspectorCost;
 	private float fine;
-	private int veichleCost;
+	private int inspectorGeneration;
 	
 	private Semaphore startSimulationSemaphore = new Semaphore(0);
 	
@@ -98,14 +97,6 @@ public class SimulationConfig {
 		this.maxInspectors = maxInspectors;
 	}
 
-	public int getInspectorPresencePercentageProbability() {
-		return inspectorPresencePercentageProbability;
-	}
-
-	public void setInspectorPresencePercentageProbability(int inspectorPresencePercentageProbability) {
-		this.inspectorPresencePercentageProbability = inspectorPresencePercentageProbability;
-	}
-
 	public int getNumberOfPresentInspectors() {
 		return numberOfPresentInspectors;
 	}
@@ -118,11 +109,11 @@ public class SimulationConfig {
 		this.ticketPrice = ticketPrice;
 	}
 
-	public float getTicketEvasion() {
+	public int getTicketEvasion() {
 		return ticketEvasion;
 	}
 
-	public void setTicketEvasion(float ticketEvasion) {
+	public void setTicketEvasion(int ticketEvasion) {
 		this.ticketEvasion = ticketEvasion;
 	}
 
@@ -142,12 +133,12 @@ public class SimulationConfig {
 		this.fine = fine;
 	}
 
-	public int getVeichleCost() {
-		return veichleCost;
+	public int getInspectorGeneration() {
+		return inspectorGeneration;
 	}
 
-	public void setVeichleCost(int veichleCost) {
-		this.veichleCost = veichleCost;
+	public void setInspectorGeneration(int inspectorGeneration) {
+		this.inspectorGeneration = inspectorGeneration;
 	}
 
 	public boolean addInspector(int numberOfAddedInspectors) {

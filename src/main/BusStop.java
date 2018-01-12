@@ -111,7 +111,7 @@ public class BusStop {
 	}
 
 	private void generateInspector() {
-		boolean probabilityPresence = r.nextInt(101) <= SimulationConfig.getInstance().getInspectorPresencePercentageProbability();
+		boolean probabilityPresence = r.nextInt(101) <= SimulationConfig.getInstance().getInspectorGeneration();
 		if(probabilityPresence && SimulationConfig.getInstance().addInspector())
 			inspectorPresent = true;
 		else
