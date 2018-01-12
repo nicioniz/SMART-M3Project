@@ -23,16 +23,14 @@ public class StatisticsManager {
 		kp = new KPICore(SIBConfiguration.getInstance().getHost(),
 				SIBConfiguration.getInstance().getPort(),
 				SIBConfiguration.getInstance().getSmartSpaceName());
-	}
-	
-	private void joinToTheSIB(){
+		
 		if(!kp.join().isConfirmed())
 			System.out.println("Error joining the SIB");
 		else
-			System.out.println("Statistics joined SIB correctly");
+			System.out.println("StatisticsManager: joined SIB correctly");
 	}
 	
-	public StatisticsManager getInstance(){	
+	public static StatisticsManager getInstance(){	
 		if(istance == null)
 			istance = new StatisticsManager();
 
@@ -58,8 +56,6 @@ public class StatisticsManager {
 		
 		int numDaysOfSimulation = SimulationConfig.getInstance().getSimulationDays();
 		
-		joinToTheSIB();
-		
 		for(int i=0; i<numDaysOfSimulation; i++){
 			result += "\tDay " + i+1 + "\n";
 			
@@ -81,8 +77,6 @@ public class StatisticsManager {
 		String result = "Segment with most people for line " + lineNumber + " (Day " + day + "):\n" +
 							"\tFrom Stop:\tLat= ";
 		
-		joinToTheSIB();
-		
 		//query
 		String sparqlQuery = 
 				"select ?lacs ?locs ?lanx ?lons ?rp "
@@ -97,7 +91,7 @@ public class StatisticsManager {
 						+ "?cs <" + OntologyReference.HAS_LAT + "> ?lacs ."
 						+ "?cs <" + OntologyReference.HAS_LON + "> ?locs ."
 						+ "?ns <" + OntologyReference.HAS_LAT + "> ?lans ."
-						+ "?ns <" + OntologyReference.HAS_LON + "> ?lons ."
+						+ "?ns <" + OntologyReference.HAS_LON + "> ?lons"
 						+ " }";
 		
 		// execute query
@@ -147,7 +141,7 @@ public class StatisticsManager {
 				"select distinct ?ln "
 					+ "where {"
 					+ "?bl <" + OntologyReference.RDF_TYPE + "> <" + OntologyReference.BUS_LINE + "> ."
-					+ "?bl <" + OntologyReference.HAS_NUMBER + "> " + "?ln ."
+					+ "?bl <" + OntologyReference.HAS_NUMBER + "> " + "?ln"
 					+ "}";
 		
 		SIBResponse response = kp.querySPARQL(sparqlQuery);
@@ -181,21 +175,26 @@ public class StatisticsManager {
 		
 		// query
 		String sparqlQuery = 
-				"select ?ln ?lacr ?locs ?lans ?lons ?ts ?rp ?pp"
-					+ "where {"
-					+ "?ls <" + OntologyReference.RDF_TYPE + "> <" + OntologyReference.AFFLUEANCE + "> ."
-					+ "?ls <" + OntologyReference.HAS_CURR_STOP + "> ?cs ."
-					+ "?cs <" + OntologyReference.HAS_LAT + "> ?lacs ."
-					+ "?cs <" + OntologyReference.HAS_LON + "> ?locs ."
-					+ "?ls <" + OntologyReference.HAS_NEXT_STOP + "> ?ns ."
-					+ "?ns <" + OntologyReference.HAS_LAT + "> ?lans ."
-					+ "?ns <" + OntologyReference.HAS_LON + "> ?lons ."
-					+ "?ls <" + OntologyReference.HAS_RIDE + "> ?rd ."
-					+ "?rd <" + OntologyReference.AT_TIME + "> ?ts ."
-					+ "?ls <" + OntologyReference.HAS_NUMBER + "> ?ln ."
-					+ "?ls <" + OntologyReference.HAS_REAL_PERSON + "> ?lrp ."
-					+ "?ls <" + OntologyReference.HAS_PAYING_PERSON + "> ?pp ."
+				"select ?ln ?lacs ?locs ?lans ?lons ?ts ?rp ?pp "
+					+ "where { "
+					+ "?ls <" + OntologyReference.RDF_TYPE + "> <" + OntologyReference.AFFLUEANCE + "> . "
+					+ "?ls <" + OntologyReference.FROM_CURR_STOP + "> ?cs . "
+					+ "?cs <" + OntologyReference.HAS_LOCATION_DATA + "> ?ldcs . "
+					+ "?ldcs <" + OntologyReference.HAS_LAT + "> ?lacs . "
+					+ "?ldcs <" + OntologyReference.HAS_LON + "> ?locs . "
+					+ "?ls <" + OntologyReference.TO_NEXT_STOP + "> ?ns . "
+					+ "?ns <" + OntologyReference.HAS_LOCATION_DATA + "> ?ldns . "
+					+ "?ldns <" + OntologyReference.HAS_LAT + "> ?lans . "
+					+ "?ldns <" + OntologyReference.HAS_LON + "> ?lons . "
+					+ "?ls <" + OntologyReference.ON_RIDE + "> ?rd . "
+					+ "?rd <" + OntologyReference.AT_TIME + "> ?ts . "
+					+ "?ls <" + OntologyReference.ON_LINE + "> ?bl . "
+					+ "?bl <" + OntologyReference.HAS_NUMBER + "> ?ln . "
+					+ "?ls <" + OntologyReference.OF_REAL_PERSON + "> ?rp . "
+					+ "?ls <" + OntologyReference.OF_PAYING_PERSON + "> ?pp "
 					+ "}";
+		
+		System.out.println(sparqlQuery);
 		
 		SIBResponse response = kp.querySPARQL(sparqlQuery);
 		SSAP_sparql_response results = response.sparqlquery_results;
@@ -235,7 +234,7 @@ public class StatisticsManager {
 				+ "\tFrom Stop:\tLat= " + latFromCurrStop + ";\tLon= " + lonFromCurrStop + "\n"
 				+ "\tTo Stop:\tLat= " + latToNextStop + ";\tLon= " + lonToNextStop + "\n"
 				+ "\tAt Time:\t" + timestamp + "\n"
-				+ "\tNumber of people:\t\t\t" + realPeople + "\n"
+				+ "\tNumber of people:\t\t" + realPeople + "\n"
 				+ "\tNumber of paying people:\t" + maxPeople + "\n";
 			
 			
@@ -247,14 +246,9 @@ public class StatisticsManager {
 		
 	}
 	
-/*	// return the string that represents the economic summary of the bus lines
+	// return the string that represents the economic summary of the bus lines
 	public String economicSummary(){
-		String result = "";
-			
-
-			
-		return result;
+		return this.maxAffluence() + this.maxPeopleStatistics();
 	}
-*/
 
 }

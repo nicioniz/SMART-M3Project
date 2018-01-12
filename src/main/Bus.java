@@ -421,14 +421,14 @@ public class Bus extends Thread {
 							kp.insert(
 									OntologyReference.NS + affluenceName + c,
 									OntologyReference.ON_LINE,
-									busLineName,
+									OntologyReference.NS + busLineName,
 									Triple.URI,
 									Triple.URI);
 
 							kp.insert(
 									OntologyReference.NS + affluenceName + c,
 									OntologyReference.ON_RIDE,
-									busRideName + ride,
+									OntologyReference.NS + busRideName + ride,
 									Triple.URI,
 									Triple.URI);
 							
@@ -478,14 +478,14 @@ public class Bus extends Thread {
 							kp.insert(
 									OntologyReference.NS + getOnName + c,
 									OntologyReference.ON_LINE,
-									busLineName,
+									OntologyReference.NS + busLineName,
 									Triple.URI,
 									Triple.URI);
 
 							kp.insert(
 									OntologyReference.NS + getOnName + c,
 									OntologyReference.ON_RIDE,
-									busRideName + ride,
+									OntologyReference.NS + busRideName + ride,
 									Triple.URI,
 									Triple.URI);
 							

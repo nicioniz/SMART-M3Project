@@ -30,6 +30,7 @@ import main.Bus;
 import main.BusMap;
 import main.BusStopManager;
 import main.BusVisualizerAggregator;
+import main.StatisticsManager;
 import main.StatisticsVisualizer;
 import simulationConfiguration.SimulationConfig;
 
@@ -350,8 +351,8 @@ public class SimConfigurationFrame extends JFrame {
 		this.dispose();
 		SimulationConfig.getInstance().setEndBarrier(numberOfStartedThread+1); // +1 because also this thread is counted
 		SimulationConfig.getInstance().waitThreadsEnd();
-		StatisticsVisualizer statistics = new StatisticsVisualizer("32", simulationDays, busRides);  
-		statistics.getStatistics();
+		StatisticsManager statistics = StatisticsManager.getInstance();
+		System.out.println(statistics.economicSummary());
 
 	}
 	
