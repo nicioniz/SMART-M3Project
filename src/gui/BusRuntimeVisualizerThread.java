@@ -32,7 +32,7 @@ public class BusRuntimeVisualizerThread extends Thread {
 		if(!kp.join().isConfirmed())
 			System.err.println ("Error joining the SIB");
 		else
-			System.out.println ("BusRuntimeVisualizerThread joined SIB correctly");
+			System.out.println ("BusRuntimeVisualizerThread (#" + refreshRate + " msec) joined SIB correctly");
 		
 		
 		while(!isInterrupted()) {
@@ -45,9 +45,12 @@ public class BusRuntimeVisualizerThread extends Thread {
 				sleep(refreshRate);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println ("BusRuntimeVisualizerThread (#" + refreshRate + " msec) ending...");
+				return;
 			}
 		}
+		System.out.println ("BusRuntimeVisualizerThread (#" + refreshRate + " msec) ending...");
+		
 		
 	}
 	
@@ -68,7 +71,8 @@ public class BusRuntimeVisualizerThread extends Thread {
 		SIBResponse resp = kp.querySPARQL(query);
 		
 		SSAP_sparql_response newResults = resp.sparqlquery_results;
-		
+		if(newResults == null)
+			return;
 		Vector<Vector<String[]>> data = newResults.getResults();
 //		if(indSequence.equals("0"))
 //			data = oldResults.getResults();
