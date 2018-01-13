@@ -17,8 +17,8 @@ public class Main {
 		configurator.setVisible(true);
 		SimulationConfig.getInstance().getStartSimulationSemaphore().acquire();
 		SimulationConfig.getInstance().waitThreadsEnd();
-		StatisticsVisualizer statistics = new StatisticsVisualizer("32", SimulationConfig.getInstance().getSimulationDays(), SimulationConfig.getInstance().getBusRides());  
-		statistics.getStatistics();
+		StatisticsManager statistics = StatisticsManager.getInstance();
+		System.out.println(statistics.economicSummary());
 	}
 
 	private static void initializer() {

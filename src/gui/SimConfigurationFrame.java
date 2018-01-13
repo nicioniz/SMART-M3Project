@@ -30,6 +30,7 @@ import main.Bus;
 import main.BusMap;
 import main.BusStopManager;
 import main.BusVisualizerAggregator;
+import main.StatisticsManager;
 import parser.BusPathParser;
 import simulationConfiguration.SimulationConfig;
 
@@ -362,6 +363,7 @@ public class SimConfigurationFrame extends JFrame {
 		SimulationConfig.getInstance().getStartSimulationSemaphore().release();
 			
 		SimulationConfig.getInstance().setEndBarrier(numberOfStartedThread+1); // +1 because also this thread is counted
+		
 
 		dispose();
 

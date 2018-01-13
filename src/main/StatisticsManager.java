@@ -48,11 +48,12 @@ public class StatisticsManager {
 		//							segmentMostPeopleFromLineAndDay(int day, int lineNumber)
 		//						Day 2
 		//							segmentMostPeopleFromLineAndDay(int day, int lineNumber)
-		//						...
+		//						    ...
 		//						Day N
 		//							segmentMostPeopleFromLineAndDay(int day, int lineNumber)
+		//							...
 		
-		String result = "SEGMENTS WITH MOST PEOPLE FOR EACH DAY AND LINE:\n";
+		String result = "\nSEGMENTS WITH MOST PEOPLE FOR EACH DAY AND LINE:\n";
 		
 		int numDaysOfSimulation = SimulationConfig.getInstance().getSimulationDays();
 		
@@ -60,7 +61,7 @@ public class StatisticsManager {
 			result += "\tDay " + i+1 + "\n";
 			
 			for(String lineResult : getLineNumbers())
-				result += segmentMostPeopleFromLineAndDay(i, lineResult);
+				result += "\t" + segmentMostPeopleFromLineAndDay(i, lineResult);
 		}
 		
 		return result;
@@ -74,24 +75,26 @@ public class StatisticsManager {
 		//						To Stop:	Lat= 0.2323;	Lon= 0.232323
 		//						23 real people "
 		
-		String result = "Segment with most people for line " + lineNumber + " (Day " + day + "):\n" +
-							"\tFrom Stop:\tLat= ";
+		String result = "Segment with most people for line " + lineNumber +":\n" +
+							"\t\tFrom Stop:\tLat= ";
 		
 		//query
 		String sparqlQuery = 
-				"select ?lacs ?locs ?lanx ?lons ?rp "
+				"select ?lacs ?locs ?lans ?lons ?rp "
 						+ "where { "
-						+ "?ls <" + OntologyReference.RDF_TYPE + "> <" + OntologyReference.AFFLUEANCE + "> ."
-						+ "?ls <" + OntologyReference.ON_LINE + "> ?bl ."
-						+ "?bl <" + OntologyReference.HAS_NUMBER + "> <" + lineNumber + "> ."
+						+ "?ls <" + OntologyReference.RDF_TYPE + "> <" + OntologyReference.AFFLUEANCE + "> . "
+						+ "?ls <" + OntologyReference.ON_LINE + "> ?bl . "
+						+ "?bl <" + OntologyReference.HAS_NUMBER + "> \"" + lineNumber + "\" . "
 						+ "?ls <" + OntologyReference.OF_REAL_PERSON + "> ?rp ."
-						+ "?ls <" + OntologyReference.HAS_SIMULATION_DAY + "> <" + day + "> ."
-						+ "?ls <" + OntologyReference.FROM_CURR_STOP + "> ?cs ."
-						+ "?ls <" + OntologyReference.TO_NEXT_STOP + "> ?ns ."
-						+ "?cs <" + OntologyReference.HAS_LAT + "> ?lacs ."
-						+ "?cs <" + OntologyReference.HAS_LON + "> ?locs ."
-						+ "?ns <" + OntologyReference.HAS_LAT + "> ?lans ."
-						+ "?ns <" + OntologyReference.HAS_LON + "> ?lons"
+						+ "?ls <" + OntologyReference.HAS_SIMULATION_DAY + "> \"" + day + "\" . "
+						+ "?ls <" + OntologyReference.FROM_CURR_STOP + "> ?cs . "
+						+ "?ls <" + OntologyReference.TO_NEXT_STOP + "> ?ns . "
+						+ "?cs <" + OntologyReference.HAS_LOCATION_DATA + "> ?ldcs . "
+						+ "?ns <" + OntologyReference.HAS_LOCATION_DATA + "> ?ldns . "
+						+ "?ldcs <" + OntologyReference.HAS_LAT + "> ?lacs . "
+						+ "?ldcs <" + OntologyReference.HAS_LON + "> ?locs . "
+						+ "?ldns <" + OntologyReference.HAS_LAT + "> ?lans . "
+						+ "?ldns <" + OntologyReference.HAS_LON + "> ?lons "
 						+ " }";
 		
 		// execute query
@@ -123,8 +126,8 @@ public class StatisticsManager {
 			}
 			
 			result += fromStopLat + ";\tLon= " + fromStopLon + "\n"
-					+"\tTo Stop:\tLat= "+ toStopLat + ";\tLon= " + toStopLon + "\n"
-					+ "\t" + maxPeople + " real people\n";
+					+"\t\tTo Stop:\tLat= "+ toStopLat + ";\tLon= " + toStopLon + "\n"
+					+ "\t\t" + maxPeople + " real people\n";
 			
 			return result;
 		}
@@ -171,7 +174,7 @@ public class StatisticsManager {
 		//						Number of people:			45
 		//						Number of paying people:	34
 		
-		String result = "MAX AFFLUENCE OF THE SIMULATION:\n";
+		String result = "\nMAX AFFLUENCE OF THE SIMULATION:\n";
 		
 		// query
 		String sparqlQuery = 
@@ -235,7 +238,7 @@ public class StatisticsManager {
 				+ "\tTo Stop:\tLat= " + latToNextStop + ";\tLon= " + lonToNextStop + "\n"
 				+ "\tAt Time:\t" + timestamp + "\n"
 				+ "\tNumber of people:\t\t" + realPeople + "\n"
-				+ "\tNumber of paying people:\t" + maxPeople + "\n";
+				+ "\tNumber of paying people:\t" + payingPeople + "\n";
 			
 			
 			return result;
