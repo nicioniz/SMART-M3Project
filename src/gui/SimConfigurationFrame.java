@@ -303,6 +303,7 @@ public class SimConfigurationFrame extends JFrame {
 		simulationDaysContentPane.add(startSimButton);
 		f = new BusRuntimeVisualizer();
 		f.setVisible(true);
+		pack();
 	}
 
 	public void startSimButtonPressed(ActionEvent e) {
