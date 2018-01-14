@@ -183,17 +183,7 @@ public class Bus extends Thread {
 				Triple.URI).getAsVector();
 			
 		newTripleToInsert.add(busPersonDataArch);
-		
-		//insert report
-		Vector<String> report = new Triple(
-				OntologyReference.NS + reportName,
-				OntologyReference.RDF_TYPE,
-				OntologyReference.REPORT,
-				Triple.URI,
-				Triple.URI).getAsVector();
-			
-		newTripleToInsert.add(report);
-			
+					
 		Vector<String> busId = new Triple(
 				OntologyReference.NS + name,
 				OntologyReference.HAS_ID,
