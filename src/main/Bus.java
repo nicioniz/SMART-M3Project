@@ -183,17 +183,7 @@ public class Bus extends Thread {
 				Triple.URI).getAsVector();
 			
 		newTripleToInsert.add(busPersonDataArch);
-		
-		//insert report
-		Vector<String> report = new Triple(
-				OntologyReference.NS + reportName,
-				OntologyReference.RDF_TYPE,
-				OntologyReference.REPORT,
-				Triple.URI,
-				Triple.URI).getAsVector();
-			
-		newTripleToInsert.add(report);
-			
+					
 		Vector<String> busId = new Triple(
 				OntologyReference.NS + name,
 				OntologyReference.HAS_ID,
@@ -522,6 +512,13 @@ public class Bus extends Thread {
 							//insert fines
 							if(inspectorPresent) {
 								fines = realPerson - payingPerson;
+								kp.insert(
+										OntologyReference.NS + reportName + fines_id,
+										OntologyReference.RDF_TYPE,
+										OntologyReference.REPORT,
+										Triple.URI,
+										Triple.URI);								
+								
 								
 								kp.insert(
 										OntologyReference.NS + reportName + fines_id,
@@ -600,14 +597,15 @@ public class Bus extends Thread {
 					}
 				}
 				
-				kp.remove(currentAndNextStop);
-				kp.remove(newTriplePoint);
 				System.out.printf("ride %d terminated\n", ride+1);
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+
+				kp.remove(currentAndNextStop);
+				kp.remove(newTriplePoint);
 			}
 			//this barrier is needed to avoid that one bus start day i+1 before another bus has finished day i
 			SimulationConfig.getInstance().waitForBarrier();
