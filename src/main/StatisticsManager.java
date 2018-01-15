@@ -94,7 +94,7 @@ public class StatisticsManager {
 							int evasionNumber = Integer.parseInt(riga.get(2)[2]) - Integer.parseInt(riga.get(1)[2]);
 							
 							//composing result
-							result += "\t\t" + riga.get(4)[2].split("#")[1] + " at time "  + riga.get(5)[2] + " -> " + evasionNumber + " evasions\n";
+							result += "\t     " + riga.get(4)[2].split("#")[1] + " at time "  + riga.get(5)[2] + " -> " + evasionNumber + " evasions\n";
 						}
 						
 					}
