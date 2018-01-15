@@ -15,8 +15,6 @@ import utils.SIBConfiguration;
 
 public class StatisticsManager {
 	
-	// this class doesn't connect to the SIB, it uses the method declared in Statistics class to operate, which connects to the SIB
-	
 	private static StatisticsManager istance = null;
 	
 	private KPICore kp = null;
