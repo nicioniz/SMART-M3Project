@@ -1,6 +1,7 @@
 package main;
 
 import gui.SimConfigurationFrame;
+import gui.StatisticsFrame;
 import simulationConfiguration.SimulationConfig;
 import sofia_kp.KPICore;
 import utils.OntologyReference;
@@ -15,10 +16,11 @@ public class Main {
 		initializer();
 		SimConfigurationFrame configurator = new SimConfigurationFrame();
 		configurator.setVisible(true);
-		SimulationConfig.getInstance().getStartSimulationSemaphore().acquire();
+		SimulationConfig.getInstance().getStartSimulationSemaphore().acquire();	
 		SimulationConfig.getInstance().waitThreadsEnd();
-		StatisticsManager statistics = StatisticsManager.getInstance();
-		System.out.println(statistics.economicSummary());
+		StatisticsFrame statistics = new StatisticsFrame();
+		statistics.setVisible(true);
+		
 	}
 
 	private static void initializer() {
