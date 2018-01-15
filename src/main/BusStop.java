@@ -34,7 +34,7 @@ public class BusStop {
 		
 	public void init() {
 		insertIntoSIB();
-		generateInspector();		
+//		generateInspector();		
 	}
 	
 	private void insertIntoSIB() {
@@ -110,7 +110,7 @@ public class BusStop {
 		kp.insert(newTripleToInsert);
 	}
 
-	private void generateInspector() {
+	public void generateInspector() {
 		boolean probabilityPresence = r.nextInt(101) <= SimulationConfig.getInstance().getInspectorGeneration();
 		if(probabilityPresence && SimulationConfig.getInstance().addInspector())
 			inspectorPresent = true;

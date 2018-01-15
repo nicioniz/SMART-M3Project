@@ -3,10 +3,12 @@ package main;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.teamdev.jxmaps.LatLng;
 
@@ -56,7 +58,14 @@ public class BusStopManager {
 		if(initCalled)
 			return;
 		
-		busStopLists.values().stream().forEach(lbs -> lbs.stream().forEach(bs -> bs.init()));		
+		busStopLists.values().stream().forEach(lbs -> lbs.stream().forEach(bs -> bs.init()));
+		List<BusStop> allBS = Stream.concat(busStopLists.get("11").stream(), Stream.concat(busStopLists.get("20").stream(), busStopLists.get("32").stream())).collect(Collectors.toList()); 
+		Collections.shuffle(allBS);
+		allBS.stream().forEach(bs -> bs.generateInspector());
+//		Stream<String> out = Stream.of(a, b, c)
+//			      .reduce(Stream::concat)
+//			      .orElseGet(Stream::empty);
+//			  out.forEach(System.out::println);
 		initCalled = true;
 	}
 

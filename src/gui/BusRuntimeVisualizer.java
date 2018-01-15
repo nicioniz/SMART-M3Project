@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 
 public class BusRuntimeVisualizer extends JFrame {
@@ -58,6 +59,7 @@ public class BusRuntimeVisualizer extends JFrame {
 		txtResult.setEditable(false);
 		panel.add(txtResult);
 		
+		
 	}
 	
 	private void clickBtnShow(ActionEvent ae) {
@@ -75,5 +77,15 @@ public class BusRuntimeVisualizer extends JFrame {
 		runningThread = new BusRuntimeVisualizerThread(refreshRate, txtResult);
 		runningThread.start();
 	}
+
+	
+	@Override
+	public void dispose() {
+		if(runningThread != null)
+			runningThread.interrupt();
+		super.dispose();
+	}
+	
+	
 
 }
