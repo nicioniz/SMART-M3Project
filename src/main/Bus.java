@@ -599,7 +599,7 @@ public class Bus extends Thread {
 				
 				System.out.printf("ride %d terminated\n", ride+1);
 				try {
-					Thread.sleep(500);
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -607,15 +607,15 @@ public class Bus extends Thread {
 				kp.remove(currentAndNextStop);
 				kp.remove(newTriplePoint);
 			}
-			//this barrier is needed to avoid that one bus start day i+1 before another bus has finished day i
-			SimulationConfig.getInstance().waitForBarrier();
 			
 			System.out.printf("day %d terminated\n", day+1);
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			//this barrier is needed to avoid that one bus start day i+1 before another bus has finished day i
+			SimulationConfig.getInstance().waitForBarrier();			
 		}
 		SimulationConfig.getInstance().waitThreadsEnd();
 	}

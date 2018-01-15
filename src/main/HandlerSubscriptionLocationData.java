@@ -1,9 +1,3 @@
-/**
- * Example of subscribe handler implementing the interface iKPIC_subscribeHandler2
- * 
- * @author Alfredo D'Elia
- */
-
 package main;
 import com.teamdev.jxmaps.LatLng;
 
