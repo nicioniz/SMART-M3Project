@@ -650,14 +650,19 @@ public class Bus extends Thread {
 		
 	public int generateDescendingPayingPerson(int descendedRealPerson, int currentStopIndex, int sizeOfStopsList, int payingPerson, int realPerson) {
 		int descendedPayingPerson = 0;
+		int tempRealPerson = realPerson;
+		int tempPayingPerson = payingPerson;
 		float ticketEvasion = SimulationConfig.getInstance().getTicketEvasion();
 		if((descendedRealPerson > 0) && (currentStopIndex < sizeOfStopsList-1))
 			if(realPerson == payingPerson) 
 				descendedPayingPerson = descendedRealPerson;
 			else {
-				for(int i = 0; i<descendedRealPerson && descendedPayingPerson<payingPerson; i++) { 
-				if(random.nextInt(101) >= ticketEvasion)
-					descendedPayingPerson++;
+				for(int i = 0; i<descendedRealPerson && descendedPayingPerson<payingPerson; i++) {
+					tempRealPerson--;
+					if(random.nextInt(101) >= ticketEvasion || tempRealPerson < tempPayingPerson) {
+						descendedPayingPerson++;
+						tempPayingPerson--;
+					}
 				}
 			}
 		if((currentStopIndex == sizeOfStopsList-1))
