@@ -484,7 +484,7 @@ public class StatisticsManager {
 				+ "\tFrom Stop:\tLat= " + latFromCurrStop + ";\tLon= " + lonFromCurrStop + "\n"
 				+ "\tTo Stop:\tLat= " + latToNextStop + ";\tLon= " + lonToNextStop + "\n"
 				+ "\tAt Time:\t" + timestamp + "\n"
-				+ "\tNumber of people:\t\t" + maxPeople + "\n"
+				+ "\tNumber of people:\t" + maxPeople + "\n"
 				+ "\tNumber of paying people:\t" + payingPeople + "\n";
 			
 			
@@ -515,6 +515,7 @@ public class StatisticsManager {
 		String result = "\nSEGMENTS WITH MOST PEOPLE AND SEGMENT WITH MOST PAYING PEOPLE FOR EACH DAY AND LINE:\n";
 		
 		int numDaysOfSimulation = SimulationConfig.getInstance().getSimulationDays();
+		
 		
 		for(int i=0; i<numDaysOfSimulation; i++){
 			result += "\tDay " + (i+1) + "\n";
@@ -717,7 +718,7 @@ public class StatisticsManager {
 				+ "\tFrom Stop:\tLat= " + latFromCurrStop + ";\tLon= " + lonFromCurrStop + "\n"
 				+ "\tTo Stop:\tLat= " + latToNextStop + ";\tLon= " + lonToNextStop + "\n"
 				+ "\tAt Time:\t" + timestamp + "\n"
-				+ "\tNumber of people:\t\t" + maxPeople + "\n"
+				+ "\tNumber of people:\t" + maxPeople + "\n"
 				+ "\tNumber of paying people:\t" + payingPeople + "\n";
 			
 			
@@ -732,9 +733,9 @@ public class StatisticsManager {
 	// return the string that represents the economic summary of the bus lines
 	public String economicSummary(){
 		return this.maxAffluence()
+			+ this.maxGetOn()
 			+ this.maxAffluenceForDayAndLine()
 			+ this.maxGetOnForDayAndLine()
-			+ this.maxGetOn()
 			+ this.maxFinesLine()
 			+ this.linesBalance()
 			+ this.evasionNumberForRideAndLineAndDay()
