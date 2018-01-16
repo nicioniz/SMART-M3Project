@@ -22,7 +22,7 @@
   </wpt>
   <wpt lat="44.4913209" lon="11.3417484">
     <name>40123 Bologna BO</name>
-    <desc>Via D'Azeglio, 23, 40123 Bologna BO, Italy</desc>
+    <desc>Via D Azeglio, 23, 40123 Bologna BO, Italy</desc>
   </wpt>
   <wpt lat="44.4932602" lon="11.3358634">
     <name>40123 Bologna BO</name>
@@ -34,7 +34,7 @@
   </wpt>
   <wpt lat="44.494885" lon="11.3426091">
     <name>40125 Bologna BO</name>
-    <desc>Via dell'Indipendenza, 1, 40125 Bologna BO, Italy</desc>
+    <desc>Via dell Indipendenza, 1, 40125 Bologna BO, Italy</desc>
   </wpt>
   <wpt lat="44.5011844" lon="11.3445257">
     <name>40126 Bologna BO</name>
@@ -682,7 +682,7 @@
   </trkpt>
   
   <trkpt lat="44.499353" lon="11.358672">
-    <name>Sant'Egidio </name>
+    <name>Sant Egidio </name>
   </trkpt>
   
   <trkpt lat="44.49951" lon="11.35888">
