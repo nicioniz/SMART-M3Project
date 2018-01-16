@@ -37,8 +37,8 @@ public class StatisticsManager {
 		return istance;
 	}
 	
-	// returns the string that represents the evasion's number statistics, for each day,line and ride
-	private String evasionNumberForRideAndLineAndDay(){
+	// returns the string that represents the evasion's number statistics, for each ride
+	private String evasionNumberForRide(){
 		
 		// result expected:
 		//		EVASION'S NUMBER FOR EACH RIDE OF THE SIMULATION:
@@ -71,6 +71,8 @@ public class StatisticsManager {
 			
 			Vector<Vector<String[]>> data = results.getResults();
 			
+			Map<String, Integer> evasionRideMap = new HashMap<String, Integer>();
+			
 			// days of simulation cycle
 			for(int i=0; i<SimulationConfig.getInstance().getSimulationDays(); i++){
 				
@@ -88,11 +90,15 @@ public class StatisticsManager {
 						
 						if(day == i && ln.equals(lineNumber)){
 							
-							// calculating evasion
+							// evasions update
+							String ride = riga.get(4)[2].split("#")[1];
 							int evasionNumber = Integer.parseInt(riga.get(2)[2]) - Integer.parseInt(riga.get(1)[2]);
 							
-							//composing result
-							result += "\t     " + riga.get(4)[2].split("#")[1] + " at time "  + riga.get(5)[2] + " -> " + evasionNumber + " evasions\n";
+							if(evasionRideMap.get(ride) == null)
+								evasionRideMap.put(ride + "." + lineNumber + "." + day, evasionNumber);
+							else
+								evasionRideMap.put(ride + "." + lineNumber + "." + day, evasionRideMap.get(ride) + evasionNumber);
+							
 						}
 						
 					}
@@ -101,8 +107,13 @@ public class StatisticsManager {
 					
 			}
 			
+			//composing result
+			for(String rideMapKey : evasionRideMap.keySet())
+				result += "\t     " + rideMapKey.split("\\.")[0] + " -> " + evasionRideMap.get(rideMapKey) + " evasions\n";
+			
 			return result;
 		}
+
 		
 		
 		return "";
@@ -132,15 +143,30 @@ public class StatisticsManager {
 	private String singleLineBalance(String lineNumber){
 		
 		// result expected:
-		//		Line 32: positive/negative -> +32€/-32€
+		//		Line 32:
+		//			Fine's price: 5€
+		//			Number of fines: 120
+		//			Inspector's cost: 10€/day
+		//			Number of inspector: 20
+		//			Days of simulation: 2
+		//			Ticket's price: 1€
+		//			positive/negative -> +32€/-32€
 		
-		String result = "Line " + lineNumber + ": ";
+		String result = "Line " + lineNumber + ":\n";
 		float finePrice = SimulationConfig.getInstance().getFine();
 		int inspectorCost = SimulationConfig.getInstance().getInspectorCost();
 		int numInspector = SimulationConfig.getInstance().getMaxInspectors();
 		int numFines = getNumFinesForLine(lineNumber);
 		int daysOfSimulation = SimulationConfig.getInstance().getSimulationDays();
 		float ticketPrice = SimulationConfig.getInstance().getTicketPrice();
+		
+		result += "\t   Fine's price: " + finePrice + "€\n"
+				+ "\t   Number of fines: " + numFines + "\n"
+				+ "\t   Inspector's cost: " + inspectorCost + "€/day\n"
+				+ "\t   Number of inspector: " + numInspector + "\n"
+				+ "\t   Days of simulation: " + daysOfSimulation + "\n"
+				+ "\t   Ticket's price: " + ticketPrice + "€\n"
+				;
 		
 		// positive sheet items
 		float positiveHalfBalance = finePrice*numFines + ticketPrice*getPayingPeopleForLine(lineNumber);
@@ -156,7 +182,7 @@ public class StatisticsManager {
 		if(balance < 0)
 			pos_neg = "Negative";
 		
-		result += pos_neg + " -> " + balance + "€";
+		result += "\t   " + pos_neg + " -> " + balance + "€";
 		
 		
 		return result;
@@ -305,7 +331,7 @@ public class StatisticsManager {
 		//							segmentMostGetOnFromLineAndDay(int day, int lineNumber)
 		//							...
 		
-		String result = "\nSEGMENTS WITH MOST PEOPLE AND SEGMENT WITH MOST PAYING PEOPLE THAT GET ON THE BUS FOR EACH DAY AND LINE:\n";
+		String result = "\nSEGMENT WITH MOST PEOPLE AND SEGMENT WITH MOST PAYING PEOPLE THAT GET ON THE BUS FOR EACH DAY AND LINE:\n";
 		
 		int numDaysOfSimulation = SimulationConfig.getInstance().getSimulationDays();
 				
@@ -323,20 +349,22 @@ public class StatisticsManager {
 	private String segmentMostGetOnFromLineAndDay(int day, String lineNumber){
 			
 		// result expected: "Bus Stop with most people that get on the bus for line 32: 
-		//						From Stop:	Lat= 0.21212;	Lon= 0.232323
-		//						To Stop:	Lat= 0.2323;	Lon= 0.232323
+		//						Ride:	Ride1
+		//						From Stop:	Piazza Malpighi
+		//						To Stop:	Marconi
 		//						Max real people: 23
-		//						---
-		//						From Stop:	Lat= 0.21212;	Lon= 0.232323
-		//						To Stop:	Lat= 0.2323;	Lon= 0.232323
+		//					 Bus Stop with most paying people that get on the bus for line 32:
+		//						Ride: Ride2
+		//						From Stop:	Piazza Minghetti
+		//						To Stop:	Marconi
 		//						Max paying people: 23"
 		
 		String result = "Bus Stop with most real people that get on the bus for line " + lineNumber +":\n" +
-							"\t\tFrom Stop:\tLat= ";
+							"\t\tRide:\t";
 		
 		//query
 		String sparqlQuery = 
-				"select ?lacs ?locs ?lans ?lons ?rp ?pp "
+				"select ?lacs ?locs ?lans ?lons ?rp ?pp ?rd "
 						+ "where { "
 						+ "?ls <" + OntologyReference.RDF_TYPE + "> <" + OntologyReference.GET_ON_DATA + "> . "
 						+ "?ls <" + OntologyReference.ON_LINE + "> ?bl . "
@@ -351,7 +379,8 @@ public class StatisticsManager {
 						+ "?ldcs <" + OntologyReference.HAS_LON + "> ?locs . "
 						+ "?ldns <" + OntologyReference.HAS_LAT + "> ?lans . "
 						+ "?ldns <" + OntologyReference.HAS_LON + "> ?lons . "
-						+ "?ls <" + OntologyReference.HAS_GETTING_ON_PAYING + "> ?pp"
+						+ "?ls <" + OntologyReference.HAS_GETTING_ON_PAYING + "> ?pp . "
+						+ "?ls <" + OntologyReference.ON_RIDE + "> ?rd"
 						+ " }";
 		
 		// execute query
@@ -370,6 +399,8 @@ public class StatisticsManager {
 			String toStopLonP = "";
 			String fromStopLatP = "";
 			String fromStopLonP = "";
+			String rideR = "";
+			String rideP = "";
 			int maxRealPeople = 0;
 			int maxPayingPeople = 0;
 			
@@ -384,6 +415,7 @@ public class StatisticsManager {
 					fromStopLonR = riga.get(1)[2];
 					toStopLatR = riga.get(2)[2];
 					toStopLonR = riga.get(3)[2];
+					rideR = riga.get(6)[2].split("#")[1];
 					maxRealPeople = realPeople;
 				}
 				
@@ -392,16 +424,19 @@ public class StatisticsManager {
 					fromStopLonP = riga.get(1)[2];
 					toStopLatP = riga.get(2)[2];
 					toStopLonP = riga.get(3)[2];
+					rideP = riga.get(6)[2].split("#")[1];
 					maxPayingPeople = payingPeople;
 				}
 			}
 			
-			result += fromStopLatR + ";\tLon= " + fromStopLonR + "\n"
-					+"\t\tTo Stop:\tLat= "+ toStopLatR + ";\tLon= " + toStopLonR + "\n"
+			result += rideR + "\n"
+					+ "\t\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, fromStopLatR + "-" + fromStopLonR).toString().split("\\.")[1] + "\n"
+					+"\t\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, toStopLatR + "-" + toStopLonR).toString().split("\\.")[1] + "\n"
 					+ "\t\tMost real people " + maxRealPeople + "\n"
-					+ "\tBus Stop with most paying people that get on the bus for line " + lineNumber +":\n" +
-					"\t\tFrom Stop:\tLat= " + fromStopLatP + ";\tLon= " + fromStopLonP + "\n"
-					+"\t\tTo Stop:\tLat= "+ toStopLatP + ";\tLon= " + toStopLonP + "\n"
+					+ "\tBus Stop with most paying people that get on the bus for line " + lineNumber +":\n"
+					+ "\t\tRide:\t" + rideP + "\n"
+					+ "\t\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, fromStopLatP + "-" + fromStopLonP).toString().split("\\.")[1] + "\n"
+					+"\t\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, toStopLatP + "-" + toStopLonP).toString().split("\\.")[1] + "\n"
 					+ "\t\tMost paying people " + maxPayingPeople + "\n";
 			
 			return result;
@@ -414,9 +449,10 @@ public class StatisticsManager {
 	private String maxGetOn(){
 		
 		// result expected: "MAX GET ON OF THE SIMULATION:
+		//						Ride:	ride1
 		//						Line:	32
-		//						From Stop:	Lat= 0.4545345;	Lon= 0.34532
-		//						To Stop:	Lat= 0.45323;	Lon= 0.345323
+		//						From Stop:	Piazza Minghetti
+		//						To Stop:	Marconi
 		//						At time:	12:45
 		//						Number of people:			45
 		//						Number of paying people:	34
@@ -425,7 +461,7 @@ public class StatisticsManager {
 		
 		// query
 		String sparqlQuery = 
-				"select ?ln ?lacs ?locs ?lans ?lons ?ts ?rp ?pp "
+				"select ?ln ?lacs ?locs ?lans ?lons ?ts ?rp ?pp ?rd "
 					+ "where { "
 					+ "?ls <" + OntologyReference.RDF_TYPE + "> <" + OntologyReference.GET_ON_DATA + "> . "
 					+ "?ls <" + OntologyReference.FROM_CURR_STOP + "> ?cs . "
@@ -441,8 +477,9 @@ public class StatisticsManager {
 					+ "?ls <" + OntologyReference.ON_LINE + "> ?bl . "
 					+ "?bl <" + OntologyReference.HAS_NUMBER + "> ?ln . "
 					+ "?ls <" + OntologyReference.HAS_GETTING_ON + "> ?rp . "
-					+ "?ls <" + OntologyReference.HAS_GETTING_ON_PAYING + "> ?pp "
-					+ "}";
+					+ "?ls <" + OntologyReference.HAS_GETTING_ON_PAYING + "> ?pp . "
+					+ "?ls <" + OntologyReference.ON_RIDE + "> ?rd"
+					+ " }";
 			
 		SIBResponse response = kp.querySPARQL(sparqlQuery);
 		SSAP_sparql_response results = response.sparqlquery_results;
@@ -462,6 +499,7 @@ public class StatisticsManager {
 			String timestamp = "";
 			String payingPeople = "";
 			String lineNumber = "";
+			String ride = "";
 			
 			for(Vector<String[]> riga : data){
 				realPeople = Integer.parseInt(riga.get(6)[2]);
@@ -475,12 +513,14 @@ public class StatisticsManager {
 					lonToNextStop = riga.get(4)[2];
 					timestamp = riga.get(5)[2];
 					payingPeople = riga.get(7)[2];
+					ride = riga.get(8)[2].split("#")[1];
 				}
 			}
 			
 			result += "\tLine:\t" + lineNumber + "\n"
-				+ "\tFrom Stop:\tLat= " + latFromCurrStop + ";\tLon= " + lonFromCurrStop + "\n"
-				+ "\tTo Stop:\tLat= " + latToNextStop + ";\tLon= " + lonToNextStop + "\n"
+				+ "\tRide:\t" + ride + "\n"
+				+ "\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latFromCurrStop + "-" + lonFromCurrStop).toString().split("\\.")[1] + "\n"
+				+ "\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latToNextStop + "-" + lonToNextStop).toString().split("\\.")[1] + "\n"
 				+ "\tAt Time:\t" + timestamp + "\n"
 				+ "\tNumber of people:\t" + maxPeople + "\n"
 				+ "\tNumber of paying people:\t" + payingPeople + "\n";
@@ -510,7 +550,7 @@ public class StatisticsManager {
 		//							segmentMostAffluenceFromLineAndDay(int day, int lineNumber)
 		//							...
 		
-		String result = "\nSEGMENTS WITH MOST PEOPLE AND SEGMENT WITH MOST PAYING PEOPLE FOR EACH DAY AND LINE:\n";
+		String result = "\nSEGMENT WITH MOST PEOPLE AND SEGMENT WITH MOST PAYING PEOPLE FOR EACH DAY AND LINE:\n";
 		
 		int numDaysOfSimulation = SimulationConfig.getInstance().getSimulationDays();
 		
@@ -528,21 +568,23 @@ public class StatisticsManager {
 	// returns the string that contains the segment with most real people and the segment with most paying people for a specified line number and day
 	private String segmentMostAffluenceFromLineAndDay(int day, String lineNumber){
 		
-		// result expected: "Line 32: 
-		//						From Stop:	Lat= 0.21212;	Lon= 0.232323
-		//						To Stop:	Lat= 0.2323;	Lon= 0.232323
+		// result expected: "Segment with most real people for line 11:
+		//						Ride: ride0
+		//						From Stop:	Piazza Malpighi
+		//						To Stop:	Marconi	
 		//						Max real people: 23
-		//						---
-		//						From Stop:	Lat= 0.21212;	Lon= 0.232323
-		//						To Stop:	Lat= 0.2323;	Lon= 0.232323
+		//					 Segment with most paying people for line 11:
+		//						Ride: ride1
+		//						From Stop:	Piazza Minghetti
+		//						To Stop:	San Vitale
 		//						Max paying people: 23"
 		
 		String result = "Segment with most real people for line " + lineNumber +":\n" +
-							"\t\tFrom Stop:\tLat= ";
+							"\t\tRide:\t";
 		
 		//query
 		String sparqlQuery = 
-				"select ?lacs ?locs ?lans ?lons ?rp ?pp "
+				"select ?lacs ?locs ?lans ?lons ?rp ?pp ?rd "
 						+ "where { "
 						+ "?ls <" + OntologyReference.RDF_TYPE + "> <" + OntologyReference.AFFLUEANCE + "> . "
 						+ "?ls <" + OntologyReference.ON_LINE + "> ?bl . "
@@ -557,7 +599,8 @@ public class StatisticsManager {
 						+ "?ldcs <" + OntologyReference.HAS_LON + "> ?locs . "
 						+ "?ldns <" + OntologyReference.HAS_LAT + "> ?lans . "
 						+ "?ldns <" + OntologyReference.HAS_LON + "> ?lons . "
-						+ "?ls <" + OntologyReference.OF_PAYING_PERSON + "> ?pp"
+						+ "?ls <" + OntologyReference.OF_PAYING_PERSON + "> ?pp . "
+						+ "?ls <" + OntologyReference.ON_RIDE + "> ?rd"
 						+ " }";
 		
 		// execute query
@@ -576,6 +619,8 @@ public class StatisticsManager {
 			String toStopLonP = "";
 			String fromStopLatP = "";
 			String fromStopLonP = "";
+			String rideR = "";
+			String rideP = "";
 			int maxRealPeople = 0;
 			int maxPayingPeople = 0;
 			
@@ -590,6 +635,7 @@ public class StatisticsManager {
 					fromStopLonR = riga.get(1)[2];
 					toStopLatR = riga.get(2)[2];
 					toStopLonR = riga.get(3)[2];
+					rideR = riga.get(6)[2].split("#")[1];
 					maxRealPeople = realPeople;
 				}
 				
@@ -598,16 +644,19 @@ public class StatisticsManager {
 					fromStopLonP = riga.get(1)[2];
 					toStopLatP = riga.get(2)[2];
 					toStopLonP = riga.get(3)[2];
+					rideP = riga.get(6)[2].split("#")[1];
 					maxPayingPeople = payingPeople;
 				}
 			}
 			
-			result += fromStopLatR + ";\tLon= " + fromStopLonR + "\n"
-					+"\t\tTo Stop:\tLat= "+ toStopLatR + ";\tLon= " + toStopLonR + "\n"
+			result += rideR + "\n"
+					+ "\t\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, fromStopLatR + "-" + fromStopLonR).toString().split("\\.")[1] + "\n"
+					+"\t\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, toStopLatR + "-" + toStopLonR).toString().split("\\.")[1] + "\n"
 					+ "\t\tMost real people " + maxRealPeople + "\n"
-					+ "\tSegment with most paying people for line " + lineNumber +":\n" +
-					"\t\tFrom Stop:\tLat= " + fromStopLatP + ";\tLon= " + fromStopLonP + "\n"
-					+"\t\tTo Stop:\tLat= "+ toStopLatP + ";\tLon= " + toStopLonP + "\n"
+					+ "\tSegment with most paying people for line " + lineNumber +":\n"
+					+ "\t\tRide:\t" + rideP + "\n"
+					+ "\t\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, fromStopLatP + "-" + fromStopLonP).toString().split("\\.")[1] + "\n"
+					+"\t\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, toStopLatP + "-" + toStopLonP).toString().split("\\.")[1] + "\n"
 					+ "\t\tMost paying people " + maxPayingPeople + "\n";
 			
 			return result;
@@ -649,8 +698,9 @@ public class StatisticsManager {
 		
 		// result expected: "MAX AFFLUENCE OF THE SIMULATION:
 		//						Line:	32
-		//						From Stop:	Lat= 0.4545345;	Lon= 0.34532
-		//						To Stop:	Lat= 0.45323;	Lon= 0.345323
+		//						Ride:	ride0
+		//						From Stop:	Piazza Malpighi
+		//						To Stop:	San Vitale
 		//						At time:	12:45
 		//						Number of people:			45
 		//						Number of paying people:	34
@@ -659,7 +709,7 @@ public class StatisticsManager {
 		
 		// query
 		String sparqlQuery = 
-				"select ?ln ?lacs ?locs ?lans ?lons ?ts ?rp ?pp "
+				"select ?ln ?lacs ?locs ?lans ?lons ?ts ?rp ?pp ?rd "
 					+ "where { "
 					+ "?ls <" + OntologyReference.RDF_TYPE + "> <" + OntologyReference.AFFLUEANCE + "> . "
 					+ "?ls <" + OntologyReference.FROM_CURR_STOP + "> ?cs . "
@@ -675,8 +725,9 @@ public class StatisticsManager {
 					+ "?ls <" + OntologyReference.ON_LINE + "> ?bl . "
 					+ "?bl <" + OntologyReference.HAS_NUMBER + "> ?ln . "
 					+ "?ls <" + OntologyReference.OF_REAL_PERSON + "> ?rp . "
-					+ "?ls <" + OntologyReference.OF_PAYING_PERSON + "> ?pp "
-					+ "}";
+					+ "?ls <" + OntologyReference.OF_PAYING_PERSON + "> ?pp . "
+					+ "?ls <" + OntologyReference.ON_RIDE + "> ?rd"
+					+ " }";
 		
 		SIBResponse response = kp.querySPARQL(sparqlQuery);
 		SSAP_sparql_response results = response.sparqlquery_results;
@@ -696,6 +747,7 @@ public class StatisticsManager {
 			String timestamp = "";
 			String payingPeople = "";
 			String lineNumber = "";
+			String ride = "";
 			
 			for(Vector<String[]> riga : data){
 				realPeople = Integer.parseInt(riga.get(6)[2]);
@@ -709,12 +761,14 @@ public class StatisticsManager {
 					lonToNextStop = riga.get(4)[2];
 					timestamp = riga.get(5)[2];
 					payingPeople = riga.get(7)[2];
+					ride = riga.get(8)[2].split("#")[1];
 				}
 			}
 			
 			result += "\tLine:\t" + lineNumber + "\n"
-				+ "\tFrom Stop:\tLat= " + latFromCurrStop + ";\tLon= " + lonFromCurrStop + "\n"
-				+ "\tTo Stop:\tLat= " + latToNextStop + ";\tLon= " + lonToNextStop + "\n"
+				+ "\tRide:\t" + ride + "\n"
+				+ "\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latFromCurrStop + "-" + lonFromCurrStop).toString().split("\\.")[1] + "\n"
+				+ "\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latToNextStop + "-" + lonToNextStop).toString().split("\\.")[1] + "\n"
 				+ "\tAt Time:\t" + timestamp + "\n"
 				+ "\tNumber of people:\t" + maxPeople + "\n"
 				+ "\tNumber of paying people:\t" + payingPeople + "\n";
@@ -736,7 +790,7 @@ public class StatisticsManager {
 			+ this.maxGetOnForDayAndLine()
 			+ this.maxFinesLine()
 			+ this.linesBalance()
-			+ this.evasionNumberForRideAndLineAndDay()
+			+ this.evasionNumberForRide()
 			;
 	}
 
