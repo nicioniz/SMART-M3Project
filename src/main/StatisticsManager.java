@@ -428,15 +428,15 @@ public class StatisticsManager {
 					maxPayingPeople = payingPeople;
 				}
 			}
-			
+						
 			result += rideR + "\n"
-					+ "\t\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, fromStopLatR + "-" + fromStopLonR).toString().split("\\.")[1] + "\n"
-					+"\t\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, toStopLatR + "-" + toStopLonR).toString().split("\\.")[1] + "\n"
+					+ "\t\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, fromStopLatR + "-" + fromStopLonR).getName() + "\n"
+					+"\t\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, toStopLatR + "-" + toStopLonR).getName() + "\n"
 					+ "\t\tMost real people " + maxRealPeople + "\n"
 					+ "\tBus Stop with most paying people that get on the bus for line " + lineNumber +":\n"
 					+ "\t\tRide:\t" + rideP + "\n"
-					+ "\t\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, fromStopLatP + "-" + fromStopLonP).toString().split("\\.")[1] + "\n"
-					+"\t\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, toStopLatP + "-" + toStopLonP).toString().split("\\.")[1] + "\n"
+					+ "\t\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, fromStopLatP + "-" + fromStopLonP).getName() + "\n"
+					+"\t\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, toStopLatP + "-" + toStopLonP).getName() + "\n"
 					+ "\t\tMost paying people " + maxPayingPeople + "\n";
 			
 			return result;
@@ -519,8 +519,8 @@ public class StatisticsManager {
 			
 			result += "\tLine:\t" + lineNumber + "\n"
 				+ "\tRide:\t" + ride + "\n"
-				+ "\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latFromCurrStop + "-" + lonFromCurrStop).toString().split("\\.")[1] + "\n"
-				+ "\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latToNextStop + "-" + lonToNextStop).toString().split("\\.")[1] + "\n"
+				+ "\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latFromCurrStop + "-" + lonFromCurrStop).getName()  + "\n"
+				+ "\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latToNextStop + "-" + lonToNextStop).getName()  + "\n"
 				+ "\tAt Time:\t" + timestamp + "\n"
 				+ "\tNumber of people:\t" + maxPeople + "\n"
 				+ "\tNumber of paying people:\t" + payingPeople + "\n";
@@ -650,13 +650,13 @@ public class StatisticsManager {
 			}
 			
 			result += rideR + "\n"
-					+ "\t\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, fromStopLatR + "-" + fromStopLonR).toString().split("\\.")[1] + "\n"
+					+ "\t\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, fromStopLatR + "-" + fromStopLonR).getName()  + "\n"
 					+"\t\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, toStopLatR + "-" + toStopLonR).toString().split("\\.")[1] + "\n"
 					+ "\t\tMost real people " + maxRealPeople + "\n"
 					+ "\tSegment with most paying people for line " + lineNumber +":\n"
 					+ "\t\tRide:\t" + rideP + "\n"
-					+ "\t\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, fromStopLatP + "-" + fromStopLonP).toString().split("\\.")[1] + "\n"
-					+"\t\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, toStopLatP + "-" + toStopLonP).toString().split("\\.")[1] + "\n"
+					+ "\t\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, fromStopLatP + "-" + fromStopLonP).getName()  + "\n"
+					+"\t\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, toStopLatP + "-" + toStopLonP).getName()  + "\n"
 					+ "\t\tMost paying people " + maxPayingPeople + "\n";
 			
 			return result;
@@ -767,8 +767,8 @@ public class StatisticsManager {
 			
 			result += "\tLine:\t" + lineNumber + "\n"
 				+ "\tRide:\t" + ride + "\n"
-				+ "\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latFromCurrStop + "-" + lonFromCurrStop).toString().split("\\.")[1] + "\n"
-				+ "\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latToNextStop + "-" + lonToNextStop).toString().split("\\.")[1] + "\n"
+				+ "\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latFromCurrStop + "-" + lonFromCurrStop).getName() + "\n"
+				+ "\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latToNextStop + "-" + lonToNextStop).getName() + "\n"
 				+ "\tAt Time:\t" + timestamp + "\n"
 				+ "\tNumber of people:\t" + maxPeople + "\n"
 				+ "\tNumber of paying people:\t" + payingPeople + "\n";
