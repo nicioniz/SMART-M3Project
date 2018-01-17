@@ -66,6 +66,8 @@ public class StatisticsManager {
 		
 		SSAP_sparql_response results = kp.querySPARQL(sparqlQuery).sparqlquery_results;
 		
+		int daysOfSimulation = SimulationConfig.getInstance().getSimulationDays();
+		
 		//process results
 		if(results != null){
 			
@@ -74,12 +76,10 @@ public class StatisticsManager {
 			Map<String, Integer> evasionRideMap = new HashMap<String, Integer>();
 			
 			// days of simulation cycle
-			for(int i=0; i<SimulationConfig.getInstance().getSimulationDays(); i++){
+			for(int i=0; i<daysOfSimulation; i++){
 				
 				// line numbers cycle
 				for(String ln : getLineNumbers()){
-					
-					result += "\tDay " + (i+1) + " - Line " + ln + "\n";
 					
 					// results cycle
 					for(Vector<String[]> riga : data){
@@ -93,11 +93,12 @@ public class StatisticsManager {
 							// evasions update
 							String ride = riga.get(4)[2].split("#")[1];
 							int evasionNumber = Integer.parseInt(riga.get(2)[2]) - Integer.parseInt(riga.get(1)[2]);
+							String rideMapKey = ride + "." + lineNumber + "." + day;
 							
-							if(evasionRideMap.get(ride) == null)
-								evasionRideMap.put(ride + "." + lineNumber + "." + day, evasionNumber);
+							if(evasionRideMap.get(rideMapKey) == null)
+								evasionRideMap.put(rideMapKey, evasionNumber);
 							else
-								evasionRideMap.put(ride + "." + lineNumber + "." + day, evasionRideMap.get(ride) + evasionNumber);
+								evasionRideMap.put(rideMapKey, evasionRideMap.get(rideMapKey) + evasionNumber);
 							
 						}
 						
@@ -107,9 +108,24 @@ public class StatisticsManager {
 					
 			}
 			
+			
 			//composing result
-			for(String rideMapKey : evasionRideMap.keySet())
-				result += "\t     " + rideMapKey.split("\\.")[0] + " -> " + evasionRideMap.get(rideMapKey) + " evasions\n";
+			for(int i=0; i<daysOfSimulation; i++){
+				for(String ln : getLineNumbers()){
+					
+					result += "\tDay " + (i+1) + " - Line " + ln + "\n";
+					
+					for(String rideMapKey : evasionRideMap.keySet()){
+				
+						int day = Integer.parseInt(rideMapKey.split("\\.")[2]);
+						String lineNumber = rideMapKey.split("\\.")[1];
+						String ride = rideMapKey.split("\\.")[0];
+				
+						if(lineNumber.equals(ln) && day == i)
+							result += "\t     " + ride + " -> " + evasionRideMap.get(rideMapKey) + " evasions\n";
+					}
+				}
+			}
 			
 			return result;
 		}
