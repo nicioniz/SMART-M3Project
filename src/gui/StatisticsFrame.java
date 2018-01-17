@@ -15,7 +15,7 @@ public class StatisticsFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
 
 	public StatisticsFrame() {
-		setTitle("Simulations's Statistics");
+		setTitle("Simulation Statistics");
 		
 		// text area
 		JTextArea txt = new JTextArea();
