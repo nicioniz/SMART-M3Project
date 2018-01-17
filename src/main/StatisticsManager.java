@@ -47,6 +47,16 @@ public class StatisticsManager {
 		//				Ride XXX2 -> 36 evasions
 		//				...
 		//				Ride XXXn -> 35 evasions
+		//			Day 1 - Line 20
+		//				...
+		//			...
+		//				...
+		//			Day 2 - Line 32
+		//				...
+		//			...
+		//				...
+		//			Day N - Line M
+		//				...
 		
 		String result = "\nEVASION'S NUMBER FOR EACH RIDE OF THE SIMULATION:\n";
 		
@@ -146,11 +156,21 @@ public class StatisticsManager {
 		//			singleLineBalance(lineNumber);
 		//			singleLineBalance(lineNumber);
 		//			...
+		//
+		//			Algorithm used:
+		//			   Positive Half in Balance: [ (fine price * number of fines) + (ticket price * people who have paid) ]
+		//			   Negative Half in Balane: [ inspector's cost * number of inspectors * duration (days) of the simulation ]
+		//			   Balance = Positive Half - Negative Half
+		
 		String result = "\nLINES BALANCE:\n";
 		
 		for(String ln : getLineNumbers())
 			result += "\t" + singleLineBalance(ln) + "\n";
 		
+		result += "\n\tAlgorithm used: \n"
+				+ "\t   Positive Half in Balance: [ (fine price * number of fines) + (ticket price * people who have paid) ]\n"
+				+ "\t   Negative Half in Balane: [ inspector's cost * number of inspectors * duration (days) of the simulation ]\n"
+				+ "\t   Balance = Positive Half - Negative Half\n";
 		
 		return result;
 	}
@@ -160,13 +180,13 @@ public class StatisticsManager {
 		
 		// result expected:
 		//		Line 32:
-		//			Fine's price: 5€
+		//			Fine price: 5€
 		//			Number of fines: 120
 		//			Inspector's cost: 10€/day
 		//			Number of inspector: 20
 		//			Days of simulation: 2
-		//			Ticket's price: 1€
-		//			positive/negative -> +32€/-32€
+		//			Ticket price: 1€
+		//			Balance: Positive/Negative -> +32€/-32€
 		
 		String result = "Line " + lineNumber + ":\n";
 		float finePrice = SimulationConfig.getInstance().getFine();
@@ -176,12 +196,12 @@ public class StatisticsManager {
 		int daysOfSimulation = SimulationConfig.getInstance().getSimulationDays();
 		float ticketPrice = SimulationConfig.getInstance().getTicketPrice();
 		
-		result += "\t   Fine's price: " + finePrice + "€\n"
+		result += "\t   Fine price: " + finePrice + "€\n"
 				+ "\t   Number of fines: " + numFines + "\n"
 				+ "\t   Inspector's cost: " + inspectorCost + "€/day\n"
 				+ "\t   Number of inspector: " + numInspector + "\n"
 				+ "\t   Days of simulation: " + daysOfSimulation + "\n"
-				+ "\t   Ticket's price: " + ticketPrice + "€\n"
+				+ "\t   Ticket price: " + ticketPrice + "€\n"
 				;
 		
 		// positive sheet items
@@ -198,7 +218,7 @@ public class StatisticsManager {
 		if(balance < 0)
 			pos_neg = "Negative";
 		
-		result += "\t   " + pos_neg + " -> " + balance + "€";
+		result += "\t   Balance: " + pos_neg + " -> " + balance + "€";
 		
 		
 		return result;
@@ -667,7 +687,7 @@ public class StatisticsManager {
 			
 			result += rideR + "\n"
 					+ "\t\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, fromStopLatR + "-" + fromStopLonR).getName()  + "\n"
-					+"\t\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, toStopLatR + "-" + toStopLonR).toString().split("\\.")[1] + "\n"
+					+"\t\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, toStopLatR + "-" + toStopLonR).getName() + "\n"
 					+ "\t\tMost real people " + maxRealPeople + "\n"
 					+ "\tSegment with most paying people for line " + lineNumber +":\n"
 					+ "\t\tRide:\t" + rideP + "\n"
