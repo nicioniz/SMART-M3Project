@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -70,7 +69,7 @@ public class BusStopManager {
 	}
 
 	public synchronized BusStop getBusStopFromLatLngString(String lineNumber, String latLng) {
-		return busStopHashmaps.get(lineNumber).get(latLng);
+		return busStopHashmaps.get(lineNumber).get(latLng.trim().replace(" ", ""));
 	}
 	
 	/**
