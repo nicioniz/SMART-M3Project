@@ -163,14 +163,20 @@ public class StatisticsManager {
 		//			   Balance = Positive Half - Negative Half
 		
 		String result = "\nLINES BALANCE:\n";
-		
+		result += "Fixed costs:\tinspector number * inspector cost/day * days\n            \t" +
+				SimulationConfig.getInstance().getMaxInspectors() + " * " + 
+				SimulationConfig.getInstance().getInspectorCost() + " €/day * " + 
+				SimulationConfig.getInstance().getSimulationDays() + " days = " +
+				SimulationConfig.getInstance().getMaxInspectors()*
+				SimulationConfig.getInstance().getInspectorCost()*
+				SimulationConfig.getInstance().getSimulationDays() + "€\n\n";
 		for(String ln : getLineNumbers())
-			result += "\t" + singleLineBalance(ln) + "\n";
+			result += "\t" + singleLineBalance(ln) + "\n\n";
 		
-		result += "\n\tAlgorithm used: \n"
-				+ "\t   Positive Half in Balance: [ (fine price * number of fines) + (ticket price * people who have paid) ]\n"
-				+ "\t   Negative Half in Balane: [ inspector's cost * number of inspectors * duration (days) of the simulation ]\n"
-				+ "\t   Balance = Positive Half - Negative Half\n";
+//		result += "\n\tAlgorithm used: \n"
+//				+ "\t   Positive Half in Balance: [ (fine price * number of fines) + (ticket price * people who have paid) ]\n"
+//				+ "\t   Negative Half in Balane: [ inspector's cost * number of inspectors * duration (days) of the simulation ]\n"
+//				+ "\t   Balance = Positive Half - Negative Half\n";
 		
 		return result;
 	}
@@ -190,35 +196,37 @@ public class StatisticsManager {
 		
 		String result = "Line " + lineNumber + ":\n";
 		float finePrice = SimulationConfig.getInstance().getFine();
-		int inspectorCost = SimulationConfig.getInstance().getInspectorCost();
-		int numInspector = SimulationConfig.getInstance().getMaxInspectors();
+//		int inspectorCost = SimulationConfig.getInstance().getInspectorCost();
+//		int numInspector = SimulationConfig.getInstance().getMaxInspectors();
 		int numFines = getNumFinesForLine(lineNumber);
-		int daysOfSimulation = SimulationConfig.getInstance().getSimulationDays();
+//		int daysOfSimulation = SimulationConfig.getInstance().getSimulationDays();
 		float ticketPrice = SimulationConfig.getInstance().getTicketPrice();
 		
-		result += "\t   Fine price: " + finePrice + "€\n"
-				+ "\t   Number of fines: " + numFines + "\n"
-				+ "\t   Inspector's cost: " + inspectorCost + "€/day\n"
-				+ "\t   Number of inspector: " + numInspector + "\n"
-				+ "\t   Days of simulation: " + daysOfSimulation + "\n"
-				+ "\t   Ticket price: " + ticketPrice + "€\n"
-				;
-		
-		// positive sheet items
-		float positiveHalfBalance = finePrice*numFines + ticketPrice*getPayingPeopleForLine(lineNumber);
-		
-		//negative sheet items
-		int negativeHalfBalance = inspectorCost*numInspector*daysOfSimulation;
-		
-		// line balance
-		float balance = positiveHalfBalance - negativeHalfBalance;
-		
-		// composing result
-		String pos_neg = "Positive";
-		if(balance < 0)
-			pos_neg = "Negative";
-		
-		result += "\t   Balance: " + pos_neg + " -> " + balance + "€";
+		result += "\t   Collection from fines: " + numFines + " * " + String.format("%.2f", finePrice) + "€ = \t+" + String.format("%.2f", (numFines*finePrice)) + "€\n" 
+				+ "\t   Collection from tickets: " + getPayingPeopleForLine(lineNumber) + " * " + String.format("%.2f", ticketPrice) + "€ = \t+" + String.format("%.2f", (getPayingPeopleForLine(lineNumber)*ticketPrice)) + "€\n"
+				+ "\t                                         \t\t----------------\n"
+				+ "\t                                         \t\t+" + String.format("%.2f", (numFines*finePrice + getPayingPeopleForLine(lineNumber)*ticketPrice)) + "€\n";
+//				+ "\t   Without inspectors:\n"
+//				+ "\t   Collection from tickets: " + getPayingPeopleForLine(lineNumber) + " * " + String.format("%.2f", ticketPrice) + "€ = \t+" + String.format("%.2f", (getPayingPeopleForLine(lineNumber)*ticketPrice)) + "€\n"
+//				+ "\t   NOT Collection from tickets: " + (getRealPeopleForLine(lineNumber)-getPayingPeopleForLine(lineNumber)) + " * " + String.format("%.2f", ticketPrice) + "€ = \t-" + String.format("%.2f", ((getRealPeopleForLine(lineNumber)-getPayingPeopleForLine(lineNumber))*ticketPrice)) + "€\n";
+
+//		// positive sheet items
+//		float positiveHalfBalance = finePrice*numFines + ticketPrice*getPayingPeopleForLine(lineNumber);
+//		
+//		//negative sheet items
+//		int negativeHalfBalance = inspectorCost*numInspector*daysOfSimulation;
+//		
+//		// line balance
+//		float balance = positiveHalfBalance - negativeHalfBalance;
+//		
+//		// composing result
+//		String pos_neg = "Positive";
+//		if(balance < 0)
+//			pos_neg = "Negative";
+//		
+//		result += "\t   Balance: " + pos_neg + " -> " + balance + "€";
+
+
 		
 		
 		return result;
