@@ -153,14 +153,15 @@ public class StatisticsManager {
 		
 		// result expected:
 		//		LINES BALANCE:
-		//			singleLineBalance(lineNumber);
-		//			singleLineBalance(lineNumber);
-		//			...
+		// 		fixed costs:  inspector number * inspector cost/day * days
+		//		              10 * 10€/day * 2 = 200€
 		//
-		//			Algorithm used:
-		//			   Positive Half in Balance: [ (fine price * number of fines) + (ticket price * people who have paid) ]
-		//			   Negative Half in Balane: [ inspector's cost * number of inspectors * duration (days) of the simulation ]
-		//			   Balance = Positive Half - Negative Half
+		//		   			  singleLineBalance(lineNumber);
+		//
+		//					  singleLineBalance(lineNumber);
+		//
+		//					  ...
+		//
 		
 		String result = "\nLINES BALANCE:\n";
 		result += "Fixed costs:\tinspector number * inspector cost/day * days\n            \t" +
@@ -186,13 +187,10 @@ public class StatisticsManager {
 		
 		// result expected:
 		//		Line 32:
-		//			Fine price: 5€
-		//			Number of fines: 120
-		//			Inspector's cost: 10€/day
-		//			Number of inspector: 20
-		//			Days of simulation: 2
-		//			Ticket price: 1€
-		//			Balance: Positive/Negative -> +32€/-32€
+		//			Collection from fines: 23 * 5,00€ =		+115,00€
+		//			Collection from tickets: 96* 1,00€ = 	+96,00€
+		//													--------
+		//													+211,00€
 		
 		String result = "Line " + lineNumber + ":\n";
 		float finePrice = SimulationConfig.getInstance().getFine();
