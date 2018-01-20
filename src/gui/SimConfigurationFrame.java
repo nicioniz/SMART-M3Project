@@ -99,7 +99,7 @@ public class SimConfigurationFrame extends JFrame {
 		topPanel.add(lineNo32CheckBox);
 		lineNo32CheckBox.setSelected(true);
 		
-		lblSimulationVelocity = new JLabel("Simulation velocity");
+		lblSimulationVelocity = new JLabel("Simulation speed");
 		lblSimulationVelocity.setHorizontalAlignment(SwingConstants.CENTER);
 		topPanel.add(lblSimulationVelocity);
 		
