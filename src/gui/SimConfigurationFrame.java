@@ -342,29 +342,23 @@ public class SimConfigurationFrame extends JFrame {
 		if(lineNo32CheckBox.isSelected()) {
 			numberOfStartedThread++;
 			prepareNewBus("32", simulationDays, busRides, BusColor.ORANGE);
-		//	busMap.addBusline(new BusPathParser("gpx/bus32.gpx").getListOfPoint(), "#FFA500");
+//			busMap.addBusline(new BusPathParser("gpx/bus32.gpx").getListOfPoint(), "#FFA500");
 		}
 		if(lineNo20CheckBox.isSelected()) {
 			numberOfStartedThread++;
 			prepareNewBus("20", simulationDays, busRides, BusColor.RED);
-	//		busMap.addBusline(new BusPathParser("gpx/bus20.gpx").getListOfPoint(), "#FF0000");
+//			busMap.addBusline(new BusPathParser("gpx/bus20.gpx").getListOfPoint(), "#FF0000");
 		}
 		if(lineNo11CheckBox.isSelected()) {
 			numberOfStartedThread++;
 			prepareNewBus("11", simulationDays, busRides, BusColor.BLUE);
-	//		busMap.addBusline(new BusPathParser("gpx/bus11.gpx").getListOfPoint(), "#0000FF");
+//			busMap.addBusline(new BusPathParser("gpx/bus11.gpx").getListOfPoint(), "#0000FF");
 		}
 		
-		
-		
-		SimulationConfig.getInstance().setWaitingThreadForBarrier(numberOfStartedThread);
-		busMap.getMap().setCenter(new LatLng(44.4914, 11.3428));
-		
-		
-		SimulationConfig.getInstance().getStartSimulationSemaphore().release();
-			
-		SimulationConfig.getInstance().setEndBarrier(numberOfStartedThread+1); // +1 because also this thread is counted
-		
+		busMap.getMap().setCenter(new LatLng(44.4914, 11.3428));		
+		SimulationConfig.getInstance().setWaitingThreadForBarrier(numberOfStartedThread);		
+		SimulationConfig.getInstance().setEndBarrier(numberOfStartedThread+1); // +1 because also main thread is counted
+		SimulationConfig.getInstance().getStartSimulationSemaphore().release();		
 
 		dispose();
 
