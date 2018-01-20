@@ -559,6 +559,7 @@ public class Bus extends Thread {
 //							System.out.printf("\n Bus linea %s corsa %s, scese %d persone reali\n", line, ride, descendedRealPerson);
 							descendedPayingPerson = generateDescendingPayingPerson(descendedRealPerson, currentStopIndex, sizeOfStopsList, payingPerson, realPerson);
 //							System.out.printf("\n Bus linea %s corsa %s, scese %d persone paganti\n", line, ride, descendedPayingPerson);						
+
 						}
 						
 					}else {
@@ -616,25 +617,8 @@ public class Bus extends Thread {
 			}
 			//this barrier is needed to avoid that one bus start day i+1 before another bus has finished day i
 			SimulationConfig.getInstance().waitForBarrier();			
-		}	
-		newTriplePoint = new Vector<>();		
-		newTriplePoint.add(new Triple(
-				OntologyReference.NS + locationDataName,
-				OntologyReference.HAS_LAT,
-				String.valueOf(0),
-				Triple.URI,
-				Triple.LITERAL).getAsVector());
-		
-		newTriplePoint.add(new Triple(
-				OntologyReference.NS + locationDataName,
-				OntologyReference.HAS_LON,
-				String.valueOf(0),
-				Triple.URI,
-				Triple.LITERAL).getAsVector());
-		
-		kp.insert(newTriplePoint);
-		
-		
+		}
+		SimulationConfig.getInstance().waitThreadsEnd();
 	}
 	
 	public int generateAscendingRealPerson(int realPerson, int maxSeats) {

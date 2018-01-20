@@ -4,8 +4,6 @@ import com.teamdev.jxmaps.LatLng;
 import java.io.FileNotFoundException;
 import java.util.Vector;
 import com.teamdev.jxmaps.Marker;
-
-import simulationConfiguration.SimulationConfig;
 import sofia_kp.SSAP_sparql_response;
 import sofia_kp.iKPIC_subscribeHandler2;
 
@@ -51,28 +49,20 @@ public class HandlerSubscriptionLocationData implements iKPIC_subscribeHandler2 
 		{
 			Vector<Vector<String[]>> data = newResults.getResults();
 			for(Vector<String[]> riga : data) {
-				String lat = String.valueOf(riga.get(1)[2]);
-				String lon = String.valueOf(riga.get(2)[2]);				
-				if ( lat.equals("0") && lon.equals("0")) {
-					System.out.println("Autobus ended"); 	
-					SimulationConfig.getInstance().waitThreadsEnd();			
 
-				}else {
-//					System.out.println("Location data:" + riga.get(0)[2] + "has lat: " + riga.get(1)[2]+ " has lon: " + riga.get(2)[2]); 	
-
-					try {
-						if (Integer.parseInt(indSequence) == 1) {
-							LatLng point = new LatLng(Double.parseDouble(lat),Double.parseDouble(lon));
-							m = map.addBus(point, lineNumber, busColor);
-						}
-						else 
-							map.moveBus(m, new LatLng(Double.parseDouble(lat),Double.parseDouble(lon)));
-					} catch (NumberFormatException | FileNotFoundException e) {
-						e.printStackTrace();
+		//		System.out.println("Location data:" + riga.get(0)[2] + "has lat: " + riga.get(1)[2]+ " has lon: " + riga.get(2)[2]); 	
+				String lat = riga.get(1)[2]+"0";
+				String lon = riga.get(2)[2]+"0";
+				try {
+					if (Integer.parseInt(indSequence) == 1) {
+						LatLng point = new LatLng(Double.parseDouble(lat),Double.parseDouble(lon));
+						m = map.addBus(point, lineNumber, busColor);
 					}
-					
+					else 
+						map.moveBus(m, new LatLng(Double.parseDouble(lat),Double.parseDouble(lon)));
+				} catch (NumberFormatException | FileNotFoundException e) {
+					e.printStackTrace();
 				}
-
 			}
 			
 		}
