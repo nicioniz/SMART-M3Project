@@ -357,10 +357,10 @@ public class StatisticsManager {
 		return result;
 	}
 	
-	// returns a string containing the bus stop with max real people and the segment with most paying people that get on the bus for every line in every day
+	// returns a string containing the bus stop with max real people and the bus stop with most paying people that get on the bus for every line in every day
 	private String maxGetOnForDayAndLine(){
 
-		// result expected: "SEGMENTS WITH MOST PEOPLE AND SEGMENT WITH MOST PAYING PEOPLE THAT GET ON THE BUS FOR EACH DAY AND LINE:"
+		// result expected: "BUS STOP WITH MOST PEOPLE THAT GET ON A BUS AND BUS STOP WITH MOST PAYING PEOPLE THAT GET ON A BUS, FOR EACH DAY AND LINE:"
 		//					"	Day 1
 		//							segmentMostGetOnFromLineAndDay(int day, int lineNumber)
 		//							segmentMostGetOnFromLineAndDay(int day, int lineNumber)
@@ -373,7 +373,7 @@ public class StatisticsManager {
 		//							segmentMostGetOnFromLineAndDay(int day, int lineNumber)
 		//							...
 		
-		String result = "\nSEGMENT WITH MOST PEOPLE AND SEGMENT WITH MOST PAYING PEOPLE THAT GET ON THE BUS FOR EACH DAY AND LINE:\n";
+		String result = "\nBUS STOP WITH MOST PEOPLE THAT GET ON A BUS AND BUS STOP WITH MOST PAYING PEOPLE THAT GET ON A BUS, FOR EACH DAY AND LINE:\n";
 		
 		int numDaysOfSimulation = SimulationConfig.getInstance().getSimulationDays();
 				
@@ -392,13 +392,11 @@ public class StatisticsManager {
 			
 		// result expected: "Bus Stop with most people that get on the bus for line 32: 
 		//						Ride:	Ride1
-		//						From Stop:	Piazza Malpighi
-		//						To Stop:	Marconi
+		//						At Stop: Piazza Marconi
 		//						Max real people: 23
 		//					 Bus Stop with most paying people that get on the bus for line 32:
 		//						Ride: Ride2
-		//						From Stop:	Piazza Minghetti
-		//						To Stop:	Marconi
+		//						At Stop:	Piazza Minghetti
 		//						Max paying people: 23"
 		
 		String result = "Bus Stop with most real people that get on the bus for line " + lineNumber +":\n" +
@@ -406,7 +404,7 @@ public class StatisticsManager {
 		
 		//query
 		String sparqlQuery = 
-				"select ?lacs ?locs ?lans ?lons ?rp ?pp ?rd "
+				"select ?la ?lo ?rp ?pp ?rd "
 						+ "where { "
 						+ "?ls <" + OntologyReference.RDF_TYPE + "> <" + OntologyReference.GET_ON_DATA + "> . "
 						+ "?ls <" + OntologyReference.ON_LINE + "> ?bl . "
@@ -414,13 +412,9 @@ public class StatisticsManager {
 						+ "?ls <" + OntologyReference.HAS_GETTING_ON + "> ?rp ."
 						+ "?ls <" + OntologyReference.HAS_SIMULATION_DAY + "> \"" + day + "\" . "
 						+ "?ls <" + OntologyReference.FROM_CURR_STOP + "> ?cs . "
-						+ "?ls <" + OntologyReference.TO_NEXT_STOP + "> ?ns . "
-						+ "?cs <" + OntologyReference.HAS_LOCATION_DATA + "> ?ldcs . "
-						+ "?ns <" + OntologyReference.HAS_LOCATION_DATA + "> ?ldns . "
-						+ "?ldcs <" + OntologyReference.HAS_LAT + "> ?lacs . "
-						+ "?ldcs <" + OntologyReference.HAS_LON + "> ?locs . "
-						+ "?ldns <" + OntologyReference.HAS_LAT + "> ?lans . "
-						+ "?ldns <" + OntologyReference.HAS_LON + "> ?lons . "
+						+ "?cs <" + OntologyReference.HAS_LOCATION_DATA + "> ?ld . "
+						+ "?ld <" + OntologyReference.HAS_LAT + "> ?la . "
+						+ "?ld <" + OntologyReference.HAS_LON + "> ?lo . "
 						+ "?ls <" + OntologyReference.HAS_GETTING_ON_PAYING + "> ?pp . "
 						+ "?ls <" + OntologyReference.ON_RIDE + "> ?rd"
 						+ " }";
@@ -433,14 +427,10 @@ public class StatisticsManager {
 		if(results != null){
 			Vector<Vector<String[]>> data = results.getResults();
 			
-			String toStopLatR = "";
-			String toStopLonR = "";
-			String fromStopLatR = "";
-			String fromStopLonR = "";
-			String toStopLatP = "";
-			String toStopLonP = "";
-			String fromStopLatP = "";
-			String fromStopLonP = "";
+			String stopLatRealP = "";
+			String stopLonRealP = "";
+			String stopLatPayingP = "";
+			String stopLonPayingP = "";
 			String rideR = "";
 			String rideP = "";
 			int maxRealPeople = 0;
@@ -449,36 +439,30 @@ public class StatisticsManager {
 			for(Vector<String[]> riga : data){
 				
 				// calculate segment with max people
-				int realPeople = Integer.parseInt(riga.get(4)[2]);
-				int payingPeople = Integer.parseInt(riga.get(5)[2]);
+				int realPeople = Integer.parseInt(riga.get(2)[2]);
+				int payingPeople = Integer.parseInt(riga.get(3)[2]);
 				
 				if(realPeople >= maxRealPeople){
-					fromStopLatR = riga.get(0)[2];
-					fromStopLonR = riga.get(1)[2];
-					toStopLatR = riga.get(2)[2];
-					toStopLonR = riga.get(3)[2];
-					rideR = riga.get(6)[2].split("#")[1];
+					stopLatRealP = riga.get(0)[2];
+					stopLonRealP = riga.get(1)[2];
+					rideR = riga.get(4)[2].split("#")[1];
 					maxRealPeople = realPeople;
 				}
 				
 				if(payingPeople >= maxPayingPeople){
-					fromStopLatP = riga.get(0)[2];
-					fromStopLonP = riga.get(1)[2];
-					toStopLatP = riga.get(2)[2];
-					toStopLonP = riga.get(3)[2];
-					rideP = riga.get(6)[2].split("#")[1];
+					stopLatPayingP = riga.get(0)[2];
+					stopLonPayingP = riga.get(1)[2];
+					rideP = riga.get(4)[2].split("#")[1];
 					maxPayingPeople = payingPeople;
 				}
 			}
 						
 			result += rideR + "\n"
-					+ "\t\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, fromStopLatR + "-" + fromStopLonR).getName() + "\n"
-					+"\t\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, toStopLatR + "-" + toStopLonR).getName() + "\n"
+					+ "\t\tAt Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, stopLatRealP + "-" + stopLonRealP).getName() + "\n"
 					+ "\t\tMost real people " + maxRealPeople + "\n"
 					+ "\tBus Stop with most paying people that get on the bus for line " + lineNumber +":\n"
 					+ "\t\tRide:\t" + rideP + "\n"
-					+ "\t\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, fromStopLatP + "-" + fromStopLonP).getName() + "\n"
-					+"\t\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, toStopLatP + "-" + toStopLonP).getName() + "\n"
+					+ "\t\tAt Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, stopLatPayingP + "-" + stopLonPayingP).getName() + "\n"
 					+ "\t\tMost paying people " + maxPayingPeople + "\n";
 			
 			return result;
@@ -490,30 +474,25 @@ public class StatisticsManager {
 	// returns the max get on of the simulation
 	private String maxGetOn(){
 		
-		// result expected: "MAX GET ON OF THE SIMULATION:
+		// result expected: "BUS STOP WITH MAX PEOPLE THAT GET ON A BUS OF THE SIMULATION:
 		//						Ride:	ride1
 		//						Line:	32
-		//						From Stop:	Piazza Minghetti
-		//						To Stop:	Marconi
+		//						At Stop:	Piazza Minghetti
 		//						At time:	12:45
 		//						Number of people:			45
 		//						Number of paying people:	34
 		
-		String result = "\nMAX GET ON OF THE SIMULATION:\n";
+		String result = "\nBUS STOP WITH MAX PEOPLE THAT GET ON A BUS OF THE SIMULATION:\n";
 		
 		// query
 		String sparqlQuery = 
-				"select ?ln ?lacs ?locs ?lans ?lons ?ts ?rp ?pp ?rd "
+				"select ?ln ?la ?lo ?ts ?rp ?pp ?rd "
 					+ "where { "
 					+ "?ls <" + OntologyReference.RDF_TYPE + "> <" + OntologyReference.GET_ON_DATA + "> . "
 					+ "?ls <" + OntologyReference.FROM_CURR_STOP + "> ?cs . "
-					+ "?cs <" + OntologyReference.HAS_LOCATION_DATA + "> ?ldcs . "
-					+ "?ldcs <" + OntologyReference.HAS_LAT + "> ?lacs . "
-					+ "?ldcs <" + OntologyReference.HAS_LON + "> ?locs . "
-					+ "?ls <" + OntologyReference.TO_NEXT_STOP + "> ?ns . "
-					+ "?ns <" + OntologyReference.HAS_LOCATION_DATA + "> ?ldns . "
-					+ "?ldns <" + OntologyReference.HAS_LAT + "> ?lans . "
-					+ "?ldns <" + OntologyReference.HAS_LON + "> ?lons . "
+					+ "?cs <" + OntologyReference.HAS_LOCATION_DATA + "> ?ld . "
+					+ "?ld <" + OntologyReference.HAS_LAT + "> ?la . "
+					+ "?ld <" + OntologyReference.HAS_LON + "> ?lo . "
 					+ "?ls <" + OntologyReference.ON_RIDE + "> ?rd . "
 					+ "?rd <" + OntologyReference.AT_TIME + "> ?ts . "
 					+ "?ls <" + OntologyReference.ON_LINE + "> ?bl . "
@@ -534,35 +513,30 @@ public class StatisticsManager {
 			// calculate max people get on
 			int maxPeople = 0;
 			int realPeople = 0;
-			String latFromCurrStop = "";
-			String lonFromCurrStop = "";
-			String latToNextStop = "";
-			String lonToNextStop = "";
+			String latStop = "";
+			String lonStop = "";
 			String timestamp = "";
 			String payingPeople = "";
 			String lineNumber = "";
 			String ride = "";
 			
 			for(Vector<String[]> riga : data){
-				realPeople = Integer.parseInt(riga.get(6)[2]);
+				realPeople = Integer.parseInt(riga.get(4)[2]);
 				
 				if(realPeople >= maxPeople){
 					maxPeople = realPeople;
 					lineNumber = riga.get(0)[2];
-					latFromCurrStop = riga.get(1)[2];
-					lonFromCurrStop = riga.get(2)[2];
-					latToNextStop = riga.get(3)[2];
-					lonToNextStop = riga.get(4)[2];
-					timestamp = riga.get(5)[2];
-					payingPeople = riga.get(7)[2];
-					ride = riga.get(8)[2].split("#")[1];
+					latStop = riga.get(1)[2];
+					lonStop = riga.get(2)[2];
+					timestamp = riga.get(3)[2];
+					payingPeople = riga.get(5)[2];
+					ride = riga.get(6)[2].split("#")[1];
 				}
 			}
 			
 			result += "\tLine:\t" + lineNumber + "\n"
 				+ "\tRide:\t" + ride + "\n"
-				+ "\tFrom Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latFromCurrStop + "-" + lonFromCurrStop).getName()  + "\n"
-				+ "\tTo Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latToNextStop + "-" + lonToNextStop).getName()  + "\n"
+				+ "\tAt Stop:\t" + BusStopManager.getInstance().getBusStopFromLatLngString(lineNumber, latStop + "-" + lonStop).getName()  + "\n"
 				+ "\tAt Time:\t" + timestamp + "\n"
 				+ "\tNumber of people:\t" + maxPeople + "\n"
 				+ "\tNumber of paying people:\t" + payingPeople + "\n";
