@@ -46,8 +46,8 @@ public class BusStop {
 		
 		if(!kp.join().isConfirmed())
 			System.err.println ("Error joining the SIB");
-		else
-			System.out.println ("BusStop joined SIB correctly");
+//		else
+//			System.out.println ("BusStop joined SIB correctly");
 		
 		Vector<Vector<String>> newTripleToInsert = new Vector<>();
 		

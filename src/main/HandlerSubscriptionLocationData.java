@@ -58,7 +58,7 @@ public class HandlerSubscriptionLocationData implements iKPIC_subscribeHandler2 
 					SimulationConfig.getInstance().waitThreadsEnd();			
 
 				}else {
-					System.out.println("Location data:" + riga.get(0)[2] + "has lat: " + riga.get(1)[2]+ " has lon: " + riga.get(2)[2]); 	
+//					System.out.println("Location data:" + riga.get(0)[2] + "has lat: " + riga.get(1)[2]+ " has lon: " + riga.get(2)[2]); 	
 
 					try {
 						if (Integer.parseInt(indSequence) == 1) {

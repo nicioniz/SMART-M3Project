@@ -304,17 +304,17 @@ public class Bus extends Thread {
 							//person generation logic
 							//PER ORA NON VIENE USATA LA SIB
       						ascendedRealPerson = generateAscendingRealPerson(realPerson, SimulationConfig.getInstance().getAutobusMaxSeats());
-      						System.out.printf("\n Bus linea %s corsa %s, salite %d persone reali\n", line, ride, ascendedRealPerson);
+//      						System.out.printf("\n Bus linea %s corsa %s, salite %d persone reali\n", line, ride, ascendedRealPerson);
 							ascendedPayingPerson = generateAscendingPayingPerson(ascendedRealPerson);
-							System.out.printf("\n Bus linea %s corsa %s, salite %d persone paganti\n", line, ride, ascendedPayingPerson);
+//							System.out.printf("\n Bus linea %s corsa %s, salite %d persone paganti\n", line, ride, ascendedPayingPerson);
 							descendedRealPerson = generateDescendingRealPerson(realPerson, currentStopIndex, sizeOfStopsList);
-							System.out.printf("\n Bus linea %s corsa %s, scese %d persone reali\n", line, ride, descendedRealPerson);
+//							System.out.printf("\n Bus linea %s corsa %s, scese %d persone reali\n", line, ride, descendedRealPerson);
 							descendedPayingPerson = generateDescendingPayingPerson(descendedRealPerson, currentStopIndex, sizeOfStopsList, payingPerson, realPerson); //payingPerson passato come parametro serve solo per far scendere tutti all'ultima fermata
-							System.out.printf("\n Bus linea %s corsa %s, scese %d persone paganti\n", line, ride, descendedPayingPerson);
+//							System.out.printf("\n Bus linea %s corsa %s, scese %d persone paganti\n", line, ride, descendedPayingPerson);
 							realPerson += (ascendedRealPerson - descendedRealPerson);
-							System.out.printf("\n Bus linea %s corsa %s, persone reali a bordo %d \n", line, ride, realPerson);
+//							System.out.printf("\n Bus linea %s corsa %s, persone reali a bordo %d \n", line, ride, realPerson);
 							payingPerson += (ascendedPayingPerson - descendedPayingPerson);
-							System.out.printf("\n Bus linea %s corsa %s, persone paganti a bordo %d\n", line, ride, payingPerson);
+//							System.out.printf("\n Bus linea %s corsa %s, persone paganti a bordo %d\n", line, ride, payingPerson);
 							currentAndNextStop = new Vector<>();
 							//in this case bus is not in transit
 							newTriplePoint.add(new Triple(
@@ -554,11 +554,11 @@ public class Bus extends Thread {
 							currentStopIndex++;
 							c++;
 						}else {
-							System.out.println("last stop");
+//							System.out.println("last stop");
 							descendedRealPerson = generateDescendingRealPerson(realPerson, currentStopIndex, sizeOfStopsList);
-							System.out.printf("\n Bus linea %s corsa %s, scese %d persone reali\n", line, ride, descendedRealPerson);
+//							System.out.printf("\n Bus linea %s corsa %s, scese %d persone reali\n", line, ride, descendedRealPerson);
 							descendedPayingPerson = generateDescendingPayingPerson(descendedRealPerson, currentStopIndex, sizeOfStopsList, payingPerson, realPerson);
-							System.out.printf("\n Bus linea %s corsa %s, scese %d persone paganti\n", line, ride, descendedPayingPerson);						
+//							System.out.printf("\n Bus linea %s corsa %s, scese %d persone paganti\n", line, ride, descendedPayingPerson);						
 						}
 						
 					}else {
@@ -597,7 +597,7 @@ public class Bus extends Thread {
 					}
 				}
 				
-				System.out.printf("ride %d terminated\n", ride+1);
+//				System.out.printf("ride %d terminated\n", ride+1);
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
@@ -608,7 +608,7 @@ public class Bus extends Thread {
 				kp.remove(newTriplePoint);
 			}
 			
-			System.out.printf("day %d terminated\n", day+1);
+//			System.out.printf("day %d terminated\n", day+1);
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
