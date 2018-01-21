@@ -618,9 +618,24 @@ public class Bus extends Thread {
 			//this barrier is needed to avoid that one bus start day i+1 before another bus has finished day i
 			SimulationConfig.getInstance().waitForBarrier();			
 		}
-		SimulationConfig.getInstance().waitThreadsEnd();
-	}
 	
+			newTriplePoint = new Vector<>();		
+			newTriplePoint.add(new Triple(
+					OntologyReference.NS + locationDataName,
+					OntologyReference.HAS_LAT,
+					String.valueOf(0),
+					Triple.URI,
+					Triple.LITERAL).getAsVector());
+			
+			newTriplePoint.add(new Triple(
+					OntologyReference.NS + locationDataName,
+					OntologyReference.HAS_LON,
+					String.valueOf(0),
+					Triple.URI,
+					Triple.LITERAL).getAsVector());
+			
+			kp.insert(newTriplePoint);	
+	}
 	public int generateAscendingRealPerson(int realPerson, int maxSeats) {
 		int availableSpace = maxSeats - realPerson;
 		int ascendedRealPerson = 0;
