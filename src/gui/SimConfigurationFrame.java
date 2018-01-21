@@ -109,10 +109,10 @@ public class SimConfigurationFrame extends JFrame {
 		
 		velocitySlider = new JSlider();
 		topPanel.add(velocitySlider);
-		velocitySlider.setToolTipText("Simulation velocity (from 0.1x to 5.0x)");
+		velocitySlider.setToolTipText("Simulation speed (from 0.1x to 2.0x)");
 		velocitySlider.setValue(15);
 		velocitySlider.setMinimum(1);
-		velocitySlider.setMaximum(50);
+		velocitySlider.setMaximum(20);
 		
 		lineNo11CheckBox = new JCheckBox("Line No. 11");
 		topPanel.add(lineNo11CheckBox);
