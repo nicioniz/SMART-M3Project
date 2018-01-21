@@ -183,5 +183,8 @@ public class BusStop {
 		return name;
 	}
 
+	public String getId() {
+		return id;
+	}
 	
 }

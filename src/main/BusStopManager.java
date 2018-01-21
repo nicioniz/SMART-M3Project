@@ -41,6 +41,7 @@ public class BusStopManager {
 		String lineNumber = lineFileName.replaceAll("[^\\d]", "");
 		BusStopParser p = new BusStopParser(lineFileName);
 		List<BusStop> stops = p.getBusStops();
+		stops = stops.stream().map(bs->new BusStop(bs.getName() + " (" + lineNumber + ")", bs.getId(), bs.getLocation())).collect(Collectors.toList());
 		busStopLists.put(lineNumber, stops);
 		HashMap<String, BusStop> hMBusStop = new HashMap<>();
 		stops.forEach(bs -> hMBusStop.put(bs.getLocationString(), bs));
