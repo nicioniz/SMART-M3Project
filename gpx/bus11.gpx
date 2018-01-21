@@ -725,6 +725,15 @@
   <trkpt lat="44.5083656" lon="11.3465197">
     <name>TP596</name>
   </trkpt>
+    <trkpt lat="44.5085" lon="11.34665">
+    <name>TP596</name>
+  </trkpt>
+  <trkpt lat="44.50860" lon="11.346665">
+    <name>TP597</name>
+  </trkpt>
+   <trkpt lat="44.508565" lon="11.346671">
+    <name>TP598</name>
+  </trkpt>
   
   <trkpt lat="44.508566" lon="11.346673">
     <name>Sacro Cuore</name>

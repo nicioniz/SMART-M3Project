@@ -944,6 +944,9 @@
   <trkpt lat="44.49196" lon="11.32933">
     <name>TP005</name>
   </trkpt>
+    <trkpt lat="44.49192" lon="11.32943">
+    <name>TP006</name>
+  </trkpt>
   
   <trkpt lat="44.492191" lon="11.329344">
     <name>Porta Saragozza - Liceo Righi</name>
