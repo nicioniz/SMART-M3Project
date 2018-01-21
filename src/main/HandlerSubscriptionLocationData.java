@@ -17,7 +17,6 @@ public class HandlerSubscriptionLocationData implements iKPIC_subscribeHandler2 
 	private String lineNumber;
 	private String busColor;
 	
-	
 	public HandlerSubscriptionLocationData(BusMap map, String lineNumber, String busColor) {
 		this.map = map;
 		this.lineNumber = lineNumber;
@@ -57,8 +56,8 @@ public class HandlerSubscriptionLocationData implements iKPIC_subscribeHandler2 
 				String lon = String.valueOf(riga.get(2)[2]);
 				
 				if ( lat.equals("0") && lon.equals("0")) {
-					System.out.println("Autobus ended"); 	
-					SimulationConfig.getInstance().waitThreadsEnd();			
+					//System.out.println("Autobus ended"); 	
+					//SimulationConfig.getInstance().waitThreadsEnd();			
 					
 				}else {					
 					try {

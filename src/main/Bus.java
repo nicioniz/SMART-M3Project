@@ -616,7 +616,12 @@ public class Bus extends Thread {
 				e.printStackTrace();
 			}
 			//this barrier is needed to avoid that one bus start day i+1 before another bus has finished day i
-			SimulationConfig.getInstance().waitForBarrier();			
+			SimulationConfig.getInstance().waitForBarrier();		
+			
+			if(day == days-1) {
+			System.out.println("Autobus ended"); 	
+			SimulationConfig.getInstance().waitThreadsEnd();
+			}
 		}
 	
 			newTriplePoint = new Vector<>();		
