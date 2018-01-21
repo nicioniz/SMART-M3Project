@@ -50,9 +50,9 @@ public class HandlerSubscriptionLocationData implements iKPIC_subscribeHandler2 
 			Vector<Vector<String[]>> data = newResults.getResults();
 			for(Vector<String[]> riga : data) {
 
-		//		System.out.println("Location data:" + riga.get(0)[2] + "has lat: " + riga.get(1)[2]+ " has lon: " + riga.get(2)[2]); 	
-				String lat = riga.get(1)[2]+"0";
-				String lon = riga.get(2)[2]+"0";
+				System.out.println("Location data:" + riga.get(0)[2] + "has lat: " + riga.get(1)[2]+ " has lon: " + riga.get(2)[2]); 	
+				String lat = String.valueOf(riga.get(1)[2]);
+				String lon = String.valueOf(riga.get(2)[2]);
 				try {
 					if (Integer.parseInt(indSequence) == 1) {
 						LatLng point = new LatLng(Double.parseDouble(lat),Double.parseDouble(lon));
