@@ -73,7 +73,6 @@ public class Bus extends Thread {
 	@Override
 	public void run() {
 
-		//DA CAPIRE QUALI DI QUESTE VARIABILI VANNO ELIMINATE E MESSE NELLA SIB
 		int descendedRealPerson;
 		int descendedPayingPerson;
 		int ascendedRealPerson;
