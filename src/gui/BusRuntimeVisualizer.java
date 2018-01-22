@@ -41,7 +41,7 @@ public class BusRuntimeVisualizer extends JFrame {
 		cmbRefreshRate.addItem("1 sec");
 		cmbRefreshRate.addItem("2 sec");
 		cmbRefreshRate.addItem("5 sec");
-		cmbRefreshRate.setSelectedIndex(0);
+		cmbRefreshRate.setSelectedIndex(1);
 		
 		
 		southPanel.add(cmbRefreshRate);
@@ -58,9 +58,6 @@ public class BusRuntimeVisualizer extends JFrame {
 		txtResult.setRows(20);
 		txtResult.setEditable(false);
 		panel.add(txtResult);
-		
-		runningThread = new BusRuntimeVisualizerThread(500, txtResult);
-		runningThread.start();
 		
 		
 	}
