@@ -34,7 +34,7 @@ public class SIBConfiguration {
 		smartSpaceName = "X";		
 	}
 
-	public static SIBConfiguration getInstance() {
+	public static synchronized SIBConfiguration getInstance() {
 		if(instance == null)
 			instance = new SIBConfiguration();
 		return instance;
