@@ -22,6 +22,11 @@ The main idea of this project is to simulate several bus rides in the city of Bo
 
 
 
+
+
+
+
+
 SMART-M3Project uses JxMaps https://www.teamdev.com/jxmaps, which is a proprietary software. The use of JxMaps is governed by JxMaps Product Licence Agreement https://www.teamdev.com/jxmaps/licence-agreement. If you would like to use JxMaps in your development, please contact TeamDev.
 
 
