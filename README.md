@@ -14,8 +14,11 @@ Once the application is started, you should see a map with the selected bus. Eac
 
 
 At the end of the simulation some statistics are provide, for example:
+
 • Segment (path between two consecutive bus stops) with more people
+
 • Line with the maximum number of fines
+
 • Balance for each bus line (could be positive or negative, it depends on the number of ticket sold, the number of ticket inspector, and the number of fines).
 
 SMART-M3Project uses JxMaps https://www.teamdev.com/jxmaps, which is a proprietary software. The use of JxMaps is governed by JxMaps Product Licence Agreement https://www.teamdev.com/jxmaps/licence-agreement. If you would like to use JxMaps in your development, please contact TeamDev.
