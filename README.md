@@ -13,7 +13,7 @@ Once the application is started, you should see a map with the selected bus. Eac
 
 
 
-At the end of the simulation some statistics are provide, for example:
+At the end of the simulation some statistics are provided, for example:
 
 • Segment (path between two consecutive bus stops) with more people
 
