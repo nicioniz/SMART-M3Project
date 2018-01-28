@@ -21,12 +21,12 @@ In oder to execute this application you should have OSGi_SIB and run the SIB:
 
 The main idea of this project is to simulate several bus rides in the city of Bologna and to provide statistics at the end of the simulation. When the application starts, you can set some parameters, like which bus simulate (actually there are three option), number of days to simulate, number of rides for each bus, ticket price for a single ride etc..
 
-<img src="https://github.com/adricarda/SMART-M3Project/blob/master/start.png" width="300" height="200">
+<img src="start.png" width="300" height="200">
 
 Once the application is started, you should see a map with the selected bus. Each bus is represented by a particular marker; also each bus stop is marked.
 
 
-<img src="https://github.com/adricarda/SMART-M3Project/blob/master/buses.png" width="600" height="400">
+<img src="buses.png" width="600" height="400">
 
 At the end of the simulation some statistics are provided, for example:
 
@@ -35,6 +35,10 @@ At the end of the simulation some statistics are provided, for example:
 • Line with the maximum number of fines
 
 • Balance for each bus line (could be positive or negative, it depends on the number of ticket sold, the number of ticket inspector, and the number of fines).
+
+[Here](videoExample.mkv) you can find a video with a little demonstration.
+
+[Here](interoperability-embedded-systems.pdf) the Italian presentation used for the project.
 
 SMART-M3Project uses JxMaps https://www.teamdev.com/jxmaps, which is a proprietary software. The use of JxMaps is governed by JxMaps Product Licence Agreement https://www.teamdev.com/jxmaps/licence-agreement. If you would like to use JxMaps in your development, please contact TeamDev.
 
