@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" creator="mapstogpx.com" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd">
+ 
+<trk>
+  <name>40134 Bologna BO to 40136 Bologna BO</name>
+  <number>1</number>
+  <trkseg>
+  
+  <trkpt lat="44.492191" lon="11.329344">
+    <name>Porta Saragozza - Liceo Righi</name>
+  </trkpt>
+  
+  <trkpt lat="44.495536" lon="11.328299">
+  <name>Porta Sant Isaia</name>
+  </trkpt>
+ 
+  <trkpt lat="44.499820" lon="11.328130">
+    <name>Porta San Felice</name>
+  </trkpt>
+  
+  <trkpt lat="44.50173" lon="11.332003">
+    <name>Porta Lame</name>
+  </trkpt>
+  
+  <trkpt lat="44.505033" lon="11.343124">
+    <name>Stazione Centrale</name>
+  </trkpt>
+  
+  <trkpt lat="44.504429" lon="11.346391">
+    <name>Porta Galliera</name>
+  </trkpt>
+  
+  <trkpt lat="44.502748" lon="11.351184">
+    <name>Borgo</name>
+  </trkpt>
+  
+  <trkpt lat="44.501768" lon="11.353752">
+    <name>Porta Mascarella</name>
+  </trkpt>
+  
+  <trkpt lat="44.497494" lon="11.356514">
+    <name>Porta San Donato</name>
+  </trkpt>
+  
+  <trkpt lat="44.494500" lon="11.356896">
+    <name>Porta San Vitale</name>
+  </trkpt>
+  
+  <trkpt lat="44.491797" lon="11.357180">
+    <name>Porta Maggiore</name>
+  </trkpt>
+  
+  <trkpt lat="44.486647" lon="11.357777">
+    <name>Carducci</name>
+  </trkpt>
+  
+  <trkpt lat="44.484666" lon="11.355258">
+    <name>Porta Santo Stefano</name>
+  </trkpt>
+  
+  <trkpt lat="44.484999" lon="11.352417">
+    <name>Giardini Margherita</name>
+  </trkpt>
+  
+  <trkpt lat="44.485353" lon="11.349417">
+    <name>Porta Castiglione</name>
+  </trkpt>
+  
+  <trkpt lat="44.485997" lon="11.344235">
+    <name>Pcheggio Staveco</name>
+  </trkpt>
+  
+  <trkpt lat="44.487018" lon="11.338265">
+    <name>Porta San Mamolo</name>
+  </trkpt>
+  
+  <trkpt lat="44.488557" lon="11.334304">
+    <name>Aldini</name>
+  </trkpt>
+  
+  <trkpt lat="44.490089" lon="11.330394">
+    <name>Porta Saragozza - Villa Cassarini</name>
+  </trkpt>
+  
+  </trkseg>
+</trk>
+</gpx>
