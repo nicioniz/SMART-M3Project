@@ -7,7 +7,7 @@ Cosi` facendo ogniqualvolta l'autobus avanza di un punto, deve interrogarsi per 
 -busId
 -Linea e massimo numero di posti disponibili
 
-Queste informazioni sono statiche, e dunque non variano mai all'interno della stessa simulazione. Tuttavia assumeranno valori diversi gli attributi degli oggetti elencati precedentemente, ad esempio ogniqualvolta l'autobus avanza di una posizione, aggiornera` i literal 'latitude' e 'longitude' dell'oggetto locationData. 
+Queste informazioni sono statiche, e dunque non variano mai all'interno della stessa simulazione. Tuttavia assumeranno valori diversi gli attributi degli oggetti elencati precedentemente, ad esempio ogniqualvolta l'autobus avanza di una posizione, aggiornerà i literal 'latitude' e 'longitude' dell'oggetto locationData. 
 In modo analogo vengono aggiornati gli attributi di personData ad ogni fermata. 
 Le operazioni fondamentali dell'autobus si sviluppano attraverso tre cicli for: il ciclo piu` esterno corrisponde al numero di giorni da simulare, quello intermedio al numero di corse da simulare, mentre quello piu` interno corrisponde alla lista di punti sulla mappa che l'autobus deve attraversare. Ad esempio uno scenario classico d'escuzione dell'autobus e` il seguente:
 -si ottengono le coordinate del prossimo punto da attraversare
@@ -16,7 +16,7 @@ In caso negativo si aggiorna semplicemente l'oggetto locationData (in tal modo i
 
 Infine le ultime due operazioni fondamentali dell'autobus sono necessarie per avere una corretta simulazione.
 A questo scopo infatti, ciascun autobus al termine della simulazione di una giornata, invoca il meotdo SimulationConfig.getInstance().waitForBarrier(). 
-Questa barriera serve a far si` che un autobus non inizi la simulazione del giorni i+1 prima che gli altri autobus abbiano terminato la simulazione del giorno i. 
+Questa barriera serve a far sì che un autobus non inizi la simulazione del giorni i+1 prima che gli altri autobus abbiano terminato la simulazione del giorno i. 
 In modo del tutto analogo e` presente una barriera al termine dell'intera simulazione; in questo modo solo quando tutti gli autobus hanno percorso l'ultima corsa dell'ultimo giorno di simulazione, viene sbloccato il main, che successivamente invoca il metodo opportuno sulla classe StatisticsFrame per calcolare e visualizzare a schermo le statistiche della simulazione.
 
 
@@ -35,3 +35,11 @@ Il controllore multerà tutte le persone sprovviste di biglietto presenti sul bu
 Il numero di multe effettuate è ottenuto quindi semplicemente dalla sottrazione fra le persone reali a bordo e quelle paganti, ed è salvato nella variabile "fines".
 Per questa operazione non è necessaria una query del controllore alla SIB in quanto salendo sul pullman è in grado di vedere "con i suoi occhi" chi ha pagato e chi no. 
 Dopo aver determinato il numero di multe effettuate, tale valore viene salvato nella SIB come nuova istanza dell'entità "Report".
+
+
+Tutti i dati di simulazione forniti all'avvio sono disponibili all'interno del programma tramite il singleton SimulationConfig.
+
+Durante la fase di inizializzazione del sistema vengono inseriti nella SIB anche tutti i dati relativi alle fermate. Anche in questo caso i dati sono resi disponibili al programma tramite file gpx. Per la generazione dei controllori alle fermate si utilizzano due dati: il numero massimo di controllori presenti e la probabilità di comparsa ad una determinata fermata. La lista di tutte le fermate presenti nel sistema viene "mescolata" e scansionata. Per ogni fermata viene quindi applicata la probabilità di comparsa del controllore. Tutto ciò avviene fino al raggiungimento del numero di controllori massimi nel sistema. La generazione dei controllori avverrà quindi solamente all'avvio del sistema.
+
+
+Dal punto di vista delle utilità prodotte è presente un file con la configurazione del server dove è presente la SIB, una classe che contiene tutte le informazioni dell'ontologia e la classe Triple. Quest'ultima permette di aggiungere un livello di astrazione maggiore per l'inserimento delle triple all'interno della SIB. Fornisce quindi all'utente una vista sotto forma di soggetto, predicato e oggetto interfacciandosi con le API pre-esistenti che utilizzano solamente dei Vector<String>.
