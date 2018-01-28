@@ -6,7 +6,10 @@ The SIB is a SPARQL endpoint built on top of an RDF triple-store.  This publish-
 • query the knowledge base (through SPARQL or RDF-M3)
 • subscribe to user-defined subgraphs (through SPARQL or RDF-M3)
 
-In oder to execute this application you should have OSGi_SIB and run the SIB. 
+In oder to execute this application you should have OSGi_SIB and run the SIB:
+    1) run the SIB with the command
+          java -jar org.eclipse.osgi*.jar
+    2) execute the main program (java -jar Bologna-BusSimulator.jar);
 
 The main idea of this project is to simulate several bus rides in the city of Bologna and to provide statistics at the end of the simulation. When the application starts, you can set some parameters, like which bus simulate (actually there are three option), number of days to simulate, number of rides for each bus, ticket price for a single ride etc..
 
