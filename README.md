@@ -8,7 +8,7 @@ The SIB is a SPARQL endpoint built on top of an RDF triple-store.  This publish-
 
 In oder to execute this application you should have OSGi_SIB and run the SIB:
 
-    1) run the SIB with the command
+    1) run the SIB:
     
           java -jar org.eclipse.osgi*.jar
      
