@@ -16,7 +16,12 @@ In oder to execute this application you should have OSGi_SIB and run the SIB:
         cd ./jar 
     
     3) execute the main program:
-            java -jar Bologna-BusSimulator.jar (note that in the same directory you should have all the required resources (res and gpx directories) )
+            java -jar Bologna-BusSimulator.jar
+            
+In order to compile this application you should have project imported in Eclipse.
+Than export like a Runnable Jar as showed in picture.
+
+<img src="export.png" width="450" height="300">
     
 
 The main idea of this project is to simulate several bus rides in the city of Bologna and to provide statistics at the end of the simulation. When the application starts, you can set some parameters, like which bus simulate (actually there are three option), number of days to simulate, number of rides for each bus, ticket price for a single ride etc..

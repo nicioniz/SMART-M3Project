@@ -30,8 +30,6 @@ import main.Bus;
 import main.BusMap;
 import main.BusStopManager;
 import main.BusVisualizerAggregator;
-import main.StatisticsManager;
-import parser.BusPathParser;
 import simulationConfiguration.SimulationConfig;
 
 
@@ -372,6 +370,6 @@ public class SimConfigurationFrame extends JFrame {
 		
 		BusVisualizerAggregator aggregator = new BusVisualizerAggregator(busNumber, busMap, busColor);
 		aggregator.start();
-		new Bus("BUS" + busNumber, busNumber , "gpx/bus" + busNumber + ".gpx","gpx/bus" + busNumber + "StopList.gpx", simulationDays, busRides).start();
+		new Bus("BUS" + busNumber, busNumber , "/gpx/bus" + busNumber + ".gpx","/gpx/bus" + busNumber + "StopList.gpx", simulationDays, busRides).start();
 	}
 }

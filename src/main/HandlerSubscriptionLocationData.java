@@ -1,11 +1,10 @@
 package main;
-import com.teamdev.jxmaps.LatLng;
-
 import java.io.FileNotFoundException;
 import java.util.Vector;
+
+import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.Marker;
 
-import simulationConfiguration.SimulationConfig;
 import sofia_kp.SSAP_sparql_response;
 import sofia_kp.iKPIC_subscribeHandler2;
 
@@ -27,6 +26,7 @@ public class HandlerSubscriptionLocationData implements iKPIC_subscribeHandler2 
 	public void kpic_RDFEventHandler(Vector<Vector<String>> newTriples,
 			Vector<Vector<String>> oldTriples, String indSequence, String subID) {
 
+		@SuppressWarnings("unused")
 		String temp = "\nNotification " + indSequence + " id = " + subID +"\n";
 		for(int i = 0; i < newTriples.size(); i++ )
 		{

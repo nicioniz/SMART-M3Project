@@ -1,26 +1,20 @@
 package main;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
+
 import com.teamdev.jxmaps.ControlPosition;
 import com.teamdev.jxmaps.Icon;
+import com.teamdev.jxmaps.InfoWindow;
 import com.teamdev.jxmaps.LatLng;
 import com.teamdev.jxmaps.MapOptions;
 import com.teamdev.jxmaps.MapStatus;
-import com.teamdev.jxmaps.MapMouseEvent;
 import com.teamdev.jxmaps.MapTypeControlOptions;
 import com.teamdev.jxmaps.Marker;
 import com.teamdev.jxmaps.Polyline;
 import com.teamdev.jxmaps.PolylineOptions;
-import com.teamdev.jxmaps.MouseEvent;
-import com.teamdev.jxmaps.InfoWindow;
 import com.teamdev.jxmaps.swing.MapView;
-
-import gui.BusMarkerClickHandler;
-import gui.BusStopMarkerClickHandler;
-import parser.BusPathParser;
 
 
 @SuppressWarnings("serial")
@@ -60,7 +54,8 @@ public class BusMap extends MapView{
     	Marker marker = new Marker(getMap());
     	
     	Icon icon = new Icon();
-    	InputStream inputstream = new FileInputStream("./res/bus" + busColor + ".png");
+    	InputStream inputstream = getClass().getResourceAsStream("/res/bus" + busColor + ".png");
+//    	InputStream inputstream = new FileInputStream("./res/bus" + busColor + ".png");
     	icon.loadFromStream(inputstream, "png");
     	marker.setIcon(icon);
     	
@@ -88,7 +83,8 @@ public class BusMap extends MapView{
     	List<LatLng> stopsPoints = BusStopManager.getInstance().getStopsPoints(busNumber.replaceAll("[^\\d]", ""));
     	int sizeOfStopsList = stopsPoints.size();
     	Icon icon = new Icon();
-    	InputStream inputstream = new FileInputStream("./res/stop.png");
+    	InputStream inputstream = getClass().getResourceAsStream("/res/stop.png");
+//    	InputStream inputstream = new FileInputStream("./res/stop.png");
     	icon.loadFromStream(inputstream, "png");
     	
     	for (int i=0; i<sizeOfStopsList; i++) {

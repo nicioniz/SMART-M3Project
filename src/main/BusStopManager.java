@@ -1,8 +1,6 @@
 package main;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -24,17 +22,23 @@ public class BusStopManager {
 	
 	private BusStopManager(){
 		
-		File gpxDir = new File("gpx");
-		if(!gpxDir.isDirectory());
-//			throw new Exception("ERROR: gpx directory not found");
+//	Following lines of code are more scalable, but can not iterate over a directory within Jar
+//	(a seprate folder with gpx near to Jar is requested)	
 		
-		List<String> fileNames = Arrays.asList(gpxDir.list()).stream()
-						.filter(s -> s.matches("^bus\\d+StopList.gpx$"))
-						.map(s -> "gpx/" + s)
-						.collect(Collectors.toList());
-		for(String s : fileNames)
-			addLine(s);	
+//		File gpxDir = new File("gpx");
+//		if(!gpxDir.isDirectory());
+////			throw new Exception("ERROR: gpx directory not found");
+//		
+//		List<String> fileNames = Arrays.asList(gpxDir.list()).stream()
+//						.filter(s -> s.matches("^bus\\d+StopList.gpx$"))
+//						.map(s -> "gpx/" + s)
+//						.collect(Collectors.toList());
+//		for(String s : fileNames)
+//			addLine(s);
 		
+		addLine("/gpx/bus11StopList.gpx");
+		addLine("/gpx/bus20StopList.gpx");
+		addLine("/gpx/bus32StopList.gpx");
 	}
 	
 	private void addLine(String lineFileName) {

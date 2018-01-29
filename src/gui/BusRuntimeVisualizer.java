@@ -1,18 +1,14 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
 
-import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.ActionEvent;
 
 public class BusRuntimeVisualizer extends JFrame {
 	

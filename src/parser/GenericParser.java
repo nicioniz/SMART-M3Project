@@ -1,9 +1,12 @@
 package parser;
 
+import java.io.InputStream;
+
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.ContentHandler;
+import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 public class GenericParser {
@@ -36,7 +39,10 @@ public class GenericParser {
 	
 	public void parse(String fileName) {
 		try {
-			xmlReader.parse(fileName);
+			InputStream inputStream = getClass().getResourceAsStream(fileName);
+//			InputStream inputStream = ClassLoader.getSystemResourceAsStream(fileName);
+			xmlReader.parse(new InputSource(inputStream));
+//			xmlReader.parse(fileName);
 		}catch (Exception e) {
 			System.err.println(e.getMessage());
 			System.exit(1);
