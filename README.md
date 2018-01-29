@@ -18,7 +18,7 @@ In oder to execute this application you should have OSGi_SIB and run the SIB:
     
     3) execute the main program:
             java -jar Bologna-BusSimulator.jar
-            
+Instead of Bologna-BusSimulator.jar use Bologna-BusSimulator_Windows.jar (if running on Windows), or Bologna-BusSimulator_Linux.jar (if running on Linux).            
 
 In order to compile this application you should have project imported in Eclipse.
 Than export like a Runnable Jar as showed in picture.
