@@ -6,6 +6,7 @@ The SIB is a SPARQL endpoint built on top of an RDF triple-store.  This publish-
 • query the knowledge base (through SPARQL or RDF-M3)
 • subscribe to user-defined subgraphs (through SPARQL or RDF-M3)
 
+Jar folder contains two different .jar one for Windows and one for Linux.
 In oder to execute this application you should have OSGi_SIB and run the SIB:
 
     1) run the SIB:
@@ -18,6 +19,7 @@ In oder to execute this application you should have OSGi_SIB and run the SIB:
     3) execute the main program:
             java -jar Bologna-BusSimulator.jar
             
+
 In order to compile this application you should have project imported in Eclipse.
 Than export like a Runnable Jar as showed in picture.
 
