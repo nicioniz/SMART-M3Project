@@ -1,4 +1,4 @@
-Il file Bus.java all'interno del package main contiene la logica del bus e viene istanziato dalla classe SimConfigurationFrame.java in base alle scelte effettuate dall'utente in fase di inizializzazione. Come prima cosa il bus ottiene una lista di coordinate; questa contiene l'insieme di punti ordinati che l'autobus deve attraversare e costituisce il percorso dell'autobus. 
+﻿Il file Bus.java all'interno del package main contiene la logica del bus e viene istanziato dalla classe SimConfigurationFrame.java in base alle scelte effettuate dall'utente in fase di inizializzazione. Come prima cosa il bus ottiene una lista di coordinate; questa contiene l'insieme di punti ordinati che l'autobus deve attraversare e costituisce il percorso dell'autobus. 
 Inoltre l'autobus deve essere in grado di riconoscere se delle coordinate corrispondono alle coordinate di una fermata di sua competenza. Di conseguenza in fase di inizializzazione viene creata una hashMap contenente proprio i punti relativi alle sole fermate che l'autobus deve effettuare. 
 Cosi` facendo ogniqualvolta l'autobus avanza di un punto, deve interrogarsi per verificare se e` arrivato o no ad una fermata, e a seconda dei casi eseguire le opportune operazioni. Notare che entrambe le liste (lista delle coordinate da attraversare e lista delle coordinate delle fermate) sono ottenute facendo parsing dei relativi file .gpx presenti nella cartella gpx. Una volta inizializzate le strutture dati necessarie l'autobus e` pronto per partire. In particolare vengono inserite tutte le informazioni non mutevoli all'interno della SIB (per maggiori dettagli consultare il grafo dell'ontologia):
 
@@ -48,3 +48,26 @@ Dal punto di vista delle utilità prodotte è presente un file con la configuraz
 I parser SAX permettono di analizzare dei file xml per ricavare l'elenco dei punti di cui è composto il percorso di una linea e l'elenco delle fermate per ogni linea. Nel caso dei punti appartenenti al percorso il parser si limiterà ad estrapolare le coordinate di ogni punto, mentre per le fermate verrà considerato anche il tag contenente il nome della fermata.
 
 "SimConfigurationFrame" provvede invece a gestire il frame iniziale, recuperando i valori parametrizzabili inseriti dall'utente e settandoli nel "SimulationConfig".
+
+STATISTICHE FINALI:
+
+Le statistiche finali, stampate in un frame apposito, sono gestite da due classi:
+1) StatisticsFrame -> Parte grafica
+2) StatisticsManager -> logica di business (la parte operativa)
+ 
+StatisticsFrame.java:
+
+Questa classe rappresenta il frame grafico dove vengono visualizzate le statistiche elaborate alla fine della simulazione; è invocata dal main (Main.java class).
+
+Essenzialmente questa classe ha un solo compito: la composizione del frame grafico dove vengono stampate le statistiche (in una JTextArea).
+Il calcolo delle statistiche non è demandato a questa classe, ma al Singleton StatisticsManager.java, opportunamente sfruttato attraverso il proprio metodo di output economicSummary(). 
+
+StatisticsManager.java:
+
+In questa classe vengono effettuati tutti i calcoli necessari alla composizione delle statistiche relative alla simulazione appena terminata.
+Ogni statistica realizzata ha un metodo dedicato che effettua tutta l'elaborazione necessaria alla composizione di quella determinata statistica.
+L'unico metodo visibile dall'esterno, oltre alla getInstance() (Ricordiamo che StatisticsManager è un Singleton), è economicSummary(), dove vengono invocati sequenzialmente i metodi privati relativi ad ogni statistica.
+
+Quasi tutti i metodi effettuano delle query alla SIB sfruttando l'espressività del linguaggio SPARQL, mentre la join è effettuata dentro al costruttore (invocato opportunamente dalla getInstance()).
+
+
