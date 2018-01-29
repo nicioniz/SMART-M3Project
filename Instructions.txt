@@ -43,3 +43,8 @@ Durante la fase di inizializzazione del sistema vengono inseriti nella SIB anche
 
 
 Dal punto di vista delle utilità prodotte è presente un file con la configurazione del server dove è presente la SIB, una classe che contiene tutte le informazioni dell'ontologia e la classe Triple. Quest'ultima permette di aggiungere un livello di astrazione maggiore per l'inserimento delle triple all'interno della SIB. Fornisce quindi all'utente una vista sotto forma di soggetto, predicato e oggetto interfacciandosi con le API pre-esistenti che utilizzano solamente dei Vector<String>.
+
+
+I parser SAX permettono di analizzare dei file xml per ricavare l'elenco dei punti di cui è composto il percorso di una linea e l'elenco delle fermate per ogni linea. Nel caso dei punti appartenenti al percorso il parser si limiterà ad estrapolare le coordinate di ogni punto, mentre per le fermate verrà considerato anche il tag contenente il nome della fermata.
+
+"SimConfigurationFrame" provvede invece a gestire il frame iniziale, recuperando i valori parametrizzabili inseriti dall'utente e settandoli nel "SimulationConfig".
