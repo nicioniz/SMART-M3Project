@@ -2,8 +2,11 @@
 This is a project for the Interoperability of Embedded System lab at the university of Bologna.
 In this project we used a Semantic Information Broker called OSGi_SIB v3.2, developed by ARCES.
 The SIB is a SPARQL endpoint built on top of an RDF triple-store.  This publish-subscribe broker allows to:
+
 • update the knowledge base (using SPARQL, RDF/XML or a triple-pattern based formalism, i.e.  RDF-M3)
+
 • query the knowledge base (through SPARQL or RDF-M3)
+
 • subscribe to user-defined subgraphs (through SPARQL or RDF-M3)
 
 Jar folder contains two different .jar one for Windows and one for Linux.
